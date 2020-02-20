@@ -17,14 +17,16 @@ public class MongoDbConfiguration {
 
     @Bean
     public MongoDbFactory mongoDbFactory() {
-        MongoClientOptions.Builder options = new MongoClientOptions.Builder().connectTimeout(5000);
-        return new SimpleMongoDbFactory(new MongoClientURI(mongoDbUri,options));
+        MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder();
+        optionsBuilder.connectTimeout(5000);
+        optionsBuilder.socketTimeout(5000);
+        optionsBuilder.serverSelectionTimeout(5000);
+        return new SimpleMongoDbFactory(new MongoClientURI(mongoDbUri,optionsBuilder));
     }
 
     @Bean
     public MongoTemplate mongoTemplate() {
         MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-
         return mongoTemplate;
     }
 }
