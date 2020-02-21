@@ -28,5 +28,6 @@ dependencies {
     implementation group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.2.0.Final'
     annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.2.0.Final'
 
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

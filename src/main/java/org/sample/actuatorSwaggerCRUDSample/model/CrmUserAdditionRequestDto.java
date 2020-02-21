@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-public class UserAdditionRequestDto {
+public class CrmUserAdditionRequestDto {
     private String name;
     private String surname;
 

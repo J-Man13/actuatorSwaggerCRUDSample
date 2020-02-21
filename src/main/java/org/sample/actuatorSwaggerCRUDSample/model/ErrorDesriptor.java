@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 public class ErrorDesriptor {
     private String source;
+    private String cause;
     private String description;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -29,12 +30,25 @@ public class ErrorDesriptor {
         this.description = description;
     }
 
+    public ErrorDesriptor(String source, String description,String cause) {
+        this(source,description);
+        this.cause = cause;
+    }
+
     public String getSource() {
         return source;
     }
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 
     public String getDescription() {

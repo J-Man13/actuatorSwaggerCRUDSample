@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class CrmUserMongoRepository {
-    @Autowired
-    @Qualifier("crmMongoTemplate")
     private MongoTemplate crmMongoTemplate;
+
+    public CrmUserMongoRepository(@Autowired @Qualifier("crmMongoTemplate") MongoTemplate crmMongoTemplate){
+        this.crmMongoTemplate = crmMongoTemplate;
+    }
 
     public CrmUserMongoDocument save(CrmUserMongoDocument user){
         return crmMongoTemplate.save(user);

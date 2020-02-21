@@ -12,17 +12,19 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 @Configuration
 public class MongoDbCRMConfiguration {
-
-    @Value("${spring.data.mongodb.crm.uri}")
     private String mongoDbCRMUri;
+
+    public MongoDbCRMConfiguration(@Value("${spring.data.mongodb.crm.uri}") String mongoDbCRMUri){
+        this.mongoDbCRMUri = mongoDbCRMUri;
+    }
 
     @Bean("crmMongoDbFactory")
     @Primary
     public MongoDbFactory crmMongoDbFactory() {
         MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder();
-        optionsBuilder.connectTimeout(5000);
-        optionsBuilder.socketTimeout(5000);
-        optionsBuilder.serverSelectionTimeout(5000);
+        optionsBuilder.connectTimeout(10000);
+        optionsBuilder.socketTimeout(10000);
+        optionsBuilder.serverSelectionTimeout(10000);
         return new SimpleMongoDbFactory(new MongoClientURI(mongoDbCRMUri,optionsBuilder));
     }
 

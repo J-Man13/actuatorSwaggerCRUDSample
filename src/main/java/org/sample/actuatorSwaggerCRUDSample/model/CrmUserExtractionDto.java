@@ -8,10 +8,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 
-public class CrmUser {
+public class CrmUserExtractionDto{
     private String id;
     private String name;
     private String surname;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dtstamp;
 
     public String getId() {
