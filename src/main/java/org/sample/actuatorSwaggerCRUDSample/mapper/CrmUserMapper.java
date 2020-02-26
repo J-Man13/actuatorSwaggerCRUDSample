@@ -8,8 +8,8 @@ import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.CrmUserMongoDocument
 
 @Mapper(componentModel = "spring")
 public interface CrmUserMapper {
-    CrmUserDao userAdditionRequestDtoToCrmUserDao(CrmUserAdditionRequestDto crmUserAdditionRequestDto);
-    CrmUserMongoDocument crmUserDaoToCrmUserMongoDocument(CrmUserDao crmUserDao);
+//    CrmUserDao userAdditionRequestDtoToCrmUserDao(CrmUserAdditionRequestDto crmUserAdditionRequestDto);
+//    CrmUserMongoDocument crmUserDaoToCrmUserMongoDocument(CrmUserDao crmUserDao);
     CrmUserDao UserMongoDocumentToCrmUserDao(CrmUserMongoDocument crmUserMongoDocument);
     CrmUserExtractionDto crmUserDaoToCrmUserExtractionDto(CrmUserDao crmUserDao);
 }

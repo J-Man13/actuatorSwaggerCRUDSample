@@ -1,6 +1,7 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -74,4 +75,20 @@ public class ErrorDesriptor {
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
+
+//    @Override
+//    public String toString() {
+//        try {
+//            return new ObjectMapper().writeValueAsString(this);
+//        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        return "ErrorDesriptor{" +
+//                "source='" + source + '\'' +
+//                ", cause='" + cause + '\'' +
+//                ", description='" + description + '\'' +
+//                ", dtstamp=" + dtstamp +
+//                ", timestamp=" + timestamp +
+//                '}';
+//    }
 }

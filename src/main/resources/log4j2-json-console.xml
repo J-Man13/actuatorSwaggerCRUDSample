@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="ConsoleJSON" target="SYSTEM_OUT">
+            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false">
+            </JsonLayout>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="ALL">
+            <AppenderRef ref="ConsoleJSON"/>
+        </Root>
+        <Logger name="JSON_EVENT_LOGGER" level="ALL" additivity="false">
+            <Appenderref ref="ConsoleJSON"/>
+        </Logger>
+    </Loggers>
+</Configuration>

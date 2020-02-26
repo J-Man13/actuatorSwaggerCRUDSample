@@ -1,5 +1,7 @@
 package org.sample.actuatorSwaggerCRUDSample.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.*;
 import org.sample.actuatorSwaggerCRUDSample.service.ICrmUserService;
@@ -9,11 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/users")
 public class CrmUsersController {
+
     private ICrmUserService crmUserService;
     private CrmUserMapper crmUserMapper;
+
+
 
     public CrmUsersController(@Autowired @Qualifier("crmUserMongoService") ICrmUserService crmUserService,
                               @Autowired CrmUserMapper crmUserMapper){
@@ -38,8 +45,8 @@ public class CrmUsersController {
     }
 
     @PostMapping
-    public ResponseEntity addUser(){
-        return null;
+    public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto){
+        return new ResponseEntity(crmUserAdditionRequestDto,HttpStatus.OK);
     }
 
 }

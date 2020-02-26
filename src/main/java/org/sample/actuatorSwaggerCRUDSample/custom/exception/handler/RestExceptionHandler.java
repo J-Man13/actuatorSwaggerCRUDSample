@@ -1,5 +1,8 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.ByteSource;
+import com.google.common.io.ByteStreams;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalUnhandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonMessageDTO;
@@ -10,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +21,8 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.io.IOException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -53,8 +59,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpRequestMethodNotSupportedException.getStackTrace()[0].getClassName(),
-                String.format("%s method is not supported for %s route", httpRequestMethodNotSupportedException.getMethod(),((ServletWebRequest)request).getRequest().getRequestURI().toString()),
+                String.format("%s method is not supported for %s route", httpRequestMethodNotSupportedException.getMethod(),((ServletWebRequest)request).getRequest().getRequestURI()),
                 httpRequestMethodNotSupportedException.getClass().getCanonicalName());
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.METHOD_NOT_ALLOWED.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException httpMessageNotReadableException, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String route = ((ServletWebRequest)request).getRequest().getRequestURI();
+        ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpMessageNotReadableException.getStackTrace()[0].getClassName(),
+                String.format("request body is not supported for %s route",route),
+                httpMessageNotReadableException.getClass().getCanonicalName());
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <property name="currentDate">${date:yyyy-MM-dd}</property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="APPLICATION_LOGS" fileName="application-${currentDate}.log" filePattern="application-${currentDate}-rolled.log">
+            <JsonLayout compact="true" eventEol="true" stacktraceAsString="false"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200000KB"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
+            <JsonLayout complete="true" compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+                <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
+            </JsonLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200000KB"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
+            <JsonLayout compact="true" eventEol="true" stacktraceAsString="false"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size=" 200000KB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="ALL">
+            <AppenderRef ref="APPLICATION_LOGS"/>
+        </Root>
+        <Logger name="application_logs" level="ALL" additivity="false">
+            <AppenderRef ref="APPLICATION_LOGS" />
+        </Logger>
+        <Logger name="requests_logs" level="ALL" additivity="false">
+            <AppenderRef ref="REQUESTS_LOGS" />
+        </Logger>
+        <Logger name="trace_logs" level="ALL" additivity="false">
+            <AppenderRef ref="TRACE_LOGS" />
+        </Logger>
+    </Loggers>
+</Configuration>

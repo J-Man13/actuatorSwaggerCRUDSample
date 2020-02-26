@@ -1,6 +1,7 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -76,4 +77,19 @@ public class CommonResponseDTO<Data> {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "CommonResponseDTO{" +
+                "status=" + status +
+                ", timestamp=" + timestamp +
+                ", dtstamp=" + dtstamp +
+                ", messages=" + messages +
+                ", data=" + data +
+                '}';
+    }
 }
