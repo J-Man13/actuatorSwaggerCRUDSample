@@ -24,21 +24,30 @@ public class CrmUserMongoService implements ICrmUserService{
         this.crmUserMapper = crmUserMapper;
     }
 
+    @Override
     public CrmUserDao save(CrmUserDao crmUserDao){
-        return null;
+        CrmUserMongoDocument crmUserMongoDocument = crmUserMapper.crmUserDaoToCrmUserMongoDocument(crmUserDao);
+        try {
+            crmUserMongoRepository.save(crmUserMongoDocument);
+        }
+        catch (Exception exception){
+            throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception during document save : %s", exception.getMessage()));
+        }
+        return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
     }
 
+    @Override
     public CrmUserDao findById(String id){
-        CrmUserMongoDocument crmUserMongoDocument = null;
+        CrmUserMongoDocument crmUserMongoDocument;
         try{
             crmUserMongoDocument = crmUserMongoRepository.findById(id);
         }
         catch (Exception exception){
-            throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception : %s", exception.getMessage()));
+            throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()));
         }
         Objects.requireNonNull(crmUserMongoDocument,()->{
             throw new MongoDocumentNotFoundException(String.format("Mongo Document with %s id was not found ",id));
         });
-        return crmUserMapper.UserMongoDocumentToCrmUserDao(crmUserMongoDocument);
+        return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
     }
 }

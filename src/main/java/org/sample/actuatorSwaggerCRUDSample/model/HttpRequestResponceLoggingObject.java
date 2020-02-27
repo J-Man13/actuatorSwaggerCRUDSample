@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpRequestResponceLoggingObject{
     public HttpRequestFields request;
-    public HttpResponseFields response;
+    public HttpResponseLoggingModel response;
 
-    public HttpRequestResponceLoggingObject(HttpRequestFields request, HttpResponseFields responce) {
+    public HttpRequestResponceLoggingObject(HttpRequestFields request, HttpResponseLoggingModel responce) {
         this.request = request;
         this.response = responce;
     }
@@ -20,11 +20,11 @@ public class HttpRequestResponceLoggingObject{
         this.request = request;
     }
 
-    public HttpResponseFields getResponse() {
+    public HttpResponseLoggingModel getResponse() {
         return response;
     }
 
-    public void setResponse(HttpResponseFields response) {
+    public void setResponse(HttpResponseLoggingModel response) {
         this.response = response;
     }
 

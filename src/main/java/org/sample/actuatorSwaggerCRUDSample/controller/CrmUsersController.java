@@ -11,16 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/users")
 public class CrmUsersController {
+    private static final Logger LOGGER = LogManager.getLogger("trace_logs");
+    private static final String CLASS = CrmUsersController.class.getCanonicalName();
 
     private ICrmUserService crmUserService;
     private CrmUserMapper crmUserMapper;
-
-
 
     public CrmUsersController(@Autowired @Qualifier("crmUserMongoService") ICrmUserService crmUserService,
                               @Autowired CrmUserMapper crmUserMapper){
@@ -30,7 +29,11 @@ public class CrmUsersController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
+
+        LOGGER.info(new CommonLoggingObject(CLASS,"Preparing to extract user by id",id));
         CrmUserDao crmUserDao = crmUserService.findById(id);
+
+        LOGGER.info(new CommonLoggingObject(CLASS,String.format("Extracted user by %s",id),crmUserDao));
         CrmUserExtractionDto crmUserExtractionDto = crmUserMapper.crmUserDaoToCrmUserExtractionDto(crmUserDao);
         CrmUserExtractionResponceDto crmUserExtractionResponceDto = new CrmUserExtractionResponceDto(crmUserExtractionDto);
         CommonResponseDTO<CrmUserExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user data was successfully extracted"));
@@ -38,15 +41,15 @@ public class CrmUsersController {
         return new ResponseEntity(commonResponseDTO,HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto){
+        return new ResponseEntity(crmUserAdditionRequestDto,HttpStatus.OK);
+    }
+
     @GetMapping("/attributes/name/{name}")
     public ResponseEntity findUsersByNameIgnoringCase(@PathVariable("name") String name)
     {
         return null;
-    }
-
-    @PostMapping
-    public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto){
-        return new ResponseEntity(crmUserAdditionRequestDto,HttpStatus.OK);
     }
 
 }

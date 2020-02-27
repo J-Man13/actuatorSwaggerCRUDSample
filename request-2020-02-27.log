@@ -1,0 +1,69 @@
+[
+{
+  "thread" : "http-nio-8080-exec-1",
+  "level" : "INFO",
+  "loggerName" : "requests_logs",
+  "message" : {
+    "source" : "org.sample.actuatorSwaggerCRUDSample.configuration.RequestResponseLoggingAdapter",
+    "description" : "Http request body and headers logging",
+    "data" : {
+      "method" : "GET",
+      "path" : "/users/5e4d4ec715cac62bfabf1817",
+      "headerKeyValuePairs" : {
+        "sec-fetch-mode" : "navigate",
+        "sec-fetch-site" : "none",
+        "accept-language" : "en-US,en;q=0.9,ru;q=0.8",
+        "purpose" : "prefetch",
+        "sec-fetch-user" : "?1",
+        "accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "host" : "localhost:8080",
+        "upgrade-insecure-requests" : "1",
+        "connection" : "keep-alive",
+        "auth_token" : "998717dd-f0f7-4af6-979c-d075b7561bf1",
+        "accept-encoding" : "gzip, deflate, br",
+        "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
+        "sec-fetch-dest" : "document"
+      }
+    },
+    "loggableObjectClass" : "HttpRequestLoggingModel"
+  },
+  "endOfBatch" : false,
+  "loggerFqcn" : "org.apache.logging.log4j.spi.AbstractLogger",
+  "instant" : {
+    "epochSecond" : 1582798304,
+    "nanoOfSecond" : 963000000
+  },
+  "threadId" : 35,
+  "threadPriority" : 5,
+  "requestIdentifier" : "d68b7ccb-86bd-4ef2-9ec7-ce0dfb9e66dc",
+  "sourceClass" : "%c{2}"
+}
+, {
+  "thread" : "http-nio-8080-exec-1",
+  "level" : "INFO",
+  "loggerName" : "requests_logs",
+  "message" : {
+    "source" : "org.sample.actuatorSwaggerCRUDSample.configuration.RequestResponseLoggingAdapter",
+    "description" : "Http responce body and headers logging",
+    "data" : {
+      "status" : 404,
+      "body" : "{\"status\":404,\"timestamp\":1582798305,\"dtstamp\":\"2020-02-27 14:11:45.116\",\"messages\":[{\"type\":\"error\",\"message\":\"Mongo Document with 5e4d4ec715cac62bfabf1817 id was not found \"}],\"data\":null,\"errorDesriptorList\":[{\"source\":\"org.sample.actuatorSwaggerCRUDSample.service.CrmUserMongoService\",\"cause\":\"org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException\",\"description\":\"Mongo Document with 5e4d4ec715cac62bfabf1817 id was not found \",\"dtstamp\":\"2020-02-27 14:11:45.111\",\"timestamp\":1582798305}]}",
+      "headers" : {
+        "Transfer-Encoding" : "chunked",
+        "Date" : "Thu, 27 Feb 2020 10:11:45 GMT",
+        "Content-Type" : "application/json;charset=UTF-8"
+      }
+    },
+    "loggableObjectClass" : "HttpResponseLoggingModel"
+  },
+  "endOfBatch" : false,
+  "loggerFqcn" : "org.apache.logging.log4j.spi.AbstractLogger",
+  "instant" : {
+    "epochSecond" : 1582798305,
+    "nanoOfSecond" : 151000000
+  },
+  "threadId" : 35,
+  "threadPriority" : 5,
+  "requestIdentifier" : "d68b7ccb-86bd-4ef2-9ec7-ce0dfb9e66dc",
+  "sourceClass" : "%c{2}"
+}

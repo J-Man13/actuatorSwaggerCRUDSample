@@ -6,22 +6,30 @@ import com.google.common.io.ByteStreams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
-import org.apache.logging.log4j.message.ObjectMessage;
+import org.sample.actuatorSwaggerCRUDSample.model.CommonLoggingObject;
+import org.sample.actuatorSwaggerCRUDSample.model.HttpRequestLoggingModel;
+import org.sample.actuatorSwaggerCRUDSample.model.HttpResponseBodyHolderBean;
+import org.sample.actuatorSwaggerCRUDSample.model.HttpResponseLoggingModel;
 import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Component
 public class RequestResponseLoggingAdapter extends HandlerInterceptorAdapter {
+    private static final Logger LOGGER = LogManager.getLogger("requests_logs");
+    private static final String CLASS = RequestResponseLoggingAdapter.class.getCanonicalName();
 
-    private Logger logger = LogManager.getLogger("requests_logs");
+    @Autowired
+    @Qualifier("httpResponseBodyHolderBean")
+    private HttpResponseBodyHolderBean httpResponseBodyHolderBean;
 
     @Override
     public boolean preHandle(
@@ -32,15 +40,12 @@ public class RequestResponseLoggingAdapter extends HandlerInterceptorAdapter {
                 .asCharSource(Charsets.UTF_8).read();
         Map<String,String> headerKeyValuePairs = CommonUtil.headersKeyValueMap(request);
 
-        Map<String,String> httpRequestLogs = new HashMap<>();
-        httpRequestLogs.putAll(headerKeyValuePairs);
-        httpRequestLogs.put("requestBody",requestBody);
-        httpRequestLogs.put("type","requestBodyAndHeaders");
-        httpRequestLogs.put("method",request.getMethod());
+        HttpRequestLoggingModel httpRequestLoggingModel = new HttpRequestLoggingModel(request.getMethod(),request.getRequestURI(),requestBody,headerKeyValuePairs);
+        CommonLoggingObject commonLoggingObject = new CommonLoggingObject(CLASS,"Http request body and headers logging", httpRequestLoggingModel);
 
         String requestIdentifier = UUID.randomUUID().toString();
         ThreadContext.put("request.identifier",requestIdentifier);
-        logger.info(new ObjectMessage(httpRequestLogs));
+        LOGGER.info(commonLoggingObject);
         return true;
     }
 
@@ -50,12 +55,8 @@ public class RequestResponseLoggingAdapter extends HandlerInterceptorAdapter {
             HttpServletResponse response,
             Object handler,
             Exception ex){
-
         Map<String,String> headerKeyValuePairs = CommonUtil.headersKeyValueMap(response);
-        Map<String,String> httpResponseLogs = new HashMap<>();
-        httpResponseLogs.putAll(headerKeyValuePairs);
-        httpResponseLogs.put("type","responseHeaders");
-        logger.info(new ObjectMessage(httpResponseLogs));
+        HttpResponseLoggingModel httpResponseLoggingModel = new HttpResponseLoggingModel(response.getStatus(),httpResponseBodyHolderBean.getResponseBody(),headerKeyValuePairs);
+        LOGGER.info(new CommonLoggingObject(CLASS,"Http responce body and headers logging",httpResponseLoggingModel));
     }
-
 }

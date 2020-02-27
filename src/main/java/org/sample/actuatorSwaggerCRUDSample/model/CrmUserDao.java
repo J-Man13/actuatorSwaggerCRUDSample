@@ -39,4 +39,14 @@ public class CrmUserDao {
     public void setDtstamp(LocalDateTime dtstamp) {
         this.dtstamp = dtstamp;
     }
+
+    @Override
+    public String toString() {
+        return "CrmUserDao{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", dtstamp=" + dtstamp +
+                '}';
+    }
 }

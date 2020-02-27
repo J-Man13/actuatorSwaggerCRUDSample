@@ -5,9 +5,9 @@
     </Properties>
     <Appenders>
         <RollingFile name="APPLICATION_LOGS" fileName="application-${currentDate}.log" filePattern="application-${currentDate}-rolled.log">
-            <JsonLayout compact="true" eventEol="true" stacktraceAsString="false"/>
+            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" />
             <Policies>
-                <SizeBasedTriggeringPolicy size="200000KB"/>
+                <SizeBasedTriggeringPolicy size="1GB"/>
             </Policies>
         </RollingFile>
         <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
@@ -15,13 +15,15 @@
                 <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
             </JsonLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="200000KB"/>
+                <SizeBasedTriggeringPolicy size="1GB"/>
             </Policies>
         </RollingFile>
         <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
-            <JsonLayout compact="true" eventEol="true" stacktraceAsString="false"/>
+            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+                <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
+            </JsonLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size=" 200000KB"/>
+                <SizeBasedTriggeringPolicy size="1GB"/>
             </Policies>
         </RollingFile>
     </Appenders>
