@@ -24,8 +24,8 @@ import java.util.UUID;
 
 @Component
 public class RequestResponseLoggingAdapter extends HandlerInterceptorAdapter {
-    private static final Logger LOGGER = LogManager.getLogger("requests_logs");
-    private static final String CLASS = RequestResponseLoggingAdapter.class.getCanonicalName();
+    private final Logger LOGGER = LogManager.getLogger("requests_logs");
+    private final String CLASS = RequestResponseLoggingAdapter.class.getCanonicalName();
 
     @Autowired
     @Qualifier("httpResponseBodyHolderBean")

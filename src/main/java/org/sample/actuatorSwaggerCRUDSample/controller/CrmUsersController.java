@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 public class CrmUsersController {
-    private static final Logger LOGGER = LogManager.getLogger("trace_logs");
-    private static final String CLASS = CrmUsersController.class.getCanonicalName();
+    private final Logger LOGGER = LogManager.getLogger("trace_logs");
+    private final String CLASS = CrmUsersController.class.getCanonicalName();
 
     private ICrmUserService crmUserService;
     private CrmUserMapper crmUserMapper;

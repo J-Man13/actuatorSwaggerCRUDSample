@@ -7,7 +7,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @Configuration
 public class CommonConfigurations {
-
     @Bean
     @RequestScope
     public HttpResponseBodyHolderBean httpResponseBodyHolderBean(){
