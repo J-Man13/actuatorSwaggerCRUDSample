@@ -1,6 +1,8 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-public class CrmUserAdditionRequestDto {
+import java.io.Serializable;
+
+public class CrmUserAdditionRequestDto implements Serializable {
     private String name;
     private String surname;
 

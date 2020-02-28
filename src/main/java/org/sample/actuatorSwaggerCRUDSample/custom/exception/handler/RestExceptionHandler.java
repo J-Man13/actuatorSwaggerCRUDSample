@@ -68,7 +68,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException httpMessageNotReadableException, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpMessageNotReadableException.getStackTrace()[0].getClassName(),
-                String.format("request body is not supported for %s route",route),
+                String.format("request body is not readable for %s route",route),
                 httpMessageNotReadableException.getClass().getCanonicalName());
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.BAD_REQUEST);
     }

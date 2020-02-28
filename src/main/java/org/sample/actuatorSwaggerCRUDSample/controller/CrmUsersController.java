@@ -29,21 +29,14 @@ public class CrmUsersController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
-
-        LOGGER.info(new CommonLoggingObject(CLASS,"Preparing to extract user by id",id));
+        LOGGER.trace(new CommonLoggingObject(CLASS,"Extracting user by id from crm users service",id));
         CrmUserDao crmUserDao = crmUserService.findById(id);
-
-        LOGGER.info(new CommonLoggingObject(CLASS,String.format("Extracted user by %s",id),crmUserDao));
+        LOGGER.info(new CommonLoggingObject(CLASS,String.format("Extracted crm user by %s id from crm users service",id),crmUserDao));
         CrmUserExtractionDto crmUserExtractionDto = crmUserMapper.crmUserDaoToCrmUserExtractionDto(crmUserDao);
         CrmUserExtractionResponceDto crmUserExtractionResponceDto = new CrmUserExtractionResponceDto(crmUserExtractionDto);
         CommonResponseDTO<CrmUserExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user data was successfully extracted"));
         commonResponseDTO.setData(crmUserExtractionResponceDto);
         return new ResponseEntity(commonResponseDTO,HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto){
-        return new ResponseEntity(crmUserAdditionRequestDto,HttpStatus.OK);
     }
 
     @GetMapping("/attributes/name/{name}")
