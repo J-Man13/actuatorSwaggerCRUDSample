@@ -8,14 +8,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
-    private RequestResponseLoggingAdapter requestResponseLoggingAdapter;
+    private RequestResponseHeadersLoggingAdapter requestResponseHeadersLoggingAdapter;
 
-    public WebConfiguration(@Autowired RequestResponseLoggingAdapter requestResponseLoggingAdapter){
-        this.requestResponseLoggingAdapter = requestResponseLoggingAdapter;
+    public WebConfiguration(@Autowired RequestResponseHeadersLoggingAdapter requestResponseHeadersLoggingAdapter){
+        this.requestResponseHeadersLoggingAdapter = requestResponseHeadersLoggingAdapter;
     }
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(requestResponseLoggingAdapter);
+        registry.addInterceptor(requestResponseHeadersLoggingAdapter);
     }
 }

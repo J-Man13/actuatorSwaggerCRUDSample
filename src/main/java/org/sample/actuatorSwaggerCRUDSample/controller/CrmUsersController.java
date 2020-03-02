@@ -45,4 +45,6 @@ public class CrmUsersController {
         return null;
     }
 
+    @PostMapping
+    public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto) { return new ResponseEntity(crmUserAdditionRequestDto,HttpStatus.OK); }
 }

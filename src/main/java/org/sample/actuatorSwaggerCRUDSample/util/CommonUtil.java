@@ -44,11 +44,4 @@ public class CommonUtil {
         return map;
     }
 
-    public static ObjectMapper objectMapperWithOutQuotes(){
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-        return objectMapper;
-    }
-
 }
