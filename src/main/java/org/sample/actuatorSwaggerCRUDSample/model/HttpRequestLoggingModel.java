@@ -1,36 +1,17 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-import org.apache.logging.log4j.message.MapMessage;
 
+
+import java.util.List;
 import java.util.Map;
 
 public class HttpRequestLoggingModel {
-    private String method;
-    private String path;
     private String requestBody;
-    private Map<String,String> headerKeyValuePairs;
+    private Map<String, List<String>> requestHeaderKeyValuePairs;
 
-    public HttpRequestLoggingModel(String method, String path, String requestBody, Map<String, String> headerKeyValuePairs) {
-        this.method = method;
-        this.path = path;
+    public HttpRequestLoggingModel(String requestBody, Map<String, List<String>> requestHeaderKeyValuePairs) {
         this.requestBody = requestBody;
-        this.headerKeyValuePairs = headerKeyValuePairs;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
+        this.requestHeaderKeyValuePairs = requestHeaderKeyValuePairs;
     }
 
     public String getRequestBody() {
@@ -41,11 +22,11 @@ public class HttpRequestLoggingModel {
         this.requestBody = requestBody;
     }
 
-    public Map<String, String> getHeaderKeyValuePairs() {
-        return headerKeyValuePairs;
+    public Map<String, List<String>> getRequestHeaderKeyValuePairs() {
+        return requestHeaderKeyValuePairs;
     }
 
-    public void setHeaderKeyValuePairs(Map<String, String> headerKeyValuePairs) {
-        this.headerKeyValuePairs = headerKeyValuePairs;
+    public void setRequestHeaderKeyValuePairs(Map<String, List<String>> requestHeaderKeyValuePairs) {
+        this.requestHeaderKeyValuePairs = requestHeaderKeyValuePairs;
     }
 }

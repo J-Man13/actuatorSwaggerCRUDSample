@@ -1,8 +1,5 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.ByteSource;
-import com.google.common.io.ByteStreams;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalUnhandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonMessageDTO;
@@ -22,7 +19,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.io.IOException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice

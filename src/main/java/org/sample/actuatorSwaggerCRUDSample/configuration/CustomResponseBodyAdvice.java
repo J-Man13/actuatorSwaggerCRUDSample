@@ -24,11 +24,6 @@ public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        String responceBody;
-        if (body == null) responceBody = "";
-        else responceBody = body.toString();
-        CommonLoggingObject commonLoggingObject = new CommonLoggingObject(CLASS,"Http response body", responceBody);
-        LOGGER.info(commonLoggingObject);
         response.getHeaders().set("requestIdentifier", ThreadContext.get("request.identifier"));
         return body;
     }
