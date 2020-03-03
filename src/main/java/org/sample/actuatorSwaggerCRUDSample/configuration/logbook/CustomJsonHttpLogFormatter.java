@@ -24,11 +24,15 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
 
     @Override
     public Optional<Object> prepareBody(final HttpMessage message) throws IOException {
-        try {
-            return Optional.ofNullable(mapper.readTree(message.getBodyAsString()));
-        }
-        catch (IOException ioe){
+        if (message.getBodyAsString() == null)
             return Optional.ofNullable(message.getBodyAsString());
+        else {
+            try {
+                return Optional.ofNullable(mapper.readTree(message.getBodyAsString()));
+            }
+            catch (IOException ioe){
+                return Optional.ofNullable(message.getBodyAsString());
+            }
         }
     }
 
