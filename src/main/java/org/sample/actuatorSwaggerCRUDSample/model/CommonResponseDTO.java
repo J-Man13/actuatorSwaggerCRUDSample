@@ -77,19 +77,4 @@ public class CommonResponseDTO<Data> {
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "CommonResponseDTO{" +
-                "status=" + status +
-                ", timestamp=" + timestamp +
-                ", dtstamp=" + dtstamp +
-                ", messages=" + messages +
-                ", data=" + data +
-                '}';
-    }
 }

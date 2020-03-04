@@ -75,20 +75,5 @@ public class ErrorDesriptor {
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
-
-//    @Override
-//    public String toString() {
-//        try {
-//            return new ObjectMapper().writeValueAsString(this);
-//        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//        return "ErrorDesriptor{" +
-//                "source='" + source + '\'' +
-//                ", cause='" + cause + '\'' +
-//                ", description='" + description + '\'' +
-//                ", dtstamp=" + dtstamp +
-//                ", timestamp=" + timestamp +
-//                '}';
-//    }
+    
 }

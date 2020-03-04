@@ -24,16 +24,4 @@ public class CrmUserAdditionRequestDto implements Serializable {
         this.surname = surname;
     }
 
-    @Override
-    public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "CrmUserAdditionRequestDto{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                '}';
-    }
 }
