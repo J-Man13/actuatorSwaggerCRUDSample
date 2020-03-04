@@ -7,7 +7,7 @@ import org.apache.logging.log4j.core.lookup.StrLookup;
 import org.springframework.util.StringUtils;
 
 @Plugin(name = "ctlu", category = StrLookup.CATEGORY)
-public class CustomLookUpTracingPlugin implements  StrLookup  {
+public class CustomLookUpTracingPlugin implements StrLookup {
     @Override
     public String lookup(String key) {
         return key;

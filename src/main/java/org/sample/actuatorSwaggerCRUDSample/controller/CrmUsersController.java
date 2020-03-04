@@ -35,17 +35,18 @@ public class CrmUsersController {
         CrmUserExtractionResponceDto crmUserExtractionResponceDto = new CrmUserExtractionResponceDto(crmUserExtractionDto);
         CommonResponseDTO<CrmUserExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user data was successfully extracted"));
         commonResponseDTO.setData(crmUserExtractionResponceDto);
-        return new ResponseEntity(commonResponseDTO,HttpStatus.OK);
-    }
-
-    @GetMapping("/attributes/name/{name}")
-    public ResponseEntity findUsersByNameIgnoringCase(@PathVariable("name") String name)
-    {
-        return null;
+        return ResponseEntity.ok(commonResponseDTO);
     }
 
     @PostMapping
     public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
-        return new ResponseEntity(crmUserAdditionRequestDto,HttpStatus.OK);
+        LOGGER.trace(new CommonLoggingObject("Adding user via crm users service",crmUserAdditionRequestDto));
+        CrmUserDao crmUserDao = crmUserMapper.crmUserAdditionRequestDtoToCrmUserDao(crmUserAdditionRequestDto);
+        crmUserDao = crmUserService.save(crmUserDao);
+        CrmUserAdditionResponceDto crmUserAdditionResponceDto = new CrmUserAdditionResponceDto(crmUserDao);
+        CommonResponseDTO<CrmUserAdditionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully saved"));
+        commonResponseDTO.setData(crmUserAdditionResponceDto);
+        return ResponseEntity.ok(commonResponseDTO);
     }
+
 }

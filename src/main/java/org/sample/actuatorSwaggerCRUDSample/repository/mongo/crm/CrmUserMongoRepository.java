@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+
 @Repository
 public class CrmUserMongoRepository {
     private MongoTemplate crmMongoTemplate;
@@ -14,8 +16,9 @@ public class CrmUserMongoRepository {
         this.crmMongoTemplate = crmMongoTemplate;
     }
 
-    public CrmUserMongoDocument save(CrmUserMongoDocument user){
-        return crmMongoTemplate.save(user);
+    public CrmUserMongoDocument save(CrmUserMongoDocument crmUserMongoDocument){
+        crmUserMongoDocument.setDtstamp(LocalDateTime.now());
+        return crmMongoTemplate.save(crmUserMongoDocument);
     }
 
     public CrmUserMongoDocument findById(String id){

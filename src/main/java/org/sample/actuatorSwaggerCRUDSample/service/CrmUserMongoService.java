@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+
 import java.util.Objects;
 
 @Service
 public class CrmUserMongoService implements ICrmUserService{
     private final Logger LOGGER = LogManager.getLogger("trace_logs");
-    private final String CLASS = CrmUserMongoService.class.getCanonicalName();
     private CrmUserMongoRepository crmUserMongoRepository;
     private CrmUserMapper crmUserMapper;
 
@@ -33,9 +33,10 @@ public class CrmUserMongoService implements ICrmUserService{
     public CrmUserDao save(CrmUserDao crmUserDao){
         CrmUserMongoDocument crmUserMongoDocument = crmUserMapper.crmUserDaoToCrmUserMongoDocument(crmUserDao);
         try {
-            crmUserMongoRepository.save(crmUserMongoDocument);
+            crmUserMongoDocument = crmUserMongoRepository.save(crmUserMongoDocument);
         }
         catch (Exception exception){
+            LOGGER.error(new CommonLoggingObject(String.format("Mongo Repository has thrown unhandled exception during document save : %s", exception.getMessage()),exception));
             throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception during document save : %s", exception.getMessage()));
         }
         return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
