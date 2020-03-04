@@ -5,14 +5,14 @@
     </Properties>
     <Appenders>
         <RollingFile name="APPLICATION_LOGS" fileName="application-${currentDate}.log" filePattern="application-${currentDate}-rolled.log">
-            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" />
+            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
             </Policies>
         </RollingFile>
         <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
             <JsonLayout complete="true" compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
-                <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
+                <KeyValuePair key="requestIdentifier" value="$${ctlu:request.identifier}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>
@@ -22,7 +22,7 @@
         </RollingFile>
         <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
             <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
-                <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
+                <KeyValuePair key="requestIdentifier" value="$${ctlu:request.identifier}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>

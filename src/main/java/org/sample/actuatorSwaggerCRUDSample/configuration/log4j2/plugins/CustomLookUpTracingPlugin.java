@@ -6,6 +6,8 @@ import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.lookup.StrLookup;
 import org.springframework.util.StringUtils;
 
+import java.util.UUID;
+
 @Plugin(name = "ctlu", category = StrLookup.CATEGORY)
 public class CustomLookUpTracingPlugin implements StrLookup {
     @Override
@@ -26,6 +28,14 @@ public class CustomLookUpTracingPlugin implements StrLookup {
                 traceOrderInt = Integer.parseInt(traceOrderString)+1;
             ThreadContext.put("trace.order",String.valueOf(traceOrderInt));
             return String.valueOf(traceOrderInt);
+        }
+        else if(key.equals("request.identifier")){
+            String requestIdentifier = ThreadContext.get("request.identifier");
+            if (StringUtils.isEmpty(requestIdentifier)) {
+                requestIdentifier = UUID.randomUUID().toString();
+                ThreadContext.put("request.identifier",requestIdentifier);
+            }
+            return requestIdentifier;
         }
         else
             return null;
