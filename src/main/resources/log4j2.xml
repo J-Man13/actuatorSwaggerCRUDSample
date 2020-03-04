@@ -13,7 +13,8 @@
         <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
             <JsonLayout complete="true" compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
-                <KeyValuePair key="source" value="$${ccmlu:source.class.method}"/>
+                <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
+                <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
@@ -22,7 +23,8 @@
         <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
             <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
-                <KeyValuePair key="source" value="$${ccmlu:source.class.method}"/>
+                <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
+                <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
