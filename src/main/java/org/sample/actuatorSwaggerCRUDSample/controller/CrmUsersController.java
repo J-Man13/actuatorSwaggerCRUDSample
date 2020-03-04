@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class CrmUsersController {
     private final Logger LOGGER = LogManager.getLogger("trace_logs");
-    private final String CLASS = CrmUsersController.class.getCanonicalName();
 
     private ICrmUserService crmUserService;
     private CrmUserMapper crmUserMapper;
@@ -29,9 +28,9 @@ public class CrmUsersController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
-        LOGGER.trace(new CommonLoggingObject(CLASS,"Extracting user by id from crm users service",id));
+        LOGGER.trace(new CommonLoggingObject("Extracting user by id from crm users service",id));
         CrmUserDao crmUserDao = crmUserService.findById(id);
-        LOGGER.info(new CommonLoggingObject(CLASS,String.format("Extracted crm user by %s id from crm users service",id),crmUserDao));
+        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service",id),crmUserDao));
         CrmUserExtractionDto crmUserExtractionDto = crmUserMapper.crmUserDaoToCrmUserExtractionDto(crmUserDao);
         CrmUserExtractionResponceDto crmUserExtractionResponceDto = new CrmUserExtractionResponceDto(crmUserExtractionDto);
         CommonResponseDTO<CrmUserExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user data was successfully extracted"));

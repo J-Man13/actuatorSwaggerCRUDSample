@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="error" packages="org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.plugins">
     <Properties>
         <property name="currentDate">${date:yyyy-MM-dd}</property>
     </Properties>
@@ -13,6 +13,7 @@
         <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
             <JsonLayout complete="true" compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
+                <KeyValuePair key="source" value="$${ccmlu:source.class.method}"/>
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
@@ -21,6 +22,7 @@
         <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
             <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="requestIdentifier" value="$${ctx:request.identifier}"/>
+                <KeyValuePair key="source" value="$${ccmlu:source.class.method}"/>
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
@@ -29,16 +31,16 @@
     </Appenders>
 
     <Loggers>
-        <Root level="ALL">
+        <Root level="ALL" includeLocation="true">
             <AppenderRef ref="APPLICATION_LOGS"/>
         </Root>
-        <Logger name="application_logs" level="ALL" additivity="false">
+        <Logger name="application_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="APPLICATION_LOGS" />
         </Logger>
-        <Logger name="requests_logs" level="ALL" additivity="false">
+        <Logger name="requests_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="REQUESTS_LOGS" />
         </Logger>
-        <Logger name="trace_logs" level="ALL" additivity="false">
+        <Logger name="trace_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="TRACE_LOGS" />
         </Logger>
     </Loggers>

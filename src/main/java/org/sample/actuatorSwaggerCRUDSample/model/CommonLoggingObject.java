@@ -4,14 +4,12 @@ package org.sample.actuatorSwaggerCRUDSample.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CommonLoggingObject<Data>{
-    private String source;
     private String description;
     @JsonProperty("loggableObjectClass")
     private String loggableObjectClass;
     private Data data;
 
-    public CommonLoggingObject(String source,String description, Data data) {
-        this.source = source;
+    public CommonLoggingObject(String description, Data data) {
         this.description = description;
         this.data = data;
         if (data == null)
@@ -26,14 +24,6 @@ public class CommonLoggingObject<Data>{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
     }
 
     public Data getData() {

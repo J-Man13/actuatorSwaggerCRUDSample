@@ -29,7 +29,6 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
 
     @Override
     public void write(Correlation correlation, String response) throws IOException {
-        ThreadContext.put("request.identifier", UUID.randomUUID().toString());
         try {
             LOGGER.info(new ObjectMapper().readTree(response));
         }

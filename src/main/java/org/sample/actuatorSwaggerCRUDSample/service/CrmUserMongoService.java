@@ -48,12 +48,12 @@ public class CrmUserMongoService implements ICrmUserService{
             crmUserMongoDocument = crmUserMongoRepository.findById(id);
         }
         catch (Exception exception){
-            LOGGER.error(new CommonLoggingObject(CLASS,String.format("Mongo Repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()),exception));
+            LOGGER.error(new CommonLoggingObject(String.format("Mongo Repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()),exception));
             throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()));
         }
 
         Objects.requireNonNull(crmUserMongoDocument,()->{
-            LOGGER.debug(new CommonLoggingObject(CLASS,String.format("Mongo Document with %s id was not found",id),null));
+            LOGGER.debug(new CommonLoggingObject(String.format("Mongo Document with %s id was not found",id),null));
             throw new MongoDocumentNotFoundException(String.format("Mongo Document with %s id was not found",id));
         });
         return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
