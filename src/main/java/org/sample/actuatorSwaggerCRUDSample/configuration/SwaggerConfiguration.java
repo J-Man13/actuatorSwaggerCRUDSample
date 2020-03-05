@@ -3,6 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.configuration;
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -19,17 +20,15 @@ public class SwaggerConfiguration {
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(Predicates.not(PathSelectors.regex("/actuator.*")))
-                .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .build()
                 .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Some Application API",
-                "Some custom description of API",
+                "Mongo Db Super Simple CRUD API",
+                "Simple Crud Project",
                 "API 0.0.1",
                 null,
                 null,

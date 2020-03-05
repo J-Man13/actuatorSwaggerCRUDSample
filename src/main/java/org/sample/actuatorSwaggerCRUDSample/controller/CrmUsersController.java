@@ -1,5 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
@@ -8,6 +9,7 @@ import org.sample.actuatorSwaggerCRUDSample.service.ICrmUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +30,11 @@ public class CrmUsersController {
         this.crmUserMapper = crmUserMapper;
     }
 
-    @GetMapping("/{id}")
+    @ApiOperation(
+            value = "Extraction of crm user by id from mongo db",
+            notes = "Nothing super fishy, just extraction of crm user by auto generated mongo db id")
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
         LOGGER.trace(new CommonLoggingObject("Extracting user by id from crm users service",id));
         CrmUserDao crmUserDao = crmUserService.findById(id);
@@ -39,7 +45,10 @@ public class CrmUsersController {
         return ResponseEntity.ok(commonResponseDTO);
     }
 
-    @GetMapping("/attributes/name/{name}")
+    @ApiOperation(
+            value = "Extraction of crm users list by name from mongo db",
+            notes = "Nothing super fishy, just extraction of crm users list by name")
+    @GetMapping(value = "/attributes/name/{name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUsersByNameExtractionResponceDto>> findUsersByName(@PathVariable("name") String name){
         LOGGER.trace(new CommonLoggingObject("Extracting list of users by name from crm users service",name));
         List<CrmUserDao> crmUserDaoList = crmUserService.findByName(name);
@@ -50,7 +59,10 @@ public class CrmUsersController {
         return ResponseEntity.ok(commonResponseDTO);
     }
 
-    @PostMapping
+    @ApiOperation(
+            value = "Addition of crm user to mongo db",
+            notes = "Nothing super fishy, just addition of crm user to mongo db")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
         LOGGER.trace(new CommonLoggingObject("Adding user via crm users service",crmUserAdditionRequestDto));
         CrmUserDao crmUserDao = crmUserMapper.crmUserAdditionRequestDtoToCrmUserDao(crmUserAdditionRequestDto);
@@ -62,7 +74,10 @@ public class CrmUsersController {
         return ResponseEntity.ok(commonResponseDTO);
     }
 
-    @PutMapping("/{id}")
+    @ApiOperation(
+            value = "Update of crm user at mongo db",
+            notes = "Nothing super fishy, just update of crm user at mongo db")
+    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity updateUser(@PathVariable("id") String id,@RequestBody CrmUserUpdateRequestDto crmUserUpdateRequestDto) {
         LOGGER.trace(new CommonLoggingObject(String.format("Extracting user by %s id from crm users service for update",id),crmUserUpdateRequestDto));
         CrmUserDao crmUserDao = crmUserService.findById(id);

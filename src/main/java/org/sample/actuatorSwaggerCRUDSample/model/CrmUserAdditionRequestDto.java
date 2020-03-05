@@ -1,11 +1,16 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class CrmUserAdditionRequestDto implements Serializable {
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String surname;
 
     public String getName() {
