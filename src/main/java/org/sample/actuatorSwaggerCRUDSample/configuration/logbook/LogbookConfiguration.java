@@ -10,16 +10,19 @@ import org.zalando.logbook.*;
 public class LogbookConfiguration {
 
     private CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter;
+    private CustomJsonHttpLogFormatter customJsonHttpLogFormatter;
 
-    public LogbookConfiguration(@Autowired CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter) {
+    public LogbookConfiguration(@Autowired CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter,
+                                @Autowired CustomJsonHttpLogFormatter customJsonHttpLogFormatter) {
         this.customHttpRequestResponseLogWriter = customHttpRequestResponseLogWriter;
+        this.customJsonHttpLogFormatter = customJsonHttpLogFormatter;
     }
 
     @Bean
     public Logbook logbook(){
         return  Logbook.builder()
                 .sink(new DefaultSink(
-                        new CustomJsonHttpLogFormatter(),
+                        customJsonHttpLogFormatter,
                         customHttpRequestResponseLogWriter
                 ))
                 .build();
