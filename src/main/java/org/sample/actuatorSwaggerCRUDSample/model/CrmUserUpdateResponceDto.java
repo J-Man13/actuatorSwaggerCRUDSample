@@ -1,10 +1,9 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-public class CrmUserExtractionResponceDto {
+public class CrmUserUpdateResponceDto {
     private CrmUserDao crmUserDao;
 
-
-    public CrmUserExtractionResponceDto(CrmUserDao crmUserDao) {
+    public CrmUserUpdateResponceDto(CrmUserDao crmUserDao) {
         this.crmUserDao = crmUserDao;
     }
 

@@ -13,8 +13,10 @@ import org.sample.actuatorSwaggerCRUDSample.repository.mongo.crm.CrmUserMongoRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -30,14 +32,27 @@ public class CrmUserMongoService implements ICrmUserService{
     }
 
     @Override
+    public CrmUserDao update(CrmUserDao crmUserDao) {
+        CrmUserMongoDocument crmUserMongoDocument = crmUserMapper.crmUserDaoToCrmUserMongoDocument(crmUserDao);
+        try {
+            crmUserMongoDocument = crmUserMongoRepository.save(crmUserMongoDocument);
+        }
+        catch (Exception exception){
+            LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document update : %s", exception.getMessage()),exception));
+            throw new GlobalUnhandledException(String.format("Mongo repository has thrown unhandled exception during document update : %s", exception.getMessage()));
+        }
+        return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
+    }
+
+    @Override
     public CrmUserDao save(CrmUserDao crmUserDao){
         CrmUserMongoDocument crmUserMongoDocument = crmUserMapper.crmUserDaoToCrmUserMongoDocument(crmUserDao);
         try {
             crmUserMongoDocument = crmUserMongoRepository.save(crmUserMongoDocument);
         }
         catch (Exception exception){
-            LOGGER.error(new CommonLoggingObject(String.format("Mongo Repository has thrown unhandled exception during document save : %s", exception.getMessage()),exception));
-            throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception during document save : %s", exception.getMessage()));
+            LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document save : %s", exception.getMessage()),exception));
+            throw new GlobalUnhandledException(String.format("Mongo repository has thrown unhandled exception during document save : %s", exception.getMessage()));
         }
         return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
     }
@@ -49,14 +64,24 @@ public class CrmUserMongoService implements ICrmUserService{
             crmUserMongoDocument = crmUserMongoRepository.findById(id);
         }
         catch (Exception exception){
-            LOGGER.error(new CommonLoggingObject(String.format("Mongo Repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()),exception));
-            throw new GlobalUnhandledException(String.format("Mongo Repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()));
+            LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()),exception));
+            throw new GlobalUnhandledException(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()));
         }
 
         Objects.requireNonNull(crmUserMongoDocument,()->{
-            LOGGER.debug(new CommonLoggingObject(String.format("Mongo Document with %s id was not found",id),null));
-            throw new MongoDocumentNotFoundException(String.format("Mongo Document with %s id was not found",id));
+            LOGGER.debug(new CommonLoggingObject(String.format("Crm user mongo document with %s id was not found",id),null));
+            throw new MongoDocumentNotFoundException(String.format("Crm user mongo document with %s id was not found",id));
         });
         return crmUserMapper.crmUserMongoDocumentToCrmUserDao(crmUserMongoDocument);
+    }
+
+    @Override
+    public List<CrmUserDao> findByName(String name) {
+        List<CrmUserMongoDocument> crmUserMongoDocumentList = crmUserMongoRepository.findByName(name);
+        if (CollectionUtils.isEmpty(crmUserMongoDocumentList)){
+            LOGGER.debug(new CommonLoggingObject(String.format("There was not any crm user mongo document with %s name",name),null));
+            throw new MongoDocumentNotFoundException(String.format("There was not any crm user mongo document with %s name",name));
+        }
+        return crmUserMapper.crmUserMongoDocumentListToCrmUserDaoList(crmUserMongoDocumentList);
     }
 }

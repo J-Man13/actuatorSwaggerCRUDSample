@@ -4,9 +4,12 @@ import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.CrmUserMongoDocument
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class CrmUserMongoRepository {
@@ -23,5 +26,11 @@ public class CrmUserMongoRepository {
 
     public CrmUserMongoDocument findById(String id){
         return crmMongoTemplate.findById(id,CrmUserMongoDocument.class);
+    }
+
+    public List<CrmUserMongoDocument> findByName(String name){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").is(name));
+        return crmMongoTemplate.find(query,CrmUserMongoDocument.class);
     }
 }
