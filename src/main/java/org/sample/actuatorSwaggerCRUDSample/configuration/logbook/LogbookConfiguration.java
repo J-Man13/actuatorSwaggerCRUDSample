@@ -28,7 +28,7 @@ public class LogbookConfiguration {
                         customHttpRequestResponseLogWriter
                 ))
                 .condition(exclude(
-                        requestTo("/actuator")))
+                        requestTo("/actuator/**")))
                 .build();
     }
 }
