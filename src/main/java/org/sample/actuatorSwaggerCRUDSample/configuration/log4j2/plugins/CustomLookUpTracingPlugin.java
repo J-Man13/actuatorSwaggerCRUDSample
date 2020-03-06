@@ -17,9 +17,11 @@ public class CustomLookUpTracingPlugin implements StrLookup {
         return key;
     }
 
-    @Autowired
-    @Qualifier("customExtractionMap")
     private Map<String, ByKeyOrLogEventValueExtractionUtil> customExtractionMap;
+
+    public CustomLookUpTracingPlugin(@Autowired @Qualifier("customExtractionMap")Map<String, ByKeyOrLogEventValueExtractionUtil> customExtractionMap){
+        this.customExtractionMap = customExtractionMap;
+    }
 
     @Override
     public String lookup(LogEvent event, String key) {
