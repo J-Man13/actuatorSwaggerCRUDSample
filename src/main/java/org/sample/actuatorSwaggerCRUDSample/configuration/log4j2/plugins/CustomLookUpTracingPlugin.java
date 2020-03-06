@@ -18,7 +18,7 @@ public class CustomLookUpTracingPlugin implements StrLookup {
     @Override
     public String lookup(LogEvent event, String key) {
         if (key.equals("source.class.method"))
-            return event.getSource().getClassName() + "." + event.getSource().getMethodName() + "()";
+            return event.getSource().getClassName() + "." + event.getSource().getMethodName() + "(), line: " +event.getSource().getLineNumber();
         else if(key.equals("trace.order")){
             int traceOrderInt;
             String traceOrderString = ThreadContext.get("trace.order");
