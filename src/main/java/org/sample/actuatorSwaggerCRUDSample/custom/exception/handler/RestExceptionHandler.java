@@ -57,8 +57,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String route = ((ServletWebRequest)request).getRequest().getRequestURI();
+        String method = ((ServletWebRequest)request).getRequest().getMethod();
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpRequestMethodNotSupportedException.getStackTrace()[0].getClassName(),
-                String.format("%s method is not supported for %s route", httpRequestMethodNotSupportedException.getMethod(),((ServletWebRequest)request).getRequest().getRequestURI()),
+                String.format("%s method is not supported for %s route", method,route),
                 httpRequestMethodNotSupportedException.getClass().getCanonicalName());
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.METHOD_NOT_ALLOWED.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.METHOD_NOT_ALLOWED);
     }
