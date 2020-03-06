@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -63,7 +64,7 @@ public class CrmUsersController {
             value = "Addition of crm user to mongo db",
             notes = "Nothing super fishy, just addition of crm user to mongo db")
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity addUser(@RequestBody CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
+    public ResponseEntity addUser(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
         LOGGER.trace(new CommonLoggingObject("Adding user via crm users service",crmUserAdditionRequestDto));
         CrmUserDao crmUserDao = crmUserMapper.crmUserAdditionRequestDtoToCrmUserDao(crmUserAdditionRequestDto);
         crmUserDao = crmUserService.save(crmUserDao);

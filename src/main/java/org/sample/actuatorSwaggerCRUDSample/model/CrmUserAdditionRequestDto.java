@@ -1,9 +1,8 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
 
+
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class CrmUserAdditionRequestDto implements Serializable {
