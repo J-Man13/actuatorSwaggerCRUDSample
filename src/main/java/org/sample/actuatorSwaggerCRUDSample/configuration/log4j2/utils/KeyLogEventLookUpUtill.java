@@ -10,20 +10,20 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class CustomLookUpUtill {
-    private static Map<String, ByKeyOrLogEventValueExtractionUtil> CUSTOM_EXTRACTION_MAP;
+public class KeyLogEventLookUpUtill {
+    private static Map<String, ByKeyOrLogEventValueExtractionUtil> BY_KEY_LOG_EVENT_IMPLS_MAP;
 
-    public static Map<String, ByKeyOrLogEventValueExtractionUtil> CUSTOM_EXTRACTION_MAP(){
-        if(Objects.isNull(CUSTOM_EXTRACTION_MAP))
+    public static Map<String, ByKeyOrLogEventValueExtractionUtil> BY_KEY_LOG_EVENT_IMPLS_MAP(){
+        if(Objects.isNull(BY_KEY_LOG_EVENT_IMPLS_MAP))
             INIT_CUSTOM_EXTRACTION_MAP();
-        return CUSTOM_EXTRACTION_MAP;
+        return BY_KEY_LOG_EVENT_IMPLS_MAP;
     }
 
     private static void INIT_CUSTOM_EXTRACTION_MAP(){
-        CUSTOM_EXTRACTION_MAP = new HashMap<>();
-        CUSTOM_EXTRACTION_MAP.put("source.class.method",sourceClassMethodExtraction());
-        CUSTOM_EXTRACTION_MAP.put("request.identifier",requestIdentifierExtraction());
-        CUSTOM_EXTRACTION_MAP.put("trace.order",traceOrderExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP = new HashMap<>();
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("source.class.method",sourceClassMethodExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("request.identifier",requestIdentifierExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order",traceOrderExtraction());
     }
 
     private static ByKeyOrLogEventValueExtractionUtil sourceClassMethodExtraction(){

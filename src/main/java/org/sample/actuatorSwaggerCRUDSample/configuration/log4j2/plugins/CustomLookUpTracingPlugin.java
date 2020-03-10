@@ -4,7 +4,7 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.lookup.StrLookup;
 import org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.utils.ByKeyOrLogEventValueExtractionUtil;
-import org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.utils.CustomLookUpUtill;
+import org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.utils.KeyLogEventLookUpUtill;
 
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ public class CustomLookUpTracingPlugin implements StrLookup {
 
     @Override
     public String lookup(LogEvent event, String key) {
-        ByKeyOrLogEventValueExtractionUtil byKeyOrLogEventValueExtractionUtil = CustomLookUpUtill.CUSTOM_EXTRACTION_MAP().get(key);
+        ByKeyOrLogEventValueExtractionUtil byKeyOrLogEventValueExtractionUtil = KeyLogEventLookUpUtill.BY_KEY_LOG_EVENT_IMPLS_MAP().get(key);
         if (Objects.nonNull(byKeyOrLogEventValueExtractionUtil))
             return byKeyOrLogEventValueExtractionUtil.extract(event);
         else
