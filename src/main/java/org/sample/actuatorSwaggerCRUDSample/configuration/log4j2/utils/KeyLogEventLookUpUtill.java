@@ -13,7 +13,7 @@ import java.util.UUID;
 public class KeyLogEventLookUpUtill {
     private static Map<String, ByKeyOrLogEventValueExtractionUtil> BY_KEY_LOG_EVENT_IMPLS_MAP;
 
-    public static Map<String, ByKeyOrLogEventValueExtractionUtil> BY_KEY_LOG_EVENT_IMPLS_MAP(){
+    public static Map<String, ByKeyOrLogEventValueExtractionUtil> GET_BY_KEY_LOG_EVENT_IMPLS_MAP(){
         if(Objects.isNull(BY_KEY_LOG_EVENT_IMPLS_MAP))
             INIT_BY_KEY_LOG_EVENT_IMPLS_MAP();
         return BY_KEY_LOG_EVENT_IMPLS_MAP;
