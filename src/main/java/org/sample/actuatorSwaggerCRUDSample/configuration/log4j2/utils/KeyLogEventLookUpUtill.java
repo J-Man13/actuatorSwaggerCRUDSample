@@ -15,11 +15,11 @@ public class KeyLogEventLookUpUtill {
 
     public static Map<String, ByKeyOrLogEventValueExtractionUtil> BY_KEY_LOG_EVENT_IMPLS_MAP(){
         if(Objects.isNull(BY_KEY_LOG_EVENT_IMPLS_MAP))
-            INIT_CUSTOM_EXTRACTION_MAP();
+            INIT_BY_KEY_LOG_EVENT_IMPLS_MAP();
         return BY_KEY_LOG_EVENT_IMPLS_MAP;
     }
 
-    private static void INIT_CUSTOM_EXTRACTION_MAP(){
+    private static void INIT_BY_KEY_LOG_EVENT_IMPLS_MAP(){
         BY_KEY_LOG_EVENT_IMPLS_MAP = new HashMap<>();
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("source.class.method",sourceClassMethodExtraction());
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("request.identifier",requestIdentifierExtraction());
