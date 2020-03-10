@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.zalando.logbook.*;
 
 import static org.zalando.logbook.Conditions.*;
+import static org.zalando.logbook.Conditions.requestTo;
 
 
 @Configuration
@@ -28,7 +29,11 @@ public class LogbookConfiguration {
                         customHttpRequestResponseLogWriter
                 ))
                 .condition(exclude(
-                        requestTo("/actuator/**")))
+                        requestTo("/actuator/**"),
+                        requestTo("/swagger**"),
+                        requestTo("/favicon.ico"),
+                        requestTo("/v2/api-docs"),
+                        requestTo("/webjars/**")))
                 .build();
     }
 }

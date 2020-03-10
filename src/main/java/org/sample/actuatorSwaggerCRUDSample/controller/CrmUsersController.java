@@ -40,7 +40,7 @@ public class CrmUsersController {
             @ApiResponse(code = 200, message = "Crm user data was successfully extracted"),
             @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
             @ApiResponse(code = 404, message = "Crm user mongo document with id was not found"),
-            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
     })
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
@@ -60,7 +60,7 @@ public class CrmUsersController {
             @ApiResponse(code = 200, message = "Crm users list data was successfully extracted"),
             @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
             @ApiResponse(code = 404, message = "There was not any crm user mongo document with such name"),
-            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
     })
     @GetMapping(value = "/attributes/name/{name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUsersByNameExtractionResponceDto>> findUsersByName(@PathVariable("name") String name){
@@ -79,7 +79,7 @@ public class CrmUsersController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Crm user was successfully saved"),
             @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
-            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity addUser(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
@@ -100,7 +100,7 @@ public class CrmUsersController {
             @ApiResponse(code = 200, message = "Crm user was successfully updated"),
             @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
             @ApiResponse(code = 404, message = "Crm user mongo document with id was not found"),
-            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
     })
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity updateUser(@PathVariable("id") String id,@RequestBody CrmUserUpdateRequestDto crmUserUpdateRequestDto) {
