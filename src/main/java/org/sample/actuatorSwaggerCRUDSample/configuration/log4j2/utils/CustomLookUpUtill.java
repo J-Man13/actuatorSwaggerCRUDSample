@@ -13,13 +13,10 @@ import java.util.UUID;
 public class CustomLookUpUtill {
     private static Map<String, ByKeyOrLogEventValueExtractionUtil> CUSTOM_EXTRACTION_MAP;
 
-    public static Map<String, ByKeyOrLogEventValueExtractionUtil> getCustomExtractionMap(){
-        if(Objects.nonNull(CUSTOM_EXTRACTION_MAP))
-            return CUSTOM_EXTRACTION_MAP;
-        else{
+    public static Map<String, ByKeyOrLogEventValueExtractionUtil> CUSTOM_EXTRACTION_MAP(){
+        if(Objects.isNull(CUSTOM_EXTRACTION_MAP))
             INIT_CUSTOM_EXTRACTION_MAP();
-            return CUSTOM_EXTRACTION_MAP;
-        }
+        return CUSTOM_EXTRACTION_MAP;
     }
     private static void INIT_CUSTOM_EXTRACTION_MAP(){
         CUSTOM_EXTRACTION_MAP = new HashMap<>();

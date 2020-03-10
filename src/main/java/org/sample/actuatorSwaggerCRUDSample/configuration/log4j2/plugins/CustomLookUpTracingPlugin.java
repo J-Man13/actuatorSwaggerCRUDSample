@@ -18,7 +18,7 @@ public class CustomLookUpTracingPlugin implements StrLookup {
 
     @Override
     public String lookup(LogEvent event, String key) {
-        ByKeyOrLogEventValueExtractionUtil byKeyOrLogEventValueExtractionUtil = CustomLookUpUtill.getCustomExtractionMap().get(key);
+        ByKeyOrLogEventValueExtractionUtil byKeyOrLogEventValueExtractionUtil = CustomLookUpUtill.CUSTOM_EXTRACTION_MAP().get(key);
         if (Objects.nonNull(byKeyOrLogEventValueExtractionUtil))
             return byKeyOrLogEventValueExtractionUtil.extract(event);
         else
