@@ -2,31 +2,37 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.utils;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.LogEvent;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
-@Configuration
-public class CustomLookUpConfiguration {
+public class CustomLookUpUtill {
+    private static Map<String, ByKeyOrLogEventValueExtractionUtil> CUSTOM_EXTRACTION_MAP;
 
-    @Bean("customExtractionMap")
-    public Map<String, ByKeyOrLogEventValueExtractionUtil> customExtractionMap(){
-        Map<String, ByKeyOrLogEventValueExtractionUtil> customExtractionMap = new HashMap<>();
-        customExtractionMap.put("source.class.method",sourceClassMethodExtraction());
-        customExtractionMap.put("request.identifier",requestIdentifierExtraction());
-        customExtractionMap.put("trace.order",traceOrderExtraction());
-        return customExtractionMap;
+    public static Map<String, ByKeyOrLogEventValueExtractionUtil> getCustomExtractionMap(){
+        if(Objects.nonNull(CUSTOM_EXTRACTION_MAP))
+            return CUSTOM_EXTRACTION_MAP;
+        else{
+            INIT_CUSTOM_EXTRACTION_MAP();
+            return CUSTOM_EXTRACTION_MAP;
+        }
+    }
+    private static void INIT_CUSTOM_EXTRACTION_MAP(){
+        CUSTOM_EXTRACTION_MAP = new HashMap<>();
+        CUSTOM_EXTRACTION_MAP.put("source.class.method",sourceClassMethodExtraction());
+        CUSTOM_EXTRACTION_MAP.put("request.identifier",requestIdentifierExtraction());
+        CUSTOM_EXTRACTION_MAP.put("trace.order",traceOrderExtraction());
     }
 
-    private ByKeyOrLogEventValueExtractionUtil sourceClassMethodExtraction(){
+    private static ByKeyOrLogEventValueExtractionUtil sourceClassMethodExtraction(){
         return (LogEvent event) -> event.getSource().getClassName() + "." + event.getSource().getMethodName() + "(), line: " +event.getSource().getLineNumber();
     }
 
-    private ByKeyOrLogEventValueExtractionUtil traceOrderExtraction(){
+    private static ByKeyOrLogEventValueExtractionUtil traceOrderExtraction(){
         return (LogEvent event) ->{
             int traceOrderInt;
             String traceOrderString = ThreadContext.get("trace.order");
@@ -39,7 +45,7 @@ public class CustomLookUpConfiguration {
         };
     }
 
-    private ByKeyOrLogEventValueExtractionUtil requestIdentifierExtraction(){
+    private static ByKeyOrLogEventValueExtractionUtil requestIdentifierExtraction(){
         return (LogEvent event) ->{
             String requestIdentifier = ThreadContext.get("request.identifier");
             if (StringUtils.isEmpty(requestIdentifier)) {
