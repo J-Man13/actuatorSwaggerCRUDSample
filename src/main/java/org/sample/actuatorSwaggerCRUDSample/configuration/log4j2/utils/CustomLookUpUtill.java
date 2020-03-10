@@ -18,6 +18,7 @@ public class CustomLookUpUtill {
             INIT_CUSTOM_EXTRACTION_MAP();
         return CUSTOM_EXTRACTION_MAP;
     }
+
     private static void INIT_CUSTOM_EXTRACTION_MAP(){
         CUSTOM_EXTRACTION_MAP = new HashMap<>();
         CUSTOM_EXTRACTION_MAP.put("source.class.method",sourceClassMethodExtraction());
