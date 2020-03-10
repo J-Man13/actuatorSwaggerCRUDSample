@@ -1,6 +1,8 @@
 package org.sample.actuatorSwaggerCRUDSample.controller;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
@@ -34,6 +36,12 @@ public class CrmUsersController {
     @ApiOperation(
             value = "Extraction of crm user by id from mongo db",
             notes = "Nothing super fishy, just extraction of crm user by auto generated mongo db id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Crm user data was successfully extracted"),
+            @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
+            @ApiResponse(code = 404, message = "Crm user mongo document with id was not found"),
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+    })
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
         LOGGER.trace(new CommonLoggingObject("Extracting user by id from crm users service",id));
@@ -48,6 +56,12 @@ public class CrmUsersController {
     @ApiOperation(
             value = "Extraction of crm users list by name from mongo db",
             notes = "Nothing super fishy, just extraction of crm users list by name")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Crm users list data was successfully extracted"),
+            @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
+            @ApiResponse(code = 404, message = "There was not any crm user mongo document with such name"),
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+    })
     @GetMapping(value = "/attributes/name/{name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUsersByNameExtractionResponceDto>> findUsersByName(@PathVariable("name") String name){
         LOGGER.trace(new CommonLoggingObject("Extracting list of users by name from crm users service",name));
@@ -62,6 +76,11 @@ public class CrmUsersController {
     @ApiOperation(
             value = "Addition of crm user to mongo db",
             notes = "Nothing super fishy, just addition of crm user to mongo db")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Crm user was successfully saved"),
+            @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+    })
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity addUser(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
         LOGGER.trace(new CommonLoggingObject("Adding user via crm users service",crmUserAdditionRequestDto));
@@ -77,6 +96,12 @@ public class CrmUsersController {
     @ApiOperation(
             value = "Update of crm user at mongo db",
             notes = "Nothing super fishy, just update of crm user at mongo db")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Crm user was successfully updated"),
+            @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
+            @ApiResponse(code = 404, message = "Crm user mongo document with id was not found"),
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , should contact for the logs")
+    })
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity updateUser(@PathVariable("id") String id,@RequestBody CrmUserUpdateRequestDto crmUserUpdateRequestDto) {
         LOGGER.trace(new CommonLoggingObject(String.format("Extracting user by %s id from crm users service for update",id),crmUserUpdateRequestDto));
@@ -86,7 +111,7 @@ public class CrmUsersController {
         crmUserDao = crmUserService.update(crmUserDao);
         LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service after update",id),crmUserDao));
         CrmUserUpdateResponceDto crmUserUpdateResponceDto = new CrmUserUpdateResponceDto(crmUserDao);
-        CommonResponseDTO<CrmUserUpdateResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully saved"));
+        CommonResponseDTO<CrmUserUpdateResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully updated"));
         commonResponseDTO.setData(crmUserUpdateResponceDto);
         return ResponseEntity.ok(commonResponseDTO);
     }
