@@ -35,7 +35,6 @@ public class CrmUsersController {
             value = "Extraction of crm user by id from mongo db",
             notes = "Nothing super fishy, just extraction of crm user by auto generated mongo db id")
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
         LOGGER.trace(new CommonLoggingObject("Extracting user by id from crm users service",id));
         CrmUserDao crmUserDao = crmUserService.findById(id);
