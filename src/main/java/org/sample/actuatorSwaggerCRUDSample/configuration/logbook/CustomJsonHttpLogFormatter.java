@@ -32,11 +32,8 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         if (message.getBodyAsString() == null)
             return Optional.ofNullable(new BodyLogginWrapper(null,null));
         else {
-            try {
-                return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString(),objectMapper.readTree(message.getBodyAsString())));
-            } catch (IOException ioe){}
-            try { return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString(), xmlMapper.readTree(message.getBodyAsString())));
-            }catch (IOException ioe){}
+            try { return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString(),objectMapper.readTree(message.getBodyAsString())));} catch (IOException ioe){}
+            try { return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString(), xmlMapper.readTree(message.getBodyAsString())));}catch (IOException ioe){}
             return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString()));
         }
     }
