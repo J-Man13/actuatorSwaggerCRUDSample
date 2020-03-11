@@ -3,6 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.models.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
@@ -114,5 +115,23 @@ public class CrmUsersController {
         CommonResponseDTO<CrmUserUpdateResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully updated"));
         commonResponseDTO.setData(crmUserUpdateResponceDto);
         return ResponseEntity.ok(commonResponseDTO);
+    }
+
+    @ApiOperation(
+            value = "Update of crm user at mongo db",
+            notes = "Nothing super fishy, just update of crm user at mongo db")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Crm user was successfully updated"),
+            @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
+            @ApiResponse(code = 404, message = "Crm user mongo document with id was not found"),
+            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
+    })
+    @PostMapping(value = "/registration",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity mockOperationRegistationService(@RequestBody String string){
+        boolean isSuccessful = Math.random() < 0.5;
+        if (isSuccessful)
+            return new ResponseEntity(string,HttpStatus.OK);
+        else
+            return new ResponseEntity(string,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -16,12 +16,16 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .build()
                 .apiInfo(apiInfo());
+        docket.useDefaultResponseMessages(false);
+        docket.host("******");
+        return docket;
     }
+
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
