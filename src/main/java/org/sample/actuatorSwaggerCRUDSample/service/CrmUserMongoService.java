@@ -68,7 +68,7 @@ public class CrmUserMongoService implements ICrmUserService{
     public CrmUser findById(String id){
         CrmUserMongoDocument crmUserMongoDocument;
         try{
-            crmUserMongoDocument = crmUserMongoRepository.findById(id);
+            crmUserMongoDocument = crmUserMongoRepository.findById(id).orElse(null);
         }
         catch (Exception exception){
             LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", exception.getMessage()),exception));
@@ -84,7 +84,7 @@ public class CrmUserMongoService implements ICrmUserService{
 
     @Override
     public List<CrmUser> findByName(String name) {
-        List<CrmUserMongoDocument> crmUserMongoDocumentList = crmUserMongoRepository.findByName(name);
+        List<CrmUserMongoDocument> crmUserMongoDocumentList = crmUserMongoRepository.findAllByName(name);
         if (CollectionUtils.isEmpty(crmUserMongoDocumentList)){
             LOGGER.debug(new CommonLoggingObject(String.format("There was not any crm user mongo document with %s name",name),null));
             throw new MongoDocumentNotFoundException(String.format("There was not any crm user mongo document with %s name",name));
