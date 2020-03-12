@@ -1,12 +1,13 @@
 package org.sample.actuatorSwaggerCRUDSample.service;
 
-import org.sample.actuatorSwaggerCRUDSample.model.CrmUserDao;
+import org.sample.actuatorSwaggerCRUDSample.model.CrmUser;
 
 import java.util.List;
 
 public interface ICrmUserService {
-    CrmUserDao update(CrmUserDao crmUserDao);
-    CrmUserDao save(CrmUserDao crmUserDao);
-    CrmUserDao findById(String id);
-    List<CrmUserDao> findByName(String name);
+    CrmUser update(CrmUser crmUser);
+    CrmUser save(CrmUser crmUser);
+    CrmUser saveAndRegisterExternally(CrmUser crmUser);
+    CrmUser findById(String id);
+    List<CrmUser> findByName(String name);
 }

@@ -19,7 +19,10 @@ dependencies {
 
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 
+
     implementation group: 'org.springframework.boot', name:'spring-boot-starter-data-mongodb'
+    implementation group: 'org.springframework.data', name: 'spring-data-releasetrain', version: 'Moore-RELEASE', ext: 'pom'
+
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
 

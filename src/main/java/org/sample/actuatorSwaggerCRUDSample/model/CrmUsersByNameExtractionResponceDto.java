@@ -3,17 +3,17 @@ package org.sample.actuatorSwaggerCRUDSample.model;
 import java.util.List;
 
 public class CrmUsersByNameExtractionResponceDto {
-    private List<CrmUserDao> crmUserDaoList;
+    private List<CrmUser> crmUserList;
 
-    public CrmUsersByNameExtractionResponceDto(List<CrmUserDao> crmUserDaoList) {
-        this.crmUserDaoList = crmUserDaoList;
+    public CrmUsersByNameExtractionResponceDto(List<CrmUser> crmUserList) {
+        this.crmUserList = crmUserList;
     }
 
-    public List<CrmUserDao> getCrmUserDaoList() {
-        return crmUserDaoList;
+    public List<CrmUser> getCrmUserList() {
+        return crmUserList;
     }
 
-    public void setCrmUserDaoList(List<CrmUserDao> crmUserDaoList) {
-        this.crmUserDaoList = crmUserDaoList;
+    public void setCrmUserList(List<CrmUser> crmUserList) {
+        this.crmUserList = crmUserList;
     }
 }

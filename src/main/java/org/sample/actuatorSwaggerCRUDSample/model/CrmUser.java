@@ -2,7 +2,7 @@ package org.sample.actuatorSwaggerCRUDSample.model;
 
 import java.time.LocalDateTime;
 
-public class CrmUserDao {
+public class CrmUser {
     private String id;
     private String name;
     private String surname;

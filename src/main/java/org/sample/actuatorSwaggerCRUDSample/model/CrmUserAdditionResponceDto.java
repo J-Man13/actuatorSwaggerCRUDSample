@@ -1,17 +1,17 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
 public class CrmUserAdditionResponceDto {
-    private CrmUserDao crmUserDao;
+    private CrmUser crmUser;
 
-    public CrmUserAdditionResponceDto(CrmUserDao crmUserDao) {
-        this.crmUserDao = crmUserDao;
+    public CrmUserAdditionResponceDto(CrmUser crmUser) {
+        this.crmUser = crmUser;
     }
 
-    public CrmUserDao getCrmUserDao() {
-        return crmUserDao;
+    public CrmUser getCrmUser() {
+        return crmUser;
     }
 
-    public void setCrmUserDao(CrmUserDao crmUserDao) {
-        this.crmUserDao = crmUserDao;
+    public void setCrmUser(CrmUser crmUser) {
+        this.crmUser = crmUser;
     }
 }
