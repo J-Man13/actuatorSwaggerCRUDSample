@@ -94,26 +94,6 @@ public class CrmUsersController {
     }
 
     @ApiOperation(
-            value = "Addition of crm user to mongo db",
-            notes = "Nothing super fishy, just addition of crm user to mongo db")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Crm user was successfully saved"),
-            @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
-            @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
-    })
-    @PostMapping(value = "/addition-with-registration",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity addUserAndRegisterTheAddition(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
-        LOGGER.trace(new CommonLoggingObject("Adding user via crm users addition and registration service",crmUserAdditionRequestDto));
-        CrmUser crmUser = crmUserMapper.crmUserAdditionRequestDtoToCrmUser(crmUserAdditionRequestDto);
-        crmUser = crmUserService.saveAndRegisterExternally(crmUser);
-        LOGGER.trace(new CommonLoggingObject("User saved at crm users service", crmUser));
-        CrmUserAdditionResponceDto crmUserAdditionResponceDto = new CrmUserAdditionResponceDto(crmUser);
-        CommonResponseDTO<CrmUserAdditionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully saved"));
-        commonResponseDTO.setData(crmUserAdditionResponceDto);
-        return ResponseEntity.ok(commonResponseDTO);
-    }
-
-    @ApiOperation(
             value = "Update of crm user at mongo db",
             notes = "Nothing super fishy, just update of crm user at mongo db")
     @ApiResponses(value = {
