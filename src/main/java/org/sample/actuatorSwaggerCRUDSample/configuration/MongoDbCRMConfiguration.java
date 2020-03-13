@@ -2,6 +2,8 @@ package org.sample.actuatorSwaggerCRUDSample.configuration;
 
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +17,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "org.sample.actuatorSwaggerCRUDSample.repository.mongo.crm",
         mongoTemplateRef = "crmMongoTemplate")
 public class MongoDbCRMConfiguration {
-    private String mongoDbCRMUri;
-
-    public MongoDbCRMConfiguration(@Value("${spring.data.mongodb.crm.uri}") String mongoDbCRMUri){
-        this.mongoDbCRMUri = mongoDbCRMUri;
-    }
 
     @Primary
     @Bean("crmMongoDbFactory")
-    public MongoDbFactory crmMongoDbFactory() {
+    public MongoDbFactory crmMongoDbFactory(@Value("${spring.data.mongodb.crm.uri}") String mongoDbCRMUri) {
         MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder();
         optionsBuilder.connectTimeout(10000);
         optionsBuilder.socketTimeout(10000);
@@ -33,8 +30,7 @@ public class MongoDbCRMConfiguration {
 
     @Bean("crmMongoTemplate")
     @Primary
-    public MongoTemplate crmMongoTemplate() {
-        MongoTemplate mongoTemplate = new MongoTemplate(crmMongoDbFactory());
-        return mongoTemplate;
+    public MongoTemplate crmMongoTemplate(@Autowired @Qualifier("crmMongoDbFactory") MongoDbFactory mongoDbFactory) {
+        return new MongoTemplate(mongoDbFactory);
     }
 }
