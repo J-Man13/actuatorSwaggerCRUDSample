@@ -82,7 +82,7 @@ public class CrmUsersController {
             @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity addUser(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
+    public ResponseEntity<CommonResponseDTO<CrmUserAdditionResponceDto>> addUser(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
         LOGGER.trace(new CommonLoggingObject("Adding user via crm users save service",crmUserAdditionRequestDto));
         CrmUser crmUser = crmUserMapper.crmUserAdditionRequestDtoToCrmUser(crmUserAdditionRequestDto);
         crmUser = crmUserService.save(crmUser);
@@ -103,7 +103,7 @@ public class CrmUsersController {
             @ApiResponse(code = 500, message = "Unhandled exception at mongo repository or somewhere else , advising to contact for the logs")
     })
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity updateUser(@PathVariable("id") String id,@RequestBody CrmUserUpdateRequestDto crmUserUpdateRequestDto) {
+    public ResponseEntity<CommonResponseDTO<CrmUserUpdateResponceDto>> updateUser(@PathVariable("id") String id,@RequestBody CrmUserUpdateRequestDto crmUserUpdateRequestDto) {
         LOGGER.trace(new CommonLoggingObject(String.format("Extracting user by %s id from crm users service for update",id),crmUserUpdateRequestDto));
         CrmUser crmUser = crmUserService.findById(id);
         LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service for update",id), crmUser));
