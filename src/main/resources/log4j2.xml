@@ -34,7 +34,6 @@
             </Policies>
         </RollingFile>
     </Appenders>
-
     <Loggers>
         <Root level="ALL" includeLocation="true">
             <AppenderRef ref="APPLICATION_LOGS"/>
