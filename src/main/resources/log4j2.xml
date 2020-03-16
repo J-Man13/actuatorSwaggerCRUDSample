@@ -36,14 +36,14 @@
         <Root level="ALL" includeLocation="true">
             <AppenderRef ref="APPLICATION_LOGS"/>
         </Root>
-        <Logger name="application_logs" level="ALL" additivity="false" includeLocation="true">
+        <AsyncLogger   name="application_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="APPLICATION_LOGS" />
-        </Logger>
-        <Logger name="requests_logs" level="ALL" additivity="false" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger name="requests_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="REQUESTS_LOGS" />
-        </Logger>
-        <Logger name="trace_logs" level="ALL" additivity="false" includeLocation="true">
+        </AsyncLogger  >
+        <AsyncLogger   name="trace_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="TRACE_LOGS" />
-        </Logger>
+        </AsyncLogger  >
     </Loggers>
 </Configuration>
