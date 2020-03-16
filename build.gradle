@@ -11,6 +11,7 @@ apply plugin: 'io.spring.dependency-management'
 sourceCompatibility = 1.8
 
 repositories {
+    maven { url "http://repo.spring.io/milestone" }
     mavenCentral()
 }
 
@@ -21,7 +22,7 @@ dependencies {
 
 
     implementation group: 'org.springframework.boot', name:'spring-boot-starter-data-mongodb'
-
+    implementation group: 'org.springframework.data', name: 'spring-data-releasetrain', version: 'Moore-RELEASE', ext: 'pom'
 
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
