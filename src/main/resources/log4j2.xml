@@ -5,7 +5,10 @@
     </Properties>
     <Appenders>
         <RollingFile name="APPLICATION_LOGS" fileName="application-${currentDate}.log" filePattern="application-${currentDate}-rolled.log">
-            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false"/>
+            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false">
+                <KeyValuePair key="requestIdentifier" value="$${ctlu:request.identifier}"/>
+                <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
+            </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
             </Policies>
@@ -41,9 +44,9 @@
         </AsyncLogger>
         <AsyncLogger name="requests_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="REQUESTS_LOGS" />
-        </AsyncLogger  >
+        </AsyncLogger>
         <AsyncLogger   name="trace_logs" level="ALL" additivity="false" includeLocation="true">
             <AppenderRef ref="TRACE_LOGS" />
-        </AsyncLogger  >
+        </AsyncLogger>
     </Loggers>
 </Configuration>
