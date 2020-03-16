@@ -58,9 +58,12 @@ public class CrmUserMongoService implements ICrmUserService{
         return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
     }
 
-    @Transactional
+//    @Transactional(transactionManager = "crmMongoTransactionManager",readOnly = true)
     @Override
     public CrmUser saveAndRegisterExternally(CrmUser crmUser) {
+//        CrmUserMongoDocument crmUserMongoDocument = crmUserMapper.crmUserToCrmUserMongoDocument(crmUser);
+//        crmUserMongoRepository.save(crmUserMongoDocument);
+//        return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
         return null;
     }
 
