@@ -22,7 +22,7 @@ public class KeyLogEventLookUpUtill {
     private static void INIT_BY_KEY_LOG_EVENT_IMPLS_MAP(){
         BY_KEY_LOG_EVENT_IMPLS_MAP = new HashMap<>();
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("source.class.method",sourceClassMethodExtraction());
-        BY_KEY_LOG_EVENT_IMPLS_MAP.put("request.identifier",requestIdentifierExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("activity.id",activityIdExtraction());
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order",traceOrderExtraction());
     }
 
@@ -43,14 +43,14 @@ public class KeyLogEventLookUpUtill {
         };
     }
 
-    private static ByKeyOrLogEventValueExtractionUtil requestIdentifierExtraction(){
+    private static ByKeyOrLogEventValueExtractionUtil activityIdExtraction(){
         return (LogEvent event) ->{
-            String requestIdentifier = ThreadContext.get("request.identifier");
-            if (StringUtils.isEmpty(requestIdentifier)) {
-                requestIdentifier = UUID.randomUUID().toString();
-                ThreadContext.put("request.identifier",requestIdentifier);
+            String activityId = ThreadContext.get("activity.id");
+            if (StringUtils.isEmpty(activityId)) {
+                activityId = UUID.randomUUID().toString();
+                ThreadContext.put("activity.id",activityId);
             }
-            return requestIdentifier;
+            return activityId;
         };
     }
 }
