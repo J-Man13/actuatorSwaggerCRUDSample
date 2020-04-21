@@ -37,7 +37,7 @@ public class KeyLogEventLookUpUtill {
             if (StringUtils.isEmpty(traceOrderString))
                 traceOrderInt = 1;
             else
-                traceOrderInt = Integer.parseInt(traceOrderString)+1;
+                traceOrderInt = Integer.parseInt(traceOrderString) + 1;
             ThreadContext.put("trace.order",String.valueOf(traceOrderInt));
             return String.valueOf(traceOrderInt);
         };
