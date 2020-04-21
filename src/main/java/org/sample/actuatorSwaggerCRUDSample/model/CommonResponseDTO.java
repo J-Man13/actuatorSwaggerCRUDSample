@@ -1,7 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -18,14 +17,14 @@ public class CommonResponseDTO<Data> {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dtstamp;
+    private LocalDateTime dateStamp;
     private List<CommonMessageDTO> messages;
     private Data data;
 
     public CommonResponseDTO() {
         this.timestamp = Instant.now().getEpochSecond();
         this.messages = new LinkedList<>();
-        this.dtstamp =  LocalDateTime.now();
+        this.dateStamp =  LocalDateTime.now();
     }
     public CommonResponseDTO(int status) {
         this();
@@ -53,12 +52,12 @@ public class CommonResponseDTO<Data> {
         this.timestamp = timestamp;
     }
 
-    public LocalDateTime getDtstamp() {
-        return dtstamp;
+    public LocalDateTime getDateStamp() {
+        return dateStamp;
     }
 
-    public void setDtstamp(LocalDateTime dtstamp) {
-        this.dtstamp = dtstamp;
+    public void setDateStamp(LocalDateTime dateStamp) {
+        this.dateStamp = dateStamp;
     }
 
     public List<CommonMessageDTO> getMessages() {
