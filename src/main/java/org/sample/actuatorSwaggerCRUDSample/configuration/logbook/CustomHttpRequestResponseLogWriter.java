@@ -3,7 +3,10 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
+import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.zalando.logbook.Correlation;
 import org.zalando.logbook.HttpLogWriter;
 import org.zalando.logbook.Precorrelation;
@@ -17,6 +20,10 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
 
     @Override
     public void write(Precorrelation precorrelation, String request) throws IOException {
+        String activityId = CommonUtil.getHeaderValueByKey("activity.id");
+        if(!StringUtils.isEmpty(activityId))
+            ThreadContext.put("activity.id",activityId);
+
         try {
             LOGGER.info(new ObjectMapper().readTree(request));
         }

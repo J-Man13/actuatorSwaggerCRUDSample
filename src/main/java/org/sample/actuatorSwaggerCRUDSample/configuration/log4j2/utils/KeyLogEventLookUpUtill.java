@@ -3,6 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.utils;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.LogEvent;
 
+
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class KeyLogEventLookUpUtill {
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("source.class.method",sourceClassMethodExtraction());
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("activity.id",activityIdExtraction());
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order",traceOrderExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("correlation.id",correlationIdExtraction());
     }
 
     private static ByKeyOrLogEventValueExtractionUtil sourceClassMethodExtraction(){
@@ -44,13 +46,24 @@ public class KeyLogEventLookUpUtill {
     }
 
     private static ByKeyOrLogEventValueExtractionUtil activityIdExtraction(){
-        return (LogEvent event) ->{
-            String activityId = ThreadContext.get("activity.id");
+        return (LogEvent event) -> {
+            String activityId = event.getContextData().toMap().get("activity.id");
             if (StringUtils.isEmpty(activityId)) {
                 activityId = UUID.randomUUID().toString();
-                ThreadContext.put("activity.id",activityId);
+                ThreadContext.put("activity.id", activityId);
             }
             return activityId;
+        };
+    }
+
+    private static ByKeyOrLogEventValueExtractionUtil correlationIdExtraction(){
+        return (LogEvent event) ->{
+            String correlationId = ThreadContext.get("correlation.id");
+            if (StringUtils.isEmpty(correlationId)) {
+                correlationId = UUID.randomUUID().toString();
+                ThreadContext.put("correlation.id",correlationId);
+            }
+            return correlationId;
         };
     }
 }

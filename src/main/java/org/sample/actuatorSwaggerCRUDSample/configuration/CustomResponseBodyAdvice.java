@@ -18,7 +18,8 @@ public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        response.getHeaders().set("activityId", ThreadContext.get("activity.id"));
+        response.getHeaders().set("activity.id", ThreadContext.get("activity.id"));
+        response.getHeaders().set("correlation.id", ThreadContext.get("correlation.id"));
         return body;
     }
 }

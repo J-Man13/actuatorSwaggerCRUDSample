@@ -6,7 +6,7 @@
     <Appenders>
         <RollingFile name="APPLICATION_LOGS" fileName="application-${currentDate}.log" filePattern="application-${currentDate}-rolled.log">
             <JsonLayout compact="false" eventEol="true" stacktraceAsString="false">
-                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>
             <Policies>
@@ -14,8 +14,9 @@
             </Policies>
         </RollingFile>
         <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
-            <JsonLayout complete="true" compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>
@@ -26,6 +27,7 @@
         <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
             <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
             </JsonLayout>
