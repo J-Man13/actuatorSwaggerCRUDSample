@@ -23,7 +23,6 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
         String activityId = CommonUtil.getHeaderValueByKey("activity.id");
         if(!StringUtils.isEmpty(activityId))
             ThreadContext.put("activity.id",activityId);
-
         try {
             LOGGER.info(new ObjectMapper().readTree(request));
         }
