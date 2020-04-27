@@ -7,7 +7,6 @@ import java.util.List;
 public interface ICrmUserService {
     CrmUser update(CrmUser crmUser);
     CrmUser save(CrmUser crmUser);
-    CrmUser saveAndRegisterExternally(CrmUser crmUser);
     CrmUser findById(String id);
     List<CrmUser> findByName(String name);
 }
