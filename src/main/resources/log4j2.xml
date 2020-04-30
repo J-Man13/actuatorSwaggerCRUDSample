@@ -8,6 +8,7 @@
             <JsonLayout compact="false" eventEol="true" stacktraceAsString="false">
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
+                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
@@ -19,6 +20,7 @@
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
+                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
@@ -30,6 +32,7 @@
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
                 <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
+                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1GB"/>
