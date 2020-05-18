@@ -48,11 +48,18 @@ public class KeyLogEventLookUpUtill {
     private static ByKeyOrLogEventValueExtractionUtil activityIdExtraction(){
         return (LogEvent event) -> {
             String activityId = event.getContextData().toMap().get("activity.id");
-            if (StringUtils.isEmpty(activityId)) {
-                activityId = UUID.randomUUID().toString();
-                ThreadContext.put("activity.id", activityId);
+            if (StringUtils.isEmpty(activityId)){
+                activityId = ThreadContext.get("activity.id");
+                if(StringUtils.isEmpty(activityId)){
+                    activityId = UUID.randomUUID().toString();
+                    ThreadContext.put("activity.id", activityId);
+                    return activityId;
+                }
+                else
+                    return activityId;
             }
-            return activityId;
+            else
+                return activityId;
         };
     }
 
