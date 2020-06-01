@@ -1,16 +1,18 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import org.sample.actuatorSwaggerCRUDSample.model.BodyLogginWrapper;
+
+import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.zalando.logbook.HttpMessage;
-import org.zalando.logbook.StructuredHttpLogFormatter;
+import org.zalando.logbook.*;
 
 
 import java.io.IOException;
+
+
 
 import java.util.Map;
 import java.util.Optional;
@@ -18,28 +20,38 @@ import java.util.Optional;
 @Component
 public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
     private final ObjectMapper objectMapper;
-    private final XmlMapper xmlMapper;
 
     public CustomJsonHttpLogFormatter() {
         this.objectMapper = new ObjectMapper();
-        this.xmlMapper = new XmlMapper();
     }
 
     public CustomJsonHttpLogFormatter(final ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.xmlMapper = new XmlMapper();
+    }
+
+    @Override
+    public Map<String, Object> prepare(Precorrelation precorrelation, HttpRequest request) throws IOException {
+        final Map<String, Object> content = StructuredHttpLogFormatter.super.prepare(precorrelation,request);
+        content.put("incomingActivityId", CommonUtil.getHeaderValueByKey("activity.id"));
+        content.remove("headers");
+        content.put("headers",request.getHeaders().toString());
+        return content;
+    }
+
+    @Override
+    public Map<String, Object> prepare(Correlation correlation, HttpResponse response) throws IOException {
+        final Map<String, Object> content = StructuredHttpLogFormatter.super.prepare(correlation,response);
+        content.remove("headers");
+        content.put("headers",response.getHeaders().toString());
+        return content;
     }
 
     @Override
     public Optional<Object> prepareBody(final HttpMessage message) throws IOException {
-        if (StringUtils.isEmpty(message.getBodyAsString()))
-            return Optional.ofNullable(new BodyLogginWrapper(null,null));
-        else {
-            try { return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString(),objectMapper.readTree(message.getBodyAsString())));} catch (IOException ioe){}
-            try { return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString(), xmlMapper.readTree(message.getBodyAsString())));}catch (IOException ioe){}
-            return Optional.ofNullable(new BodyLogginWrapper(message.getBodyAsString()));
-        }
+        return Optional.ofNullable(ObjectUtils.isEmpty(message)|| StringUtils.isEmpty(message.getBodyAsString())? null : message.getBodyAsString());
     }
+
+
 
     @Override
     public String format(final Map<String, Object> content) throws IOException {

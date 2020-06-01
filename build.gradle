@@ -4,15 +4,19 @@ plugins {
 }
 
 group 'org.example'
-version '1.0-SNAPSHOT'
+
+bootJar.archiveBaseName ='actuator-swagger-crud-sample'
+bootJar.archiveAppendix = getDate()
+bootJar.archiveVersion = '1.0'
+
 
 apply plugin: 'io.spring.dependency-management'
 
 sourceCompatibility = 1.8
 
 repositories {
-    maven { url "http://repo.spring.io/milestone" }
     mavenCentral()
+    maven { url "http://repo.spring.io/milestone" }
 }
 
 dependencies {
@@ -21,7 +25,7 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 
 
-    implementation group: 'org.springframework.boot', name:'spring-boot-starter-data-mongodb'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
     implementation group: 'org.springframework.data', name: 'spring-data-releasetrain', version: 'Moore-RELEASE', ext: 'pom'
 
 
@@ -38,10 +42,19 @@ dependencies {
 
     implementation group: 'org.appenders.log4j', name: 'log4j2-elasticsearch-jest', version: '1.4.1'
 
-    implementation group: 'com.fasterxml.jackson.dataformat', name:'jackson-dataformat-xml'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 configurations.all{
     exclude module: 'spring-boot-starter-logging'
+}
+
+def getDate() {
+    return new Date().format('yyyy_MM_dd')
+}
+
+processResources {
+    filesMatching("**/application.properties") {
+        expand( project.properties )
+    }
 }

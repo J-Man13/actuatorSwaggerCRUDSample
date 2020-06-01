@@ -20,9 +20,9 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
 
     @Override
     public void write(Precorrelation precorrelation, String request) throws IOException {
-        String activityId = CommonUtil.getHeaderValueByKey("activity.id");
-        if(!StringUtils.isEmpty(activityId))
-            ThreadContext.put("activity.id",activityId);
+        String incomingActivityId = CommonUtil.getHeaderValueByKey("activity.id");
+        if(!StringUtils.isEmpty(incomingActivityId))
+            ThreadContext.put("activity.id",incomingActivityId);
         try {
             LOGGER.info(new ObjectMapper().readTree(request));
         }

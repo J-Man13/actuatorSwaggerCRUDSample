@@ -24,7 +24,8 @@ public class KeyLogEventLookUpUtill {
         BY_KEY_LOG_EVENT_IMPLS_MAP = new HashMap<>();
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("source.class.method",sourceClassMethodExtraction());
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("activity.id",activityIdExtraction());
-        BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order",traceOrderExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order.elastic",traceOrderElasticExtraction());
+        BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order.rolling.file",traceOrderRollingFileExtraction());
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("correlation.id",correlationIdExtraction());
     }
 
@@ -32,15 +33,28 @@ public class KeyLogEventLookUpUtill {
         return (LogEvent event) -> event.getSource().getClassName() + "." + event.getSource().getMethodName() + "(), line: " +event.getSource().getLineNumber();
     }
 
-    private static ByKeyOrLogEventValueExtractionUtil traceOrderExtraction(){
+    private static ByKeyOrLogEventValueExtractionUtil traceOrderElasticExtraction(){
         return (LogEvent event) ->{
             int traceOrderInt;
-            String traceOrderString = ThreadContext.get("trace.order");
+            String traceOrderString = ThreadContext.get("trace.order.elastic");
             if (StringUtils.isEmpty(traceOrderString))
                 traceOrderInt = 1;
             else
                 traceOrderInt = Integer.parseInt(traceOrderString) + 1;
-            ThreadContext.put("trace.order",String.valueOf(traceOrderInt));
+            ThreadContext.put("trace.order.elastic",String.valueOf(traceOrderInt));
+            return String.valueOf(traceOrderInt);
+        };
+    }
+
+    private static ByKeyOrLogEventValueExtractionUtil traceOrderRollingFileExtraction(){
+        return (LogEvent event) ->{
+            int traceOrderInt;
+            String traceOrderString = ThreadContext.get("trace.order.rolling.file");
+            if (StringUtils.isEmpty(traceOrderString))
+                traceOrderInt = 1;
+            else
+                traceOrderInt = Integer.parseInt(traceOrderString) + 1;
+            ThreadContext.put("trace.order.rolling.file",String.valueOf(traceOrderInt));
             return String.valueOf(traceOrderInt);
         };
     }

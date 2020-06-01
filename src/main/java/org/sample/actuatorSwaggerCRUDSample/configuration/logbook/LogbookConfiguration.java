@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.logbook.*;
 
+
 import static org.zalando.logbook.Conditions.*;
 import static org.zalando.logbook.Conditions.requestTo;
 

@@ -4,53 +4,106 @@
         <property name="currentDate">${date:yyyy-MM-dd}</property>
     </Properties>
     <Appenders>
-        <RollingFile name="APPLICATION_LOGS" fileName="application-${currentDate}.log" filePattern="application-${currentDate}-rolled.log">
-            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false">
+        <Console name="CONSOLE"/>
+        <RollingFile name="APPLICATION_LOGS" fileName="application-logs-${bundle:application:info.build.archiveBaseName}-${currentDate}.log" filePattern="application-logs-${bundle:application:info.build.archiveBaseName}/**%d{yyyy-MM-dd_HH}**_rpi_gpio_%i.log.gz">
+            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} CORRELATION_ID-$${ctlu:correlation.id} TRACE_ORDER_ROLLING_FILE-$${ctlu:trace.order.rolling.file} DATE-$${date:yyyy-MM-dd HH:mm:ss:SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="90"/>
+        </RollingFile>
+
+        <Elasticsearch name="APPLICATION_LOGS_ELASTICSEARCH">
+            <IndexName indexName="${bundle:application:info.elasticsearch.application.logs.index}"/>
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
-                <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
+                <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
+                <KeyValuePair key="traceOrderElastic" value="$${ctlu:trace.order.elastic}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="1GB"/>
-            </Policies>
-        </RollingFile>
-        <RollingFile name="REQUESTS_LOGS" fileName="request-${currentDate}.log" filePattern="request-${currentDate}-rolled.log">
-            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+            <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="java-app-logs-type"/>
+            </AsyncBatchDelivery>
+        </Elasticsearch>
+
+        <RollingFile name="REQUESTS_LOGS" fileName="request-logs-${bundle:application:info.build.archiveBaseName}-${currentDate}.log" filePattern="request-logs-${bundle:application:info.build.archiveBaseName}/**%d{yyyy-MM-dd_HH}**_rpi_gpio_%i.log.gz">
+            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true">
+                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
-                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+                <KeyValuePair key="traceOrderRollingFile" value="$${ctlu:trace.order.rolling.file}"/>
+                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}"/>
             </JsonLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="1GB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
+            <DefaultRolloverStrategy max="90"/>
         </RollingFile>
-        <RollingFile name="TRACE_LOGS" fileName="trace-${currentDate}.log" filePattern="trace-${currentDate}-rolled.log">
-            <JsonLayout compact="false" eventEol="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+
+        <Elasticsearch name="REQUESTS_LOGS_ELASTICSEARCH">
+            <IndexName indexName="${bundle:application:info.build.archiveBaseName}"/>
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrder" value="$${ctlu:trace.order}"/>
+                <KeyValuePair key="traceOrderElastic" value="$${ctlu:trace.order.elastic}"/>
+                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+            </JsonLayout>
+            <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="request-logs-type"/>
+            </AsyncBatchDelivery>
+        </Elasticsearch>
+
+
+        <RollingFile name="TRACE_LOGS" fileName="trace-logs-${bundle:application:info.build.archiveBaseName}-${currentDate}.log" filePattern="trace-logs-${bundle:application:info.build.archiveBaseName}/**%d{yyyy-MM-dd_HH}**_rpi_gpio_%i.log.gz">
+            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true">
+                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
+                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
+                <KeyValuePair key="traceOrderRollingFile" value="$${ctlu:trace.order.rolling.file}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="1GB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
+            <DefaultRolloverStrategy max="90"/>
         </RollingFile>
+
+        <Elasticsearch name="TRACE_LOGS_ELASTICSEARCH">
+            <IndexName indexName="${bundle:application:info.build.archiveBaseName}"/>
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
+                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
+                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
+                <KeyValuePair key="traceOrderElastic" value="$${ctlu:trace.order.elastic}"/>
+                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+            </JsonLayout>
+            <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="trace-logs-type"/>
+            </AsyncBatchDelivery>
+        </Elasticsearch>
     </Appenders>
     <Loggers>
-        <Root level="ALL" includeLocation="true">
+        <Root level="info" includeLocation="true">
+            <AppenderRef ref="CONSOLE"/>
             <AppenderRef ref="APPLICATION_LOGS"/>
+            <AppenderRef ref="APPLICATION_LOGS_ELASTICSEARCH"/>
         </Root>
-        <AsyncLogger   name="application_logs" level="ALL" additivity="false" includeLocation="true">
-            <AppenderRef ref="APPLICATION_LOGS" />
+        <AsyncLogger name="requests_logs" level="TRACE" additivity="false" includeLocation="true">
+            <AppenderRef ref="REQUESTS_LOGS"/>
+            <AppenderRef ref="REQUESTS_LOGS_ELASTICSEARCH"/>
         </AsyncLogger>
-        <AsyncLogger name="requests_logs" level="ALL" additivity="false" includeLocation="true">
-            <AppenderRef ref="REQUESTS_LOGS" />
-        </AsyncLogger>
-        <AsyncLogger   name="trace_logs" level="ALL" additivity="false" includeLocation="true">
-            <AppenderRef ref="TRACE_LOGS" />
+        <AsyncLogger name="trace_logs" level="TRACE" additivity="false" includeLocation="true">
+            <AppenderRef ref="TRACE_LOGS"/>
+            <AppenderRef ref="TRACE_LOGS_ELASTICSEARCH"/>
         </AsyncLogger>
     </Loggers>
 </Configuration>
