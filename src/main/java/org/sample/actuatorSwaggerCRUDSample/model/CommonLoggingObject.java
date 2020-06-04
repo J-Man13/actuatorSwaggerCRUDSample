@@ -2,13 +2,10 @@ package org.sample.actuatorSwaggerCRUDSample.model;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.StringUtils;
 
 import java.util.AbstractMap;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonLoggingObject{
     private String logCauseDescription;
     private  AbstractMap.SimpleEntry<String,Object> logEntry;
@@ -22,7 +19,6 @@ public class CommonLoggingObject{
     }
 
     public CommonLoggingObject(String description, String loggableObjectKey, Object object) {
-        this();
         this.logCauseDescription = description;
         if (StringUtils.isEmpty(loggableObjectKey) || object == null)
             this.logEntry = null;
