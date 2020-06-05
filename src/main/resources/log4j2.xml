@@ -8,7 +8,7 @@
     <Appenders>
         <Console name="CONSOLE"/>
         <RollingFile name="APPLICATION_LOGS_ROLLING_FILE" fileName="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctx:correlation.id} DATE-$${date:yyyy-MM-dd HH:mm:ss:SSS} %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctx:correlation.id} DATE-$${date:yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -24,15 +24,15 @@
         </RollingFile>
 
         <Elasticsearch name="APPLICATION_LOGS_ELASTICSEARCH">
-            <IndexName indexName="${bundle:application:info.elasticsearch.application.logs.index}"/>
+            <IndexName indexName="java-${bundle:application:info.elasticsearch.application.logs.index}"/>
             <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
-                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}"/>
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
 
@@ -42,7 +42,7 @@
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}"/>
+                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}"/>
             </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -58,16 +58,16 @@
         </RollingFile>
 
         <Elasticsearch name="REQUESTS_LOGS_ELASTICSEARCH">
-            <IndexName indexName="${bundle:application:info.build.archiveBaseName}"/>
+            <IndexName indexName="java-service-${bundle:application:info.build.archiveBaseName}"/>
             <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
-                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}"/>
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
 
@@ -78,7 +78,7 @@
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -94,16 +94,16 @@
         </RollingFile>
 
         <Elasticsearch name="TRACE_LOGS_ELASTICSEARCH">
-            <IndexName indexName="${bundle:application:info.build.archiveBaseName}"/>
+            <IndexName indexName="java-service-${bundle:application:info.build.archiveBaseName}"/>
             <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="dtStamp" type="date" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
+                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
-                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}"/>
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
     </Appenders>
@@ -119,7 +119,7 @@
         </AsyncLogger>
         <AsyncLogger name="trace_logs" level="TRACE" additivity="false" includeLocation="true">
             <AppenderRef ref="TRACE_LOGS_ROLLING_FILE"/>
-            <AppenderRef ref="TRACE_LOGS_ELASTICSEARCH"/>
+            <AppenderRef ref="TRACE_LOGS_ELASTICSEARCH"/>`
         </AsyncLogger>
     </Loggers>
 </Configuration>
