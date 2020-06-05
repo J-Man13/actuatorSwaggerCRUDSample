@@ -37,7 +37,7 @@
         </Elasticsearch>
 
         <RollingFile name="REQUESTS_LOGS_ROLLING_FILE" fileName="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
@@ -73,7 +73,7 @@
 
 
         <RollingFile name="TRACE_LOGS_ROLLING_FILE" fileName="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}/trace-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}/trace-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>

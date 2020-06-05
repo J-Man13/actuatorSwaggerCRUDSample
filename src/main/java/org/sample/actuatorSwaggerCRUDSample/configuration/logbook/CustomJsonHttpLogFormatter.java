@@ -37,8 +37,10 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         String incomingActivityId = CommonUtil.getHeaderValueByKey("activity.id");
         content.put("incomingActivityId", incomingActivityId);
         String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
+        ThreadContext.clearAll();
         ThreadContext.put("activity.id",activityId);
         ThreadContext.put("correlation.id",UUID.randomUUID().toString());
+        ThreadContext.put("logbook.execution.status","executed");
         content.remove("headers");
         content.put("headers",request.getHeaders().toString());
         content.put("path",request.getPath());

@@ -23,13 +23,14 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
         @Override
         public boolean preHandle(HttpServletRequest request,
                                  HttpServletResponse response, Object handler) throws Exception {
-            //Checking if activityId and correlationId where set in log4j2 thread context
-            //This check is required in request interceptor as activityId and correlationId might not be set
-            //If logging for the path is disabled in logbook
-            String activityId = ThreadContext.get("activity.id");
-            String correlationId = ThreadContext.get("correlation.id");
-            if (StringUtils.isEmpty(activityId) && StringUtils.isEmpty(correlationId)){
-                activityId = request.getHeader("activity.id");
+            //Checking if logbook logging has been executed by extracting logbook.execution.status variable from
+            //log4j2 thread context which was defined during logbook request logging
+            //Logbook request/response logging can be disabled for some path in its configuration so
+            //thread context wll not be cleared and  activity.id with correlation.id will not be defined
+            String logbookExecutionStatus = ThreadContext.get("logbook.execution.status");
+            if (StringUtils.isEmpty(logbookExecutionStatus) || !logbookExecutionStatus.equals("executed")){
+                ThreadContext.clearAll();
+                String activityId = request.getHeader("activity.id");
                 if (StringUtils.isEmpty(activityId))
                     activityId = UUID.randomUUID().toString();
                 ThreadContext.put("activity.id",activityId);
