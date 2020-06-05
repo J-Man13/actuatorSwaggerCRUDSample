@@ -14,10 +14,7 @@ import org.zalando.logbook.*;
 import java.io.IOException;
 
 
-
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
@@ -33,25 +30,46 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
 
     @Override
     public Map<String, Object> prepare(Precorrelation precorrelation, HttpRequest request) throws IOException {
-        final Map<String, Object> content = StructuredHttpLogFormatter.super.prepare(precorrelation,request);
+        final String correlationId = precorrelation.getId();
+
+        final Map<String, Object> content = new LinkedHashMap<>();
+
+        content.put("origin", request.getOrigin().name().toLowerCase(Locale.ROOT));
+        content.put("type", "request");
+        content.put("correlation", correlationId);
+        content.put("protocol", request.getProtocolVersion());
+        content.put("remote", request.getRemote());
+        content.put("method", request.getMethod());
+        content.put("uri", request.getRequestUri());
+        content.put("path",request.getPath());
+        content.put("headers",request.getHeaders().toString());
+        prepareBody(request).ifPresent(body -> content.put("body", body));
+
         String incomingActivityId = CommonUtil.getHeaderValueByKey("activity.id");
         content.put("incomingActivityId", incomingActivityId);
         String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
+
         ThreadContext.clearAll();
         ThreadContext.put("activity.id",activityId);
         ThreadContext.put("correlation.id",UUID.randomUUID().toString());
         ThreadContext.put("logbook.execution.status","executed");
-        content.remove("headers");
-        content.put("headers",request.getHeaders().toString());
-        content.put("path",request.getPath());
+
         return content;
     }
 
     @Override
     public Map<String, Object> prepare(Correlation correlation, HttpResponse response) throws IOException {
-        final Map<String, Object> content = StructuredHttpLogFormatter.super.prepare(correlation,response);
-        content.remove("headers");
+        final Map<String, Object> content = new LinkedHashMap<>();
+        content.put("origin", response.getOrigin().name().toLowerCase(Locale.ROOT));
+        content.put("type", "response");
+        content.put("correlation", correlation.getId());
+        content.put("duration", correlation.getDuration().toMillis());
+        content.put("protocol", response.getProtocolVersion());
+        content.put("status", response.getStatus());
+
         content.put("headers",response.getHeaders().toString());
+        prepareBody(response).ifPresent(body -> content.put("body", body));
+
         return content;
     }
 
