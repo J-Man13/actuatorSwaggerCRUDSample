@@ -1,5 +1,5 @@
 //This file is not used anywhere
-//Just wanted to show java-request-trace index mapping
+//Just wanted to show java-application-logs index mapping
 //Used lower mentioned json as body for index template update
 {
   "index_patterns": [
@@ -12,9 +12,6 @@
   },
   "mappings": {
     "properties": {
-      "activityId": {
-        "type": "keyword"
-      },
       "correlationId": {
         "type": "keyword"
       },
@@ -50,7 +47,7 @@
         "type" : "text"
       },
       "message": {
-        "type" : "object"
+        "type" : "text"
       }
     }
   }
