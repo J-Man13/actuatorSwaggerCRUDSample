@@ -27,6 +27,7 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
             //log4j2 thread context which was defined during logbook request logging
             //Logbook request/response logging can be disabled for some path in its configuration so
             //thread context wll not be cleared and  activity.id with correlation.id will not be defined
+            //which are cleared and defined in logbook per each request
             String logbookExecutionStatus = ThreadContext.get("logbook.execution.status");
             if (StringUtils.isEmpty(logbookExecutionStatus) || !logbookExecutionStatus.equals("executed")){
                 ThreadContext.clearAll();
