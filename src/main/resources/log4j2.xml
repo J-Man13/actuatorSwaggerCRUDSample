@@ -119,7 +119,7 @@
         </AsyncLogger>
         <AsyncLogger name="trace_logs" level="TRACE" additivity="false" includeLocation="true">
             <AppenderRef ref="TRACE_LOGS_ROLLING_FILE"/>
-            <AppenderRef ref="TRACE_LOGS_ELASTICSEARCH"/>`
+            <AppenderRef ref="TRACE_LOGS_ELASTICSEARCH"/>
         </AsyncLogger>
     </Loggers>
 </Configuration>
