@@ -3,7 +3,7 @@
 //Used lower mentioned json as body for index template update
 {
   "index_patterns": [
-    "java-service-*"
+    "java-application-*"
   ],
   "settings": {
     "index": {
