@@ -31,9 +31,8 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
             String logbookExecutionStatus = ThreadContext.get("logbook.execution.status");
             if (StringUtils.isEmpty(logbookExecutionStatus) || !logbookExecutionStatus.equals("executed")){
                 ThreadContext.clearAll();
-                String activityId = request.getHeader("activity.id");
-                if (StringUtils.isEmpty(activityId))
-                    activityId = UUID.randomUUID().toString();
+                String headerActivityId = request.getHeader("activity.id");
+                String activityId = StringUtils.isEmpty(headerActivityId)?UUID.randomUUID().toString():headerActivityId;
                 ThreadContext.put("activity.id",activityId);
                 ThreadContext.put("correlation.id", UUID.randomUUID().toString());
             }
