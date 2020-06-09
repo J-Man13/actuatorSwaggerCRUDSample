@@ -7,7 +7,7 @@ import org.zalando.logbook.*;
 
 
 import static org.zalando.logbook.Conditions.*;
-import static org.zalando.logbook.Conditions.requestTo;
+
 
 
 @Configuration
