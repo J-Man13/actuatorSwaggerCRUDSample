@@ -8,7 +8,7 @@
     <Appenders>
         <Console name="CONSOLE"/>
         <RollingFile name="APPLICATION_LOGS_ROLLING_FILE" fileName="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctx:correlation.id} ACTIVITY_ID-$${ctx:correlation.id} DATE-$${date:yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctx:correlation.id} ACTIVITY_ID-$${ctx:activity.id} DATE-$${date:yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
