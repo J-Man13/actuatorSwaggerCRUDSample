@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="error" packages="org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.plugins">
+    <Properties>
+        <Property name="APPLICATION_LOGS_ROLLING_FILE_BASE_DIR">logs/application-logs-rolling-file-base-dir-logs</Property>
+        <Property name="REQUESTS_LOGS_ROLLING_FILE_BASE_DIR">logs/requests-logs-rolling-file-base-dir-logs</Property>
+        <Property name="TRACE_LOGS_ROLLING_FILE_BASE_DIR">logs/trace-logs-rolling-file-base-dir-logs</Property>
+    </Properties>
     <Appenders>
         <Console name="CONSOLE"/>
-        <RollingFile name="APPLICATION_LOGS_ROLLING_FILE" fileName="application-logs-${bundle:application:info.build.archiveBaseName}-${date:yyyy-MM-dd}.log" filePattern="application-logs-${bundle:application:info.build.archiveBaseName}/**%d{yyyy-MM-dd_HH}**_rpi_gpio_%i.log.gz">
-            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} CORRELATION_ID-$${ctlu:correlation.id} TRACE_ORDER_ROLLING_FILE-$${ctlu:trace.order.rolling.file} DATE-$${date:yyyy-MM-dd HH:mm:ss:SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        <RollingFile name="APPLICATION_LOGS_ROLLING_FILE" fileName="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctlu:correlation.id} TRACE_ORDER_ROLLING_FILE-$${ctlu:trace.order.rolling.file} DATE-$${date:yyyy-MM-dd HH:mm:ss:SSS} %-5level %logger{36} - %msg%n"/>
             <Policies>
+                <OnStartupTriggeringPolicy />
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="20 MB"/>
+                <SizeBasedTriggeringPolicy size="100 KB"/>
             </Policies>
-            <DefaultRolloverStrategy max="90"/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}" maxDepth="1">
+                    <IfAll>
+                        <IfAccumulatedFileCount exceeds="3"/>
+                    </IfAll>
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
 
         <Elasticsearch name="APPLICATION_LOGS_ELASTICSEARCH">
@@ -25,8 +37,8 @@
             </AsyncBatchDelivery>
         </Elasticsearch>
 
-        <RollingFile name="REQUESTS_LOGS_ROLLING_FILE" fileName="request-logs-${bundle:application:info.build.archiveBaseName}-${date:yyyy-MM-dd}.log" filePattern="request-logs-${bundle:application:info.build.archiveBaseName}/**%d{yyyy-MM-dd_HH}**_rpi_gpio_%i.log.gz">
-            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true">
+        <RollingFile name="REQUESTS_LOGS_ROLLING_FILE" fileName="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
@@ -36,9 +48,15 @@
             </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="20 MB"/>
+                <SizeBasedTriggeringPolicy size="100 KB"/>
             </Policies>
-            <DefaultRolloverStrategy max="90"/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}" maxDepth="1">
+                    <IfAll>
+                        <IfAccumulatedFileCount exceeds="3"/>
+                    </IfAll>
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
 
         <Elasticsearch name="REQUESTS_LOGS_ELASTICSEARCH">
@@ -57,8 +75,8 @@
         </Elasticsearch>
 
 
-        <RollingFile name="TRACE_LOGS_ROLLING_FILE" fileName="trace-logs-${bundle:application:info.build.archiveBaseName}-${date:yyyy-MM-dd}.log" filePattern="trace-logs-${bundle:application:info.build.archiveBaseName}/**%d{yyyy-MM-dd_HH}**_rpi_gpio_%i.log.gz">
-            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true">
+        <RollingFile name="TRACE_LOGS_ROLLING_FILE" fileName="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}/trace-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}/trace-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
@@ -68,9 +86,15 @@
             </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="20 MB"/>
+                <SizeBasedTriggeringPolicy size="100 KB"/>
             </Policies>
-            <DefaultRolloverStrategy max="90"/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}" maxDepth="1">
+                    <IfAll>
+                        <IfAccumulatedFileCount exceeds="3"/>
+                    </IfAll>
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
 
         <Elasticsearch name="TRACE_LOGS_ELASTICSEARCH">
