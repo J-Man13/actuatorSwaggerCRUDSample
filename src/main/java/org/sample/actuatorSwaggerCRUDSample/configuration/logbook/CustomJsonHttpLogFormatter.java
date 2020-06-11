@@ -34,6 +34,7 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         final Map<String, Object> content = StructuredHttpLogFormatter.super.prepare(precorrelation,request);
         content.put("incomingActivityId", CommonUtil.getHeaderValueByKey("activity.id"));
         content.remove("headers");
+        content.put("path",request.getPath());
         content.put("headers",request.getHeaders().toString());
         return content;
     }
