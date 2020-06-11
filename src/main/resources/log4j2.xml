@@ -8,16 +8,16 @@
     <Appenders>
         <Console name="CONSOLE"/>
         <RollingFile name="APPLICATION_LOGS_ROLLING_FILE" fileName="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}/application-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctlu:correlation.id} TRACE_ORDER_ROLLING_FILE-$${ctlu:trace.order.rolling.file} DATE-$${date:yyyy-MM-dd HH:mm:ss:SSS} %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="APP_ARCHIVE_NAME-$${bundle:application:info.build.archiveBaseName} THREAD_NAME-%t CORRELATION_ID-$${ctx:correlation.id} DATE-$${date:yyyy-MM-dd HH:mm:ss:SSS} %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <OnStartupTriggeringPolicy />
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="100 KB"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
             <DefaultRolloverStrategy>
                 <Delete basePath="${APPLICATION_LOGS_ROLLING_FILE_BASE_DIR}" maxDepth="1">
                     <IfAll>
-                        <IfAccumulatedFileCount exceeds="3"/>
+                        <IfAccumulatedFileCount exceeds="10"/>
                     </IfAll>
                 </Delete>
             </DefaultRolloverStrategy>
@@ -27,9 +27,8 @@
             <IndexName indexName="${bundle:application:info.elasticsearch.application.logs.index}"/>
             <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
-                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrderElastic" value="$${ctlu:trace.order.elastic}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
@@ -38,22 +37,21 @@
         </Elasticsearch>
 
         <RollingFile name="REQUESTS_LOGS_ROLLING_FILE" fileName="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
+            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
-                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
-                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrderRollingFile" value="$${ctlu:trace.order.rolling.file}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}"/>
             </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="100 KB"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
             <DefaultRolloverStrategy>
                 <Delete basePath="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}" maxDepth="1">
                     <IfAll>
-                        <IfAccumulatedFileCount exceeds="3"/>
+                        <IfAccumulatedFileCount exceeds="10"/>
                     </IfAll>
                 </Delete>
             </DefaultRolloverStrategy>
@@ -63,10 +61,9 @@
             <IndexName indexName="${bundle:application:info.build.archiveBaseName}"/>
             <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
-                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
-                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrderElastic" value="$${ctlu:trace.order.elastic}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
@@ -76,22 +73,21 @@
 
 
         <RollingFile name="TRACE_LOGS_ROLLING_FILE" fileName="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}/trace-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}/trace-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
+            <JsonLayout compact="false" stacktraceAsString="false" objectMessageAsJsonObject="true" eventEol="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
-                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
-                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrderRollingFile" value="$${ctlu:trace.order.rolling.file}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="100 KB"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
             <DefaultRolloverStrategy>
                 <Delete basePath="${TRACE_LOGS_ROLLING_FILE_BASE_DIR}" maxDepth="1">
                     <IfAll>
-                        <IfAccumulatedFileCount exceeds="3"/>
+                        <IfAccumulatedFileCount exceeds="10"/>
                     </IfAll>
                 </Delete>
             </DefaultRolloverStrategy>
@@ -101,10 +97,9 @@
             <IndexName indexName="${bundle:application:info.build.archiveBaseName}"/>
             <JsonLayout compact="true" stacktraceAsString="false" objectMessageAsJsonObject="true">
                 <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
-                <KeyValuePair key="activityId" value="$${ctlu:activity.id}"/>
-                <KeyValuePair key="correlationId" value="$${ctlu:correlation.id}"/>
+                <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
                 <KeyValuePair key="source" value="$${ctlu:source.class.method}"/>
-                <KeyValuePair key="traceOrderElastic" value="$${ctlu:trace.order.elastic}"/>
                 <KeyValuePair key="dtStamp" value="$${date:yyyy-MM-dd HH:mm:ss:SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">

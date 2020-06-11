@@ -44,9 +44,9 @@ public class CrmUsersController {
     })
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUserExtractionResponceDto>> findUserById(@PathVariable("id") String id){
-        LOGGER.trace(new CommonLoggingObject("Extracting user by id from crm users service",id));
+        LOGGER.trace(new CommonLoggingObject("Extracting user by id from crm users service","id",id));
         CrmUser crmUser = crmUserService.findById(id);
-        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service",id), crmUser));
+        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service",id),"crmUser", crmUser));
         CrmUserExtractionResponceDto crmUserExtractionResponceDto = new CrmUserExtractionResponceDto(crmUser);
         CommonResponseDTO<CrmUserExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user data was successfully extracted"));
         commonResponseDTO.setData(crmUserExtractionResponceDto);
@@ -64,9 +64,9 @@ public class CrmUsersController {
     })
     @GetMapping(value = "/attributes/name/{name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUsersByNameExtractionResponceDto>> findUsersByName(@PathVariable("name") String name){
-        LOGGER.trace(new CommonLoggingObject("Extracting list of users by name from crm users service",name));
+        LOGGER.trace(new CommonLoggingObject("Extracting list of users by name from crm users service","name",name));
         List<CrmUser> crmUserList = crmUserService.findByName(name);
-        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm users by %s name from crm users service",name), crmUserList));
+        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm users by %s name from crm users service",name),"crmUserList", crmUserList));
         CrmUsersByNameExtractionResponceDto crmUsersByNameExtractionResponceDto = new CrmUsersByNameExtractionResponceDto(crmUserList);
         CommonResponseDTO<CrmUsersByNameExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user data was successfully extracted"));
         commonResponseDTO.setData(crmUsersByNameExtractionResponceDto);
@@ -83,10 +83,10 @@ public class CrmUsersController {
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUserAdditionResponceDto>> addUser(@RequestBody @Valid CrmUserAdditionRequestDto crmUserAdditionRequestDto) {
-        LOGGER.trace(new CommonLoggingObject("Adding user via crm users save service",crmUserAdditionRequestDto));
+        LOGGER.trace(new CommonLoggingObject("Adding user via crm users save service","crmUserAdditionRequestDto",crmUserAdditionRequestDto));
         CrmUser crmUser = crmUserMapper.crmUserAdditionRequestDtoToCrmUser(crmUserAdditionRequestDto);
         crmUser = crmUserService.save(crmUser);
-        LOGGER.trace(new CommonLoggingObject("User saved at crm users service", crmUser));
+        LOGGER.trace(new CommonLoggingObject("User saved at crm users service","crmUser", crmUser));
         CrmUserAdditionResponceDto crmUserAdditionResponceDto = new CrmUserAdditionResponceDto(crmUser);
         CommonResponseDTO<CrmUserAdditionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully saved"));
         commonResponseDTO.setData(crmUserAdditionResponceDto);
@@ -104,12 +104,12 @@ public class CrmUsersController {
     })
     @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmUserUpdateResponceDto>> updateUser(@PathVariable("id") String id,@RequestBody CrmUserUpdateRequestDto crmUserUpdateRequestDto) {
-        LOGGER.trace(new CommonLoggingObject(String.format("Extracting user by %s id from crm users service for update",id),crmUserUpdateRequestDto));
+        LOGGER.trace(new CommonLoggingObject(String.format("Extracting user by %s id from crm users service for update",id),"crmUserUpdateRequestDto",crmUserUpdateRequestDto));
         CrmUser crmUser = crmUserService.findById(id);
-        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service for update",id), crmUser));
+        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service for update",id),"crmUser", crmUser));
         crmUser = crmUserMapper.updateCrmUserByCrmUserUpdateRequestDto(crmUser,crmUserUpdateRequestDto);
         crmUser = crmUserService.update(crmUser);
-        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service after update",id), crmUser));
+        LOGGER.info(new CommonLoggingObject(String.format("Extracted crm user by %s id from crm users service after update",id),"crmUser", crmUser));
         CrmUserUpdateResponceDto crmUserUpdateResponceDto = new CrmUserUpdateResponceDto(crmUser);
         CommonResponseDTO<CrmUserUpdateResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success","Crm user was successfully updated"));
         commonResponseDTO.setData(crmUserUpdateResponceDto);

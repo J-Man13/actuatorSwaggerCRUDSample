@@ -3,6 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import org.apache.logging.log4j.ThreadContext;
 import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
@@ -32,10 +34,14 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
     @Override
     public Map<String, Object> prepare(Precorrelation precorrelation, HttpRequest request) throws IOException {
         final Map<String, Object> content = StructuredHttpLogFormatter.super.prepare(precorrelation,request);
-        content.put("incomingActivityId", CommonUtil.getHeaderValueByKey("activity.id"));
+        String incomingActivityId = CommonUtil.getHeaderValueByKey("activity.id");
+        content.put("incomingActivityId", incomingActivityId);
+        String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
+        ThreadContext.put("activity.id",activityId);
+        ThreadContext.put("correlation.id",UUID.randomUUID().toString());
         content.remove("headers");
-        content.put("path",request.getPath());
         content.put("headers",request.getHeaders().toString());
+        content.put("path",request.getPath());
         return content;
     }
 

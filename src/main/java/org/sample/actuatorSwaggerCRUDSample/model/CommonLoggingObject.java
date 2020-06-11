@@ -1,40 +1,49 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.util.StringUtils;
 
-public class CommonLoggingObject<Data>{
-    private String description;
-    @JsonProperty("loggableObjectClass")
-    private String loggableObjectClass;
-    private Data data;
+import java.util.AbstractMap;
 
-    public CommonLoggingObject(String description, Data data) {
-        this.description = description;
-        this.data = data;
-        if (data == null)
-            this.loggableObjectClass = null;
-        else
-            this.loggableObjectClass = data.getClass().getSimpleName();
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class CommonLoggingObject{
+    private String logCauseDescription;
+    private  AbstractMap.SimpleEntry<String,Object> logEntry;
+
+    public CommonLoggingObject() {
     }
 
-    public String getDescription() {
-        return description;
+    public CommonLoggingObject(String logCauseDescription) {
+        this.logCauseDescription = logCauseDescription;
+        this.logEntry = null;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public CommonLoggingObject(String description, String loggableObjectKey, Object object) {
+        this();
+        this.logCauseDescription = description;
+        if (StringUtils.isEmpty(loggableObjectKey) || object == null)
+            this.logEntry = null;
+        else {
+            this.logEntry = new AbstractMap.SimpleEntry<>(loggableObjectKey,object);
+        }
     }
 
-    public Data getData() {
-        return data;
+    public String getLogCauseDescription() {
+        return logCauseDescription;
     }
 
-    public void setData(Data data) {
-        this.data = data;
-        if (data == null)
-            this.loggableObjectClass = null;
-        else
-            this.loggableObjectClass = data.getClass().getSimpleName();
+    public void setLogCauseDescription(String logCauseDescription) {
+        this.logCauseDescription = logCauseDescription;
+    }
+
+    public AbstractMap.SimpleEntry<String, Object> getLogEntry() {
+        return logEntry;
+    }
+
+    public void setLogEntry(AbstractMap.SimpleEntry<String, Object> logEntry) {
+        this.logEntry = logEntry;
     }
 }

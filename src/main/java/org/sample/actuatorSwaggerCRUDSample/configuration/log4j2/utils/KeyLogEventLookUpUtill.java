@@ -1,15 +1,10 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.log4j2.utils;
 
-import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.LogEvent;
-
-
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 public class KeyLogEventLookUpUtill {
     private static Map<String, ByKeyOrLogEventValueExtractionUtil> BY_KEY_LOG_EVENT_IMPLS_MAP;
@@ -23,68 +18,9 @@ public class KeyLogEventLookUpUtill {
     private static void INIT_BY_KEY_LOG_EVENT_IMPLS_MAP(){
         BY_KEY_LOG_EVENT_IMPLS_MAP = new HashMap<>();
         BY_KEY_LOG_EVENT_IMPLS_MAP.put("source.class.method",sourceClassMethodExtraction());
-        BY_KEY_LOG_EVENT_IMPLS_MAP.put("activity.id",activityIdExtraction());
-        BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order.elastic",traceOrderElasticExtraction());
-        BY_KEY_LOG_EVENT_IMPLS_MAP.put("trace.order.rolling.file",traceOrderRollingFileExtraction());
-        BY_KEY_LOG_EVENT_IMPLS_MAP.put("correlation.id",correlationIdExtraction());
     }
 
     private static ByKeyOrLogEventValueExtractionUtil sourceClassMethodExtraction(){
         return (LogEvent event) -> event.getSource().getClassName() + "." + event.getSource().getMethodName() + "(), line: " +event.getSource().getLineNumber();
-    }
-
-    private static ByKeyOrLogEventValueExtractionUtil traceOrderElasticExtraction(){
-        return (LogEvent event) ->{
-            int traceOrderInt;
-            String traceOrderString = ThreadContext.get("trace.order.elastic");
-            if (StringUtils.isEmpty(traceOrderString))
-                traceOrderInt = 1;
-            else
-                traceOrderInt = Integer.parseInt(traceOrderString) + 1;
-            ThreadContext.put("trace.order.elastic",String.valueOf(traceOrderInt));
-            return String.valueOf(traceOrderInt);
-        };
-    }
-
-    private static ByKeyOrLogEventValueExtractionUtil traceOrderRollingFileExtraction(){
-        return (LogEvent event) ->{
-            int traceOrderInt;
-            String traceOrderString = ThreadContext.get("trace.order.rolling.file");
-            if (StringUtils.isEmpty(traceOrderString))
-                traceOrderInt = 1;
-            else
-                traceOrderInt = Integer.parseInt(traceOrderString) + 1;
-            ThreadContext.put("trace.order.rolling.file",String.valueOf(traceOrderInt));
-            return String.valueOf(traceOrderInt);
-        };
-    }
-
-    private static ByKeyOrLogEventValueExtractionUtil activityIdExtraction(){
-        return (LogEvent event) -> {
-            String activityId = event.getContextData().toMap().get("activity.id");
-            if (StringUtils.isEmpty(activityId)){
-                activityId = ThreadContext.get("activity.id");
-                if(StringUtils.isEmpty(activityId)){
-                    activityId = UUID.randomUUID().toString();
-                    ThreadContext.put("activity.id", activityId);
-                    return activityId;
-                }
-                else
-                    return activityId;
-            }
-            else
-                return activityId;
-        };
-    }
-
-    private static ByKeyOrLogEventValueExtractionUtil correlationIdExtraction(){
-        return (LogEvent event) ->{
-            String correlationId = ThreadContext.get("correlation.id");
-            if (StringUtils.isEmpty(correlationId)) {
-                correlationId = UUID.randomUUID().toString();
-                ThreadContext.put("correlation.id",correlationId);
-            }
-            return correlationId;
-        };
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Configuration
 public class CustomWebMvcConfigurer implements WebMvcConfigurer {
@@ -22,9 +23,18 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
         @Override
         public boolean preHandle(HttpServletRequest request,
                                  HttpServletResponse response, Object handler) throws Exception {
-            String activityId = request.getHeader("activity.id");
-            if (!StringUtils.isEmpty(activityId) && StringUtils.isEmpty(ThreadContext.get("activity.id")))
+            //Checking if activityId and correlationId where set in log4j2 thread context
+            //This check is required in request interceptor as activityId and correlationId might not be set
+            //If logging for the path is disabled in logbook
+            String activityId = ThreadContext.get("activity.id");
+            String correlationId = ThreadContext.get("correlation.id");
+            if (StringUtils.isEmpty(activityId) && StringUtils.isEmpty(correlationId)){
+                activityId = request.getHeader("activity.id");
+                if (StringUtils.isEmpty(activityId))
+                    activityId = UUID.randomUUID().toString();
                 ThreadContext.put("activity.id",activityId);
+                ThreadContext.put("correlation.id", UUID.randomUUID().toString());
+            }
             return true;
         }
     }

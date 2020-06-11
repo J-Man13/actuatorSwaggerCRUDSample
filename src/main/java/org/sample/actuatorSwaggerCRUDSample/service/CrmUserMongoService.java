@@ -40,7 +40,7 @@ public class CrmUserMongoService implements ICrmUserService{
             crmUserMongoDocument = crmUserMongoRepository.save(crmUserMongoDocument);
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document update : %s", dataAccessException.getMessage()),dataAccessException));
+            LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document update : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
             throw new GlobalUnhandledException(String.format("Mongo repository has thrown unhandled exception during document update : %s", dataAccessException.getMessage()));
         }
         return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
@@ -53,7 +53,7 @@ public class CrmUserMongoService implements ICrmUserService{
             crmUserMongoDocument = crmUserMongoRepository.save(crmUserMongoDocument);
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document save : %s", dataAccessException.getMessage()),dataAccessException));
+            LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document save : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
             throw new GlobalUnhandledException(String.format("Mongo repository has thrown unhandled exception during document save : %s", dataAccessException.getMessage()));
         }
         return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
@@ -66,12 +66,12 @@ public class CrmUserMongoService implements ICrmUserService{
             crmUserMongoDocument = crmUserMongoRepository.findById(id).orElse(null);
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", dataAccessException.getMessage()),dataAccessException));
+            LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
             throw new GlobalUnhandledException(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", dataAccessException.getMessage()));
         }
 
         Objects.requireNonNull(crmUserMongoDocument,()->{
-            LOGGER.debug(new CommonLoggingObject(String.format("Crm user mongo document with %s id was not found",id),null));
+            LOGGER.debug(new CommonLoggingObject(String.format("Crm user mongo document with %s id was not found",id)));
             throw new MongoDocumentNotFoundException(String.format("Crm user mongo document with %s id was not found",id));
         });
         return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
@@ -83,12 +83,12 @@ public class CrmUserMongoService implements ICrmUserService{
         try {
             crmUserMongoDocumentList = crmUserMongoRepository.findAllByName(name);
         }catch (DataAccessException dataAccessException){
-            LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during documents by name extraction : %s", dataAccessException.getMessage()),dataAccessException));
+            LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during documents by name extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
             throw new GlobalUnhandledException(String.format("Crm users mongo repository has thrown unhandled exception during documents by name extraction : %s", dataAccessException.getMessage()));
         }
 
         if (CollectionUtils.isEmpty(crmUserMongoDocumentList)){
-            LOGGER.debug(new CommonLoggingObject(String.format("There was not any crm user mongo documents with %s name",name),null));
+            LOGGER.debug(new CommonLoggingObject(String.format("There was not any crm user mongo documents with %s name",name)));
             throw new MongoDocumentNotFoundException(String.format("There was not any crm user mongo documents with %s name",name));
         }
         return crmUserMapper.crmUserMongoDocumentListToCrmUserList(crmUserMongoDocumentList);

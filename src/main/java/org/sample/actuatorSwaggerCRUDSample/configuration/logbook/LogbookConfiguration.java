@@ -31,10 +31,14 @@ public class LogbookConfiguration {
                 ))
                 .condition(exclude(
                         requestTo("/actuator/**"),
+                        requestTo("**/actuator/**"),
                         requestTo("/swagger**"),
+                        requestTo("**/swagger**"),
                         requestTo("/favicon.ico"),
-                        requestTo("/v2/api-docs"),
-                        requestTo("/webjars/**")))
+                        requestTo("**/favicon.ico"),
+                        requestTo("**/v2/api-docs"),
+                        requestTo("/webjars/**"),
+                        requestTo("**/webjars/**")))
                 .build();
     }
 }

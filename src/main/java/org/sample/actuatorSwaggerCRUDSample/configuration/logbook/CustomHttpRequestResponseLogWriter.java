@@ -1,12 +1,11 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.ThreadContext;
-import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
+import org.sample.actuatorSwaggerCRUDSample.model.CommonLoggingObject;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.zalando.logbook.Correlation;
 import org.zalando.logbook.HttpLogWriter;
 import org.zalando.logbook.Precorrelation;
@@ -20,11 +19,9 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
 
     @Override
     public void write(Precorrelation precorrelation, String request) throws IOException {
-        String incomingActivityId = CommonUtil.getHeaderValueByKey("activity.id");
-        if(!StringUtils.isEmpty(incomingActivityId))
-            ThreadContext.put("activity.id",incomingActivityId);
         try {
-            LOGGER.info(new ObjectMapper().readTree(request));
+            JsonNode jsonNode = new ObjectMapper().readTree(request);
+            LOGGER.info(new CommonLoggingObject("request logging","request",jsonNode));
         }
         catch (IOException ioe){
             LOGGER.info(request);
@@ -34,7 +31,8 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
     @Override
     public void write(Correlation correlation, String response) throws IOException {
         try {
-            LOGGER.info(new ObjectMapper().readTree(response));
+            JsonNode jsonNode = new ObjectMapper().readTree(response);
+            LOGGER.info(new CommonLoggingObject("response logging","response",jsonNode));
         }
         catch (IOException ioe){
             LOGGER.info(response);
