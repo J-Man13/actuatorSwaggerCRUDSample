@@ -75,7 +75,7 @@
                 <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
-                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
 
@@ -89,7 +89,7 @@
                 <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
-                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
+                <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
 
