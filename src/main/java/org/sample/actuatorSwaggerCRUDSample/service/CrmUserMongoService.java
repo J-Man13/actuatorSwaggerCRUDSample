@@ -3,7 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalUnhandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonLoggingObject;
@@ -41,7 +41,7 @@ public class CrmUserMongoService implements ICrmUserService{
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document update : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
-            throw new GlobalUnhandledException(String.format("Mongo repository has thrown unhandled exception during document update : %s", dataAccessException.getMessage()));
+            throw new GlobalHandledException(String.format("Mongo repository has thrown unhandled exception during document update : %s", dataAccessException.getMessage()));
         }
         return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
     }
@@ -54,7 +54,7 @@ public class CrmUserMongoService implements ICrmUserService{
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error(new CommonLoggingObject(String.format("Mongo repository has thrown unhandled exception during document save : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
-            throw new GlobalUnhandledException(String.format("Mongo repository has thrown unhandled exception during document save : %s", dataAccessException.getMessage()));
+            throw new GlobalHandledException(String.format("Mongo repository has thrown unhandled exception during document save : %s", dataAccessException.getMessage()));
         }
         return crmUserMapper.crmUserMongoDocumentToCrmUser(crmUserMongoDocument);
     }
@@ -67,7 +67,7 @@ public class CrmUserMongoService implements ICrmUserService{
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
-            throw new GlobalUnhandledException(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", dataAccessException.getMessage()));
+            throw new GlobalHandledException(String.format("Crm users mongo repository has thrown unhandled exception during document by id extraction : %s", dataAccessException.getMessage()));
         }
 
         Objects.requireNonNull(crmUserMongoDocument,()->{
@@ -84,7 +84,7 @@ public class CrmUserMongoService implements ICrmUserService{
             crmUserMongoDocumentList = crmUserMongoRepository.findAllByName(name);
         }catch (DataAccessException dataAccessException){
             LOGGER.error(new CommonLoggingObject(String.format("Crm users mongo repository has thrown unhandled exception during documents by name extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException));
-            throw new GlobalUnhandledException(String.format("Crm users mongo repository has thrown unhandled exception during documents by name extraction : %s", dataAccessException.getMessage()));
+            throw new GlobalHandledException(String.format("Crm users mongo repository has thrown unhandled exception during documents by name extraction : %s", dataAccessException.getMessage()));
         }
 
         if (CollectionUtils.isEmpty(crmUserMongoDocumentList)){

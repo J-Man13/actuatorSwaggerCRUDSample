@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalUnhandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonUnsuccessfulResponseDTO;
@@ -33,9 +33,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(GlobalUnhandledException.class)
-    public ResponseEntity globalUnhandledException(GlobalUnhandledException globalUnhandledException) {
-        ErrorDesriptor errorDesriptor = globalUnhandledException.getErrorDesriptor();
+    @ExceptionHandler(GlobalHandledException.class)
+    public ResponseEntity globalHandledException(GlobalHandledException globalHandledException) {
+        ErrorDesriptor errorDesriptor = globalHandledException.getErrorDesriptor();
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
