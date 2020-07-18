@@ -2,11 +2,13 @@ package org.sample.actuatorSwaggerCRUDSample.model;
 
 public class CommonMessageDTO {
     private String type;
+    private String messageKey;
     private String message;
 
-    public CommonMessageDTO(String type, String message) {
-        this.message = message;
+    public CommonMessageDTO(String type, String messageKey, String message) {
         this.type = type;
+        this.messageKey = messageKey;
+        this.message = message;
     }
 
     public CommonMessageDTO() {
@@ -28,11 +30,12 @@ public class CommonMessageDTO {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "CommonMessageDTO{" +
-                "type='" + type + '\'' +
-                ", message='" + message + '\'' +
-                '}';
+    public String getMessageKey() {
+        return messageKey;
     }
+
+    public void setMessageKey(String messageKey) {
+        this.messageKey = messageKey;
+    }
+
 }

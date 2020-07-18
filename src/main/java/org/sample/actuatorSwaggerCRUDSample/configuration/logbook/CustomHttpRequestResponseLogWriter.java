@@ -2,9 +2,9 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.sample.actuatorSwaggerCRUDSample.model.CommonLoggingObject;
+import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.zalando.logbook.Correlation;
 import org.zalando.logbook.HttpLogWriter;
@@ -15,27 +15,31 @@ import java.io.IOException;
 
 @Component
 public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
-    private final Logger LOGGER = LogManager.getLogger("requests_logs");
+    private final CommonLogger LOGGER;
+
+    public CustomHttpRequestResponseLogWriter(@Autowired @Qualifier("requests-logger") CommonLogger LOGGER){
+        this.LOGGER = LOGGER;
+    }
 
     @Override
-    public void write(Precorrelation precorrelation, String request) throws IOException {
+    public void write(Precorrelation precorrelation, String request){
         try {
             JsonNode jsonNode = new ObjectMapper().readTree(request);
-            LOGGER.info(new CommonLoggingObject("request logging","request",jsonNode));
+            LOGGER.info("request logging","request",jsonNode);
         }
         catch (IOException ioe){
-            LOGGER.info(request);
+            LOGGER.info("request log is not in json format, logging as a string","unparseableRequest",request);
         }
     }
 
     @Override
-    public void write(Correlation correlation, String response) throws IOException {
+    public void write(Correlation correlation, String response){
         try {
             JsonNode jsonNode = new ObjectMapper().readTree(response);
-            LOGGER.info(new CommonLoggingObject("response logging","response",jsonNode));
+            LOGGER.info("response logging","response",jsonNode);
         }
         catch (IOException ioe){
-            LOGGER.info(response);
+            LOGGER.info("response log is not in json format, logging as a string","unparseableResponse",response);
         }
     }
 }

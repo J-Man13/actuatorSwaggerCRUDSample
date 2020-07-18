@@ -36,6 +36,10 @@ public class CommonResponseDTO<Data> {
         messages.add(commonMessageDTO);
     }
 
+    public CommonResponseDTO(int status, String type,String messageKey, String message) {
+        this(status,new CommonMessageDTO(type,messageKey,message));
+    }
+
     public Integer getStatus() {
         return status;
     }

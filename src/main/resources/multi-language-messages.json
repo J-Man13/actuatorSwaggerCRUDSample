@@ -1,0 +1,77 @@
+{
+  "FIND_CRM_USER_BY_ID_SUCCESS": {
+    "en": "CRM user data was successfully extracted by %s id",
+    "ru": "Данные CRM пользователя были успешно извлечены по %s идентификатору",
+    "az": "CRM istifadəçinin məlumatları %s identifikator üzrə uğurla çıxarıldı"
+  },
+  "FIND_CRM_USER_BY_NAME_SUCCESS": {
+    "en": "CRM user data was successfully extracted by %s name",
+    "ru": "Данные Crm пользователя были успешно извлечены по %s имени",
+    "az": "CRM istifadəçinin məlumatları uğurla çıxarıldı %s ad üzrə"
+  },
+  "CRM_USER_SAVED_SUCCESSFULLY": {
+    "en": "CRM user was successfully saved",
+    "ru": "Пользователь Crm был успешно сохранен",
+    "az": "CRM istifadəçisi uğurla yadda saxlanıldı"
+  },
+  "CRM_USER_UPDATED_SUCCESSFULLY": {
+    "en": "CRM user was successfully updated",
+    "ru": "Пользователь CRM был успешно обновлен",
+    "az": "CRM istifadəçisi uğurla yeniləndi"
+  },
+  "CRM_USER_EXCEPTION_FAILED_UPDATE": {
+    "en": "CRM Mongo repository has thrown exception during document update : %s",
+    "ru": "CRM Монго репозиторий выдал исключение во время обновления документа : %s",
+    "az": "CRM Mongo repositoriyi sənəd yeniləməsi zamanı texniki xəta gaytarıb : %s"
+  },
+  "CRM_USER_EXCEPTION_FAILED_SAVE": {
+    "en": "CRM Mongo repository has thrown exception during document save : %s",
+    "ru": "CRM Монго репозиторий выдал исключение во время сохранения документа : %s",
+    "az": "CRM Mongo repositoriyi sənəd yadda saxlanılması zamanı texniki xəta gaytarıb : %s"
+  },
+  "CRM_USER_MONGO_DOCUMENT_BY_ID_EXCEPTION": {
+    "en": "CRM users mongo repository has thrown exception during document by id extraction : %s",
+    "ru": "В репозитории пользователей CRM, во время извлечения по идентификатору произошла ошибка : %s",
+    "az": "CRM istifadəçi repositoriyda, identifikator üzrə mətumatın çıxarılması zamanı xəta baş verib : %s"
+  },
+  "CRM_USER_MONGO_DOCUMENT_BY_ID_NOT_FOUND": {
+    "en": "CRM user mongo document with %s id was not found",
+    "ru": "Пользователь CRM с идентификатором %s не найден",
+    "az": "CRM istifadəçi %s identifikator ilə tapılmadı"
+  },
+  "CRM_USER_MONGO_DOCUMENT_BY_NAME_EXCEPTION": {
+    "en": "CRM users mongo repository has thrown exception during documents by name extraction : %s",
+    "ru": "В репозитории пользователей CRM, во время извлечения по имени произошла ошибка : %s",
+    "az": "CRM istifadəçi repositoriyda, ad üzrə mətumatın çıxarılması zamanı xəta baş verib : %s"
+  },
+  "CRM_USER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND": {
+    "en": "CRM user mongo document with %s name was not found",
+    "ru": "Пользователи CRM с именем %s не были найден",
+    "az": "CRM istifadəçi %s ad ilə tapılmadı"
+  },
+  "THERE_IS_NO_LISTENER_FOR_ROUTE": {
+    "en": "There is no listener for %s route",
+    "ru": "Нет слушателя для %s маршрута",
+    "az": "%s marşrutu üçün dinləyici yoxdur"
+  },
+  "METHOD_IS_NOT_SUPPORTED": {
+    "en": "%s method is not supported for %s route",
+    "ru": "%S метод не поддерживается для %s маршрута",
+    "az": "%s metod %s marşrut üçün dəstəklənmir"
+  },
+  "HTTP_REQUEST_IS_NOT_READABLE": {
+    "en": "Request body is not readable for %s route %s method",
+    "ru": "Тело запроса не читается для %s маршрута %s http метода",
+    "az": "Müraciət oxunacaq formatda döyül %s marşrut üçün və %s http metod üçün"
+  },
+  "HTTP_REQUEST_FAILED_COMMON_VALIDATION": {
+    "en": "Request body did not pass common validation at %s route with %s method",
+    "ru": "Тело запроса не прошло общую проверку для %s маршрута %s http метода",
+    "az": "Müraciət ümumi yoxlamanı %s marşrut üçün və %s http metod üçün keçmədi"
+  },
+  "HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON" : {
+    "en": "%s field did not pass validation, reason : %s",
+    "ru": "%s поле не прошло валидацию, причина : %s",
+    "az": "%s sahə validatisiyanı keçməyib, səbəb : %s"
+  }
+}

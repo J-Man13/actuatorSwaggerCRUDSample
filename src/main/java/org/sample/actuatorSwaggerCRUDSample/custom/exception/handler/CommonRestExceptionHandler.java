@@ -1,10 +1,13 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 
+import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonUnsuccessfulResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.ErrorDesriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -25,34 +28,47 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final IMultiLanguageComponent multiLanguageComponent;
+
+    private final String THERE_IS_NO_LISTENER_FOR_ROUTE = "THERE_IS_NO_LISTENER_FOR_ROUTE";
+    private final String METHOD_IS_NOT_SUPPORTED = "METHOD_IS_NOT_SUPPORTED";
+    private final String HTTP_REQUEST_IS_NOT_READABLE = "HTTP_REQUEST_IS_NOT_READABLE";
+    private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION = "HTTP_REQUEST_FAILED_COMMON_VALIDATION";
+    private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON = "HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON";
+
+    public CommonRestExceptionHandler(@Autowired @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent){
+        this.multiLanguageComponent = multiLanguageComponent;
+    }
 
     @ExceptionHandler(MongoDocumentNotFoundException.class)
     public ResponseEntity mongoDocumentNotFoundExceptionHandler(MongoDocumentNotFoundException mongoDocumentNotFoundException) {
         ErrorDesriptor errorDesriptor = mongoDocumentNotFoundException.getErrorDesriptor();
-        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.NOT_FOUND);
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GlobalHandledException.class)
     public ResponseEntity globalHandledException(GlobalHandledException globalHandledException) {
         ErrorDesriptor errorDesriptor = globalHandledException.getErrorDesriptor();
-        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception exception) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
-                exception.getMessage(),exception.getClass().getCanonicalName());
-        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
+                "UNHANDLED_EXCEPTION",exception.getMessage(),exception.getClass().getCanonicalName());
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @Override
     protected ResponseEntity handleNoHandlerFoundException(NoHandlerFoundException noHandlerFoundException, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(noHandlerFoundException.getStackTrace()[0].getClassName(),
-                String.format("there is no listener for %s route", noHandlerFoundException.getRequestURL()),
+                THERE_IS_NO_LISTENER_FOR_ROUTE,
+                String.format(multiLanguageComponent.getMessageByKey(THERE_IS_NO_LISTENER_FOR_ROUTE), noHandlerFoundException.getRequestURL()),
                 noHandlerFoundException.getClass().getCanonicalName());
-        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.NOT_FOUND);
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), "error",errorDesriptor.getMessageKey(), errorDesriptor.getMessage(), errorDesriptor), HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -60,9 +76,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         String method = ((ServletWebRequest)request).getRequest().getMethod();
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpRequestMethodNotSupportedException.getStackTrace()[0].getClassName(),
-                String.format("%s method is not supported for %s route", method,route),
+                METHOD_IS_NOT_SUPPORTED,
+                String.format(multiLanguageComponent.getMessageByKey(METHOD_IS_NOT_SUPPORTED), method,route),
                 httpRequestMethodNotSupportedException.getClass().getCanonicalName());
-        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.METHOD_NOT_ALLOWED.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.METHOD_NOT_ALLOWED.value(), new CommonMessageDTO("error", errorDesriptor.getMessageKey(), errorDesriptor.getMessage()), errorDesriptor), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @Override
@@ -70,9 +87,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         String method = ((ServletWebRequest)request).getRequest().getMethod();
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpMessageNotReadableException.getStackTrace()[0].getClassName(),
-                String.format("request body is not readable for %s route %s method",route,method),
+                HTTP_REQUEST_IS_NOT_READABLE,
+                String.format(multiLanguageComponent.getMessageByKey(HTTP_REQUEST_IS_NOT_READABLE),route,method),
                 httpMessageNotReadableException.getClass().getCanonicalName());
-        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), new CommonMessageDTO("error", errorDesriptor.getMessageKey(), errorDesriptor.getMessage()), errorDesriptor), HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -80,12 +98,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         String method = ((ServletWebRequest)request).getRequest().getMethod();
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(ex.getStackTrace()[0].getClassName(),
-                String.format("request body did not pass common validation at %s route with %s method",route,method),
+                HTTP_REQUEST_FAILED_COMMON_VALIDATION,
+                String.format(multiLanguageComponent.getMessageByKey(HTTP_REQUEST_FAILED_COMMON_VALIDATION),route,method),
                 ex.getClass().getCanonicalName());
 
-        CommonUnsuccessfulResponseDTO commonUnsuccessfulResponseDTO = new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), new CommonMessageDTO("error", errorDesriptor.getDescription()), errorDesriptor);
+        CommonUnsuccessfulResponseDTO commonUnsuccessfulResponseDTO = new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), "error",errorDesriptor.getMessageKey(), errorDesriptor.getMessage(), errorDesriptor);
         for (FieldError fieldError:ex.getBindingResult().getFieldErrors())
-            commonUnsuccessfulResponseDTO.getMessages().add(new CommonMessageDTO("error",String.format("%s field did not pass validation, reason : %s",fieldError.getField(),fieldError.getDefaultMessage())));
+            commonUnsuccessfulResponseDTO.getMessages().add(new CommonMessageDTO("error",HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON,String.format(multiLanguageComponent.getMessageByKey(HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON),fieldError.getField(),fieldError.getDefaultMessage())));
 
         return new ResponseEntity(commonUnsuccessfulResponseDTO,HttpStatus.BAD_REQUEST);
     }

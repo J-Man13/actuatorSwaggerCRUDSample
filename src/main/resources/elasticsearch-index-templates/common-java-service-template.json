@@ -1,13 +1,10 @@
-//This file is not used anywhere
-//Just wanted to show java-request-trace index mapping
-//Used lower mentioned json as body for index template update
 {
   "index_patterns": [
     "java-service-*"
   ],
   "settings": {
     "index": {
-      "refresh_interval": "5s"
+      "refresh_interval": "10s"
     }
   },
   "mappings": {
@@ -46,10 +43,21 @@
       "threadPriority" : {
         "type" : "long"
       },
-      "source": {
-        "type" : "text"
-      },
       "message": {
+        "properties":{
+          "logCallLocation" : {
+            "type" : "text"
+          },
+          "logCauseDescription":{
+            "type" : "text"
+          },
+          "logEntry" : {
+            "type" : "object"
+          },
+          "logMap" : {
+            "type" : "object"
+          }
+        },
         "type" : "object"
       }
     }

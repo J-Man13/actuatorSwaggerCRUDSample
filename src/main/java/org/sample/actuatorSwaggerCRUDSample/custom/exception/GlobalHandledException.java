@@ -5,9 +5,9 @@ import org.sample.actuatorSwaggerCRUDSample.model.ErrorDesriptor;
 public class GlobalHandledException extends RuntimeException {
     private ErrorDesriptor errorDesriptor;
 
-    public GlobalHandledException(String description) {
-        super(description);
-        this.errorDesriptor = new ErrorDesriptor(this.getStackTrace()[0].getClassName(),description,this.getClass().getCanonicalName());
+    public GlobalHandledException(String messageKey,String message) {
+        super(messageKey);
+        this.errorDesriptor = new ErrorDesriptor(this.getStackTrace()[0].getClassName(),messageKey,message,this.getClass().getCanonicalName());
     }
 
     public ErrorDesriptor getErrorDesriptor() {

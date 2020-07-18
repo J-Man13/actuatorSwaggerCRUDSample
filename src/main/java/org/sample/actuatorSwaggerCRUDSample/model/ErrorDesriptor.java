@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 public class ErrorDesriptor {
     private String source;
     private String cause;
-    private String description;
+    private String messageKey;
+    private String message;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -24,14 +25,15 @@ public class ErrorDesriptor {
         this.timestamp = Instant.now().getEpochSecond();
     }
 
-    public ErrorDesriptor(String source, String description) {
+    public ErrorDesriptor(String source, String messageKey,String message) {
         this();
         this.source = source;
-        this.description = description;
+        this.message = message;
+        this.messageKey = messageKey;
     }
 
-    public ErrorDesriptor(String source, String description,String cause) {
-        this(source,description);
+    public ErrorDesriptor(String source, String messageKey,String message, String cause) {
+        this(source, messageKey,message);
         this.cause = cause;
     }
 
@@ -51,12 +53,12 @@ public class ErrorDesriptor {
         this.cause = cause;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public LocalDateTime getDtstamp() {
@@ -75,4 +77,11 @@ public class ErrorDesriptor {
         this.timestamp = timestamp;
     }
 
+    public String getMessageKey() {
+        return messageKey;
+    }
+
+    public void setMessageKey(String messageKey) {
+        this.messageKey = messageKey;
+    }
 }

@@ -22,6 +22,10 @@ public class CommonUnsuccessfulResponseDTO<Data> extends CommonResponseDTO<Data>
         errorDesriptorList.add(errorDesriptor);
     }
 
+    public CommonUnsuccessfulResponseDTO(int status, String type, String messageKey, String message,ErrorDesriptor errorDesriptor) {
+        this(status,new CommonMessageDTO(type,messageKey,message),errorDesriptor);
+    }
+
     public List<ErrorDesriptor> getErrorDesriptorList() {
         return errorDesriptorList;
     }
