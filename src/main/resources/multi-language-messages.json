@@ -73,5 +73,10 @@
     "en": "%s field did not pass validation, reason : %s",
     "ru": "%s поле не прошло валидацию, причина : %s",
     "az": "%s sahə validatisiyanı keçməyib, səbəb : %s"
+  },
+  "FAILED_AUTHENTICATION" : {
+    "en": "Request is not authenticated",
+    "ru": "Запрос не аутентифицирован",
+    "az": "Sorğu autentifikasiyanı keçməyib"
   }
 }

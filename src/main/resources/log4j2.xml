@@ -91,7 +91,7 @@
 
     </Appenders>
     <Loggers>
-        <Root level="INFO" includeLocation="true">
+        <Root level="debug" includeLocation="true">
             <AppenderRef ref="CONSOLE"/>
             <AppenderRef ref="APPLICATION_LOGS_ROLLING_FILE"/>
             <AppenderRef ref="APPLICATION_LOGS_ELASTICSEARCH"/>
