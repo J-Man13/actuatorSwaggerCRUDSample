@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration;
+package org.sample.actuatorSwaggerCRUDSample.configuration.db;
 
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;

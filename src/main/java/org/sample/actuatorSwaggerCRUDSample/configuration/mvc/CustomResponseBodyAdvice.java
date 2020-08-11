@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration;
+package org.sample.actuatorSwaggerCRUDSample.configuration.mvc;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.core.MethodParameter;

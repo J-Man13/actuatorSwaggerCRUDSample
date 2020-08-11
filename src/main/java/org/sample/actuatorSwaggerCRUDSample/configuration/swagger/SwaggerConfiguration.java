@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration;
+package org.sample.actuatorSwaggerCRUDSample.configuration.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
