@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.repository.mongo.crm;
 
-import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.CrmUserMongoDocument;
+import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document.CrmUserMongoDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

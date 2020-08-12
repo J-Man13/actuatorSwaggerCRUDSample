@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.model.mongo.crm;
+package org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

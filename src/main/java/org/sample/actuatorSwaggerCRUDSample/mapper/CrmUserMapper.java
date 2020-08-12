@@ -6,7 +6,7 @@ import org.mapstruct.NullValueCheckStrategy;
 import org.sample.actuatorSwaggerCRUDSample.model.CrmUser;
 import org.sample.actuatorSwaggerCRUDSample.model.CrmUserAdditionRequestDto;
 import org.sample.actuatorSwaggerCRUDSample.model.CrmUserUpdateRequestDto;
-import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.CrmUserMongoDocument;
+import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document.CrmUserMongoDocument;
 
 import java.util.List;
 

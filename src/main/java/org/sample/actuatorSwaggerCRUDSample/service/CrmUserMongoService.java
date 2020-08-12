@@ -6,7 +6,7 @@ import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFou
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.model.CrmUser;
-import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.CrmUserMongoDocument;
+import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document.CrmUserMongoDocument;
 import org.sample.actuatorSwaggerCRUDSample.repository.mongo.crm.CrmUserMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
