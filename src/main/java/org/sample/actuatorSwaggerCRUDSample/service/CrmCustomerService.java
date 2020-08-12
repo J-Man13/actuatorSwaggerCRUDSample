@@ -27,11 +27,12 @@ public class CrmCustomerService implements ICrmCustomerService {
     private CrmCustomerMapper crmCustomerMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
 
-    private final String CRM_USER_EXCEPTION_FAILED_UPDATE = "CRM_USER_EXCEPTION_FAILED_UPDATE";
-    private final String CRM_USER_EXCEPTION_FAILED_SAVE = "CRM_USER_EXCEPTION_FAILED_SAVE";
-    private final String CRM_USER_MONGO_DOCUMENT_BY_ID_EXCEPTION = "CRM_USER_MONGO_DOCUMENT_BY_ID_EXCEPTION";
-    private final String CRM_USER_MONGO_DOCUMENT_BY_ID_NOT_FOUND = "CRM_USER_MONGO_DOCUMENT_BY_ID_NOT_FOUND";
-    private final String CRM_USER_MONGO_DOCUMENT_BY_NAME_EXCEPTION = "CRM_USER_MONGO_DOCUMENT_BY_NAME_EXCEPTION";
+    private final String CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE = "CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE";
+    private final String CRM_CUSTOMER_EXCEPTION_FAILED_SAVE = "CRM_CUSTOMER_EXCEPTION_FAILED_SAVE";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND";
 
     public CrmCustomerService(@Autowired @Qualifier("crmCustomerMongoRepository") CrmCustomerMongoRepository crmCustomerMongoRepository,
                               @Autowired CrmCustomerMapper crmCustomerMapper,
@@ -51,7 +52,7 @@ public class CrmCustomerService implements ICrmCustomerService {
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error(String.format("CRM Mongo repository has thrown exception during document update : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
-            throw new GlobalHandledException(CRM_USER_EXCEPTION_FAILED_UPDATE,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_EXCEPTION_FAILED_UPDATE), dataAccessException.getMessage()));
+            throw new GlobalHandledException(CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE), dataAccessException.getMessage()));
         }
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
     }
@@ -64,7 +65,7 @@ public class CrmCustomerService implements ICrmCustomerService {
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error(String.format("CRM Mongo repository has thrown exception during document save : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
-            throw new GlobalHandledException(CRM_USER_EXCEPTION_FAILED_SAVE,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()));
+            throw new GlobalHandledException(CRM_CUSTOMER_EXCEPTION_FAILED_SAVE,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()));
         }
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
     }
@@ -76,13 +77,13 @@ public class CrmCustomerService implements ICrmCustomerService {
             crmCustomerMongoDocument = crmCustomerMongoRepository.findById(id).orElse(null);
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(String.format("CRM users mongo repository has thrown exception during document by id extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
-            throw new GlobalHandledException(CRM_USER_MONGO_DOCUMENT_BY_ID_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_MONGO_DOCUMENT_BY_ID_EXCEPTION), dataAccessException.getMessage()));
+            LOGGER.error(String.format("CRM customers mongo repository has thrown exception during document by id extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
+            throw new GlobalHandledException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION), dataAccessException.getMessage()));
         }
 
         Objects.requireNonNull(crmCustomerMongoDocument,()->{
-            LOGGER.debug(String.format("CRM user mongo document with %s id was not found",id));
-            throw new MongoDocumentNotFoundException(CRM_USER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),id));
+            LOGGER.debug(String.format("CRM customer mongo document with %s id was not found",id));
+            throw new MongoDocumentNotFoundException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),id));
         });
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
     }
@@ -93,14 +94,13 @@ public class CrmCustomerService implements ICrmCustomerService {
         try {
             crmCustomerMongoDocumentList = crmCustomerMongoRepository.findAllByName(name);
         }catch (DataAccessException dataAccessException){
-            LOGGER.error(String.format("CRM users mongo repository has thrown exception during documents by name extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
-            throw new GlobalHandledException(CRM_USER_MONGO_DOCUMENT_BY_NAME_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_MONGO_DOCUMENT_BY_NAME_EXCEPTION), dataAccessException.getMessage()));
+            LOGGER.error(String.format("CRM customers mongo repository has thrown exception during documents by name extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
+            throw new GlobalHandledException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION), dataAccessException.getMessage()));
         }
 
         if (CollectionUtils.isEmpty(crmCustomerMongoDocumentList)){
-            LOGGER.debug(String.format("There was not any CRM user mongo documents with %s name",name));
-            String CRM_USER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND = "CRM_USER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND";
-            throw new MongoDocumentNotFoundException(CRM_USER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND),name));
+            LOGGER.debug(String.format("There was not any CRM customer mongo documents with %s name",name));
+            throw new MongoDocumentNotFoundException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND),name));
         }
         return crmCustomerMapper.crmCustomerMongoDocumentListToCrmCustomerList(crmCustomerMongoDocumentList);
     }
