@@ -1,11 +1,20 @@
-package org.sample.actuatorSwaggerCRUDSample.model;
+package org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-public class CrmClient {
+@Document(collection = "customers")
+public class CrmCustomerMongoDocument {
+    @Id
     private String id;
+
     private String name;
     private String surname;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime dtstamp;
 
     public String getId() {
@@ -38,15 +47,5 @@ public class CrmClient {
 
     public void setDtstamp(LocalDateTime dtstamp) {
         this.dtstamp = dtstamp;
-    }
-
-    @Override
-    public String toString() {
-        return "CrmUserDao{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", dtstamp=" + dtstamp +
-                '}';
     }
 }

@@ -5,7 +5,7 @@ package org.sample.actuatorSwaggerCRUDSample.model;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-public class CrmClientAdditionRequestDto implements Serializable {
+public class CrmCustomerAdditionRequestDto implements Serializable {
     @NotBlank
     private String name;
 

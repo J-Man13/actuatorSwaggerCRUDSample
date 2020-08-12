@@ -1,10 +1,10 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-public class CrmClientUpdateRequestDto {
+public class CrmCustomerUpdateRequestDto {
     public String name;
     public String surname;
 
-    public CrmClientUpdateRequestDto() {
+    public CrmCustomerUpdateRequestDto() {
 
     }
 
