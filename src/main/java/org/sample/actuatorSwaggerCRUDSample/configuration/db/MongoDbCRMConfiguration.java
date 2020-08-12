@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,7 +19,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
         mongoTemplateRef = "crmMongoTemplate")
 public class MongoDbCRMConfiguration {
 
-    @Primary
     @Bean("crmMongoDbFactory")
     public MongoDbFactory crmMongoDbFactory(@Value("${spring.data.mongodb.crm.uri}") String mongoDbCRMUri) {
         MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder();
@@ -29,7 +28,7 @@ public class MongoDbCRMConfiguration {
         return new SimpleMongoDbFactory(new MongoClientURI(mongoDbCRMUri,optionsBuilder));
     }
 
-    @Primary
+
     @Bean("crmMongoTemplate")
     public MongoTemplate crmMongoTemplate(@Autowired @Qualifier("crmMongoDbFactory") MongoDbFactory mongoDbFactory) {
         return new MongoTemplate(mongoDbFactory);

@@ -1,9 +1,9 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
-public class CrmUserUpdateResponceDto {
+public class CrmClientAdditionResponceDto {
     private CrmClient crmClient;
 
-    public CrmUserUpdateResponceDto(CrmClient crmClient) {
+    public CrmClientAdditionResponceDto(CrmClient crmClient) {
         this.crmClient = crmClient;
     }
 

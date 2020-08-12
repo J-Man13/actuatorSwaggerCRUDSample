@@ -1,16 +1,12 @@
 package org.sample.actuatorSwaggerCRUDSample.model;
 
+public class CrmClientUpdateRequestDto {
+    public String name;
+    public String surname;
 
+    public CrmClientUpdateRequestDto() {
 
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-
-public class CrmUserAdditionRequestDto implements Serializable {
-    @NotBlank
-    private String name;
-
-    @NotBlank
-    private String surname;
+    }
 
     public String getName() {
         return name;
@@ -27,5 +23,4 @@ public class CrmUserAdditionRequestDto implements Serializable {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
 }
