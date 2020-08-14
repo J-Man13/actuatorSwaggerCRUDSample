@@ -10,16 +10,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final ActuatorAuthenticationEntryPoint actuatorAuthenticationEntryPoint;
     private final String actuatorUser;
     private final String actuatorUserPassword;
 
-    public SecurityConfiguration(@Autowired AuthenticationEntryPoint authenticationEntryPoint,
-                                 @Value("${local.actuator.user}") String actuatorUser,
-                                 @Value("${local.actuator.password}") String actuatorUserPassword){
-        this.authenticationEntryPoint = authenticationEntryPoint;
+    public ActuatorSecurityConfiguration(@Autowired ActuatorAuthenticationEntryPoint actuatorAuthenticationEntryPoint,
+                                         @Value("${local.actuator.user}") String actuatorUser,
+                                         @Value("${local.actuator.password}") String actuatorUserPassword){
+        this.actuatorAuthenticationEntryPoint = actuatorAuthenticationEntryPoint;
         this.actuatorUser = actuatorUser;
         this.actuatorUserPassword = actuatorUserPassword;
     }
@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/actuator/**").authenticated()
                 .and()
-                .httpBasic().authenticationEntryPoint(authenticationEntryPoint);
+                .httpBasic().authenticationEntryPoint(actuatorAuthenticationEntryPoint);
     }
 
     @Autowired

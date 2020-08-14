@@ -15,16 +15,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 
 @Component
-public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
+public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
-    private final String FAILED_AUTHENTICATION = "FAILED_AUTHENTICATION";
+    private final String FAILED_ACTUATOR_AUTHENTICATION = "FAILED_ACTUATOR_AUTHENTICATION";
     private final IMultiLanguageComponent multiLanguageComponent;
 
-    public AuthenticationEntryPoint(@Autowired @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent){
+    public ActuatorAuthenticationEntryPoint(@Autowired @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent){
         this.multiLanguageComponent = multiLanguageComponent;
     }
 
@@ -37,19 +37,24 @@ public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(authEx.getStackTrace()[0].getClassName(),
-                FAILED_AUTHENTICATION,
-                multiLanguageComponent.getMessageByKey(FAILED_AUTHENTICATION),
+                FAILED_ACTUATOR_AUTHENTICATION,
+                multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),
                 authEx.getClass().getCanonicalName());
 
-        CommonUnsuccessfulResponseDTO commonUnsuccessfulResponseDTO = new CommonUnsuccessfulResponseDTO(HttpServletResponse.SC_UNAUTHORIZED, "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor);
-
-        PrintWriter writer = response.getWriter();
-        writer.println(new ObjectMapper().writeValueAsString(commonUnsuccessfulResponseDTO));
+        response.getWriter().println(new ObjectMapper().writeValueAsString(buildFailedActuatorAuthenticationDto(authEx)));
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         setRealmName("AZC");
         super.afterPropertiesSet();
+    }
+
+    private CommonUnsuccessfulResponseDTO buildFailedActuatorAuthenticationDto(AuthenticationException authEx){
+        ErrorDesriptor errorDesriptor = new ErrorDesriptor(authEx.getStackTrace()[0].getClassName(),
+                FAILED_ACTUATOR_AUTHENTICATION,
+                String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),authEx.getMessage()),
+                authEx.getClass().getCanonicalName());
+        return new CommonUnsuccessfulResponseDTO(HttpServletResponse.SC_UNAUTHORIZED, "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor);
     }
 }

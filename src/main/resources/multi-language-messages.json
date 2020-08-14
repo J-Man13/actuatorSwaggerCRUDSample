@@ -74,9 +74,9 @@
     "ru": "%s поле не прошло валидацию, причина : %s",
     "az": "%s sahə validatisiyanı keçməyib, səbəb : %s"
   },
-  "FAILED_AUTHENTICATION" : {
-    "en": "Request is not authenticated",
-    "ru": "Запрос не аутентифицирован",
-    "az": "Sorğu autentifikasiyanı keçməyib"
+  "FAILED_ACTUATOR_AUTHENTICATION" : {
+    "en": "Request to actuator is not authenticated. Reason: %s",
+    "ru": "Запрос в актутор не аутентифицирован. Причина: %s",
+    "az": "Aktuatora gedən sorğu autentifikasiyanı keçməyib. Səbəb: %s"
   }
 }
