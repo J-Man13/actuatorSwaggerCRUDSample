@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,11 +46,22 @@ public class CrmCustomerService implements ICrmCustomerService {
         this.multiLanguageComponent = multiLanguageComponent;
     }
 
+    @Transactional("crmMongoTransactionManager")
     @Override
     public CrmCustomer update(CrmCustomer crmCustomer) {
-        CrmCustomerMongoDocument crmCustomerMongoDocument = crmCustomerMapper.crmCustomerToCrmCustomerMongoDocument(crmCustomer);
+        CrmCustomerMongoDocument crmCustomerMongoDocument;
         try {
-            crmCustomerMongoDocument = crmCustomerMongoRepository.save(crmCustomerMongoDocument);
+            LOGGER.trace("Extracting customer by id from crm customers repository","id",crmCustomer.getId());
+            crmCustomerMongoDocument = crmCustomerMongoRepository.findById(crmCustomer.getId()).orElse(null);
+            Objects.requireNonNull(crmCustomerMongoDocument,()->{
+                LOGGER.debug(String.format("CRM customer mongo document with %s id was not found",crmCustomer.getId()));
+                throw new MongoDocumentNotFoundException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),crmCustomer.getId()));
+            });
+            crmCustomerMapper.updateCrmCustomerMongoDocumentByCrmCustomer(crmCustomerMongoDocument,crmCustomer);
+            crmCustomerMongoRepository.save(crmCustomerMongoDocument);
+        }
+        catch (MongoDocumentNotFoundException mongoDocumentNotFoundException){
+            throw mongoDocumentNotFoundException;
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error(String.format("CRM Mongo repository has thrown exception during document update : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
@@ -57,9 +70,11 @@ public class CrmCustomerService implements ICrmCustomerService {
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
     }
 
+    @Transactional("crmMongoTransactionManager")
     @Override
     public CrmCustomer save(CrmCustomer crmCustomer){
         CrmCustomerMongoDocument crmCustomerMongoDocument = crmCustomerMapper.crmCustomerToCrmCustomerMongoDocument(crmCustomer);
+        crmCustomerMongoDocument.setDtstamp(LocalDateTime.now());
         try {
             crmCustomerMongoDocument = crmCustomerMongoRepository.save(crmCustomerMongoDocument);
         }

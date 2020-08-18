@@ -111,14 +111,12 @@ public class CrmCustomersController {
             @ApiResponse(code = 404, message = "Crm customer mongo document with id was not found"),
             @ApiResponse(code = 500, message = "Technical mismatch, advising to contact for the logs, to handle the issue")
     })
-    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<CommonResponseDTO<CrmCustomerUpdateResponceDto>> updateCustomer(@PathVariable("id") String id, @RequestBody CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto) {
-        LOGGER.trace(String.format("Extracting customer by %s id from crm customers service for update",id),"crmCustomerUpdateRequestDto", crmCustomerUpdateRequestDto);
-        CrmCustomer crmCustomer = crmCustomerService.findById(id);
-        LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service for update",id),"crmCustomer", crmCustomer);
-        crmCustomer = crmCustomerMapper.updateCrmCustomerByCrmCustomerUpdateRequestDto(crmCustomer, crmCustomerUpdateRequestDto);
+    @PutMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<CommonResponseDTO<CrmCustomerUpdateResponceDto>> updateCustomer(@RequestBody CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto) {
+        LOGGER.trace(String.format("Updating crmUserEntity by %s id with given dto",crmCustomerUpdateRequestDto.getId()),"crmCustomerUpdateRequestDto", crmCustomerUpdateRequestDto);
+        CrmCustomer crmCustomer = crmCustomerMapper.crmCustomerUpdateRequestDtoToCrmCustomer(crmCustomerUpdateRequestDto);
         crmCustomer = crmCustomerService.update(crmCustomer);
-        LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service after update",id),"crmCustomer", crmCustomer);
+        LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service after update",crmCustomer.getId()),"crmCustomer", crmCustomer);
         CrmCustomerUpdateResponceDto crmCustomerUpdateResponceDto = new CrmCustomerUpdateResponceDto(crmCustomer);
         CommonResponseDTO<CrmCustomerUpdateResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success",CRM_CUSTOMER_UPDATED_SUCCESSFULLY,multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_UPDATED_SUCCESSFULLY)));
         commonResponseDTO.setData(crmCustomerUpdateResponceDto);

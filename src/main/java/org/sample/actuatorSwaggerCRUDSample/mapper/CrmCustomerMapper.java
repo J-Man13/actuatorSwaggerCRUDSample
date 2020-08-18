@@ -16,5 +16,6 @@ public interface CrmCustomerMapper {
     CrmCustomerMongoDocument crmCustomerToCrmCustomerMongoDocument(CrmCustomer crmCustomer);
     CrmCustomer crmCustomerMongoDocumentToCrmCustomer(CrmCustomerMongoDocument crmCustomerMongoDocument);
     List<CrmCustomer> crmCustomerMongoDocumentListToCrmCustomerList(List<CrmCustomerMongoDocument> crmCustomerMongoDocument);
-    CrmCustomer updateCrmCustomerByCrmCustomerUpdateRequestDto(@MappingTarget CrmCustomer deliveryAddress, CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto);
+    CrmCustomer crmCustomerUpdateRequestDtoToCrmCustomer(CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto);
+    CrmCustomerMongoDocument updateCrmCustomerMongoDocumentByCrmCustomer(@MappingTarget CrmCustomerMongoDocument crmCustomerMongoDocument, CrmCustomer crmCustomer);
 }
