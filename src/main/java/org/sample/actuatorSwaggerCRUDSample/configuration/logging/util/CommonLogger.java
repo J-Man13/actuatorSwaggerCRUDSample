@@ -73,6 +73,19 @@ public class CommonLogger {
         LOGGER.error(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
     }
 
+    public void fatal(String logCauseDescription)
+    {
+        LOGGER.fatal(new CommonLoggingObject(logCauseDescription,getCaller()));
+    }
+
+    public void fatal(String logCauseDescription, String loggableObjectKey, Object data){
+        LOGGER.fatal(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+    }
+
+    public void fatal(String logCauseDescription, Map<String,String> logMap){
+        LOGGER.fatal(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+    }
+
     private String getCaller(){
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
         return stackTraceElement.getClassName()+"."+stackTraceElement.getMethodName()+"() line : "+stackTraceElement.getLineNumber();
