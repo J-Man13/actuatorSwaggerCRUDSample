@@ -1,5 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.service;
 
+import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,7 +66,10 @@ public class CrmCustomerService implements ICrmCustomerService {
             throw mongoDocumentNotFoundException;
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(String.format("CRM Mongo repository has thrown exception during document update : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
+            LOGGER.error(String.format("CRM Mongo repository has thrown exception during document update",new HashMap<String, String>() {{
+                put("dataAccessExceptionMessage", dataAccessException.getMessage());
+                put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
+            }}));
             throw new GlobalHandledException(CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE), dataAccessException.getMessage()));
         }
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
@@ -79,7 +84,10 @@ public class CrmCustomerService implements ICrmCustomerService {
             crmCustomerMongoDocument = crmCustomerMongoRepository.save(crmCustomerMongoDocument);
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(String.format("CRM Mongo repository has thrown exception during document save : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
+            LOGGER.error(String.format("CRM Mongo repository has thrown exception during document save",new HashMap<String, String>() {{
+                put("dataAccessExceptionMessage", dataAccessException.getMessage());
+                put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
+            }}));
             throw new GlobalHandledException(CRM_CUSTOMER_EXCEPTION_FAILED_SAVE,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()));
         }
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
@@ -92,7 +100,10 @@ public class CrmCustomerService implements ICrmCustomerService {
             crmCustomerMongoDocument = crmCustomerMongoRepository.findById(id).orElse(null);
         }
         catch (DataAccessException dataAccessException){
-            LOGGER.error(String.format("CRM customers mongo repository has thrown exception during document by id extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
+            LOGGER.error(String.format("CRM customers mongo repository has thrown exception during document by id extraction",new HashMap<String, String>() {{
+                put("dataAccessExceptionMessage", dataAccessException.getMessage());
+                put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
+            }}));
             throw new GlobalHandledException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION), dataAccessException.getMessage()));
         }
 
@@ -109,7 +120,10 @@ public class CrmCustomerService implements ICrmCustomerService {
         try {
             crmCustomerMongoDocumentList = crmCustomerMongoRepository.findAllByName(name);
         }catch (DataAccessException dataAccessException){
-            LOGGER.error(String.format("CRM customers mongo repository has thrown exception during documents by name extraction : %s", dataAccessException.getMessage()),"dataAccessException",dataAccessException);
+            LOGGER.error(String.format("CRM customers mongo repository has thrown exception during documents by name extraction",new HashMap<String, String>() {{
+                put("dataAccessExceptionMessage", dataAccessException.getMessage());
+                put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
+            }}));
             throw new GlobalHandledException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION), dataAccessException.getMessage()));
         }
 

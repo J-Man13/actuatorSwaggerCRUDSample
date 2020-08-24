@@ -1,12 +1,14 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.model.CommonUnsuccessfulResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.ErrorDesriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
@@ -51,7 +53,7 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
 
         LOGGER.fatal("Actuator Login failure. If you see lots of these messages, it means that there are authentication misfits with application's actuator accessors ,or someone is trying to guess actuator authentication credentials",new HashMap<String, String>() {{
             put("actuatorAuthenticationExceptionMessage", authenticationException.getMessage());
-            put("actuatorAuthenticationExceptionStackTraceAsString", authenticationException.getStackTrace().toString());
+            put("actuatorAuthenticationExceptionStackTraceAsString", Throwables.getStackTraceAsString(authenticationException));
             put("actuatorAccessorRemoteHost",request.getRemoteHost());
             put("actuatorAccessorHeaders",headersMap.toString());
         }});
