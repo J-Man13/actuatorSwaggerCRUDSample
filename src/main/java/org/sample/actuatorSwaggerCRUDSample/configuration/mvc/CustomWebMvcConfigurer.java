@@ -19,7 +19,6 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
     }
 
     class CustomHttpRequestInterceptor extends HandlerInterceptorAdapter {
-
         @Override
         public boolean preHandle(HttpServletRequest request,
                                  HttpServletResponse response, Object handler) throws Exception {
@@ -28,9 +27,7 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
             //Logbook request/response logging can be disabled for some path in its configuration so
             //thread context wll not be cleared and activity.id with correlation.id will not be defined
             //which are cleared and defined in logbook per each request
-            String logbookExecutionStatus = ThreadContext.get("logbook.execution.status");
-            if (StringUtils.isEmpty(logbookExecutionStatus) || !logbookExecutionStatus.equals("executed")){
-                ThreadContext.clearAll();
+            if (StringUtils.isEmpty(ThreadContext.get("activity.id")) && StringUtils.isEmpty(ThreadContext.get("correlation.id"))){
                 String headerActivityId = request.getHeader("activity.id");
                 String activityId = StringUtils.isEmpty(headerActivityId)?UUID.randomUUID().toString():headerActivityId;
                 ThreadContext.put("activity.id",activityId);
