@@ -2,6 +2,7 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.ThreadContext;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +29,7 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
             LOGGER.info("request logging","request",jsonNode);
         }
         catch (IOException ioe){
-            LOGGER.info("request log is not in json format, logging as a string","unparseableRequest",request);
+            LOGGER.info("request log is not in json format, logging as a string","unparsableRequest",request);
         }
     }
 
@@ -39,7 +40,8 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
             LOGGER.info("response logging","response",jsonNode);
         }
         catch (IOException ioe){
-            LOGGER.info("response log is not in json format, logging as a string","unparseableResponse",response);
+            LOGGER.info("response log is not in json format, logging as a string","unparsableResponse",response);
         }
+        ThreadContext.clearAll();//clear ThreadContext after request processing
     }
 }

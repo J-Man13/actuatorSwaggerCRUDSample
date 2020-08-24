@@ -44,18 +44,15 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         content.put("headers",request.getHeaders().toString());
         prepareBody(request).ifPresent(body -> content.put("body", body));
 
-        String incomingActivityId = null;
         Map<String,List<String>> heaedersKeyValues = request.getHeaders();
         List<String> incomingActivityIdList = null;
+        String incomingActivityId = null;
         if (heaedersKeyValues != null && !heaedersKeyValues.isEmpty())
             incomingActivityIdList = heaedersKeyValues.get("activity.id");
         if (incomingActivityIdList != null && !incomingActivityIdList.isEmpty())
             incomingActivityId = StringUtils.isEmpty(incomingActivityIdList.get(0))?null:incomingActivityIdList.get(0);
-
         content.put("incomingActivityId", incomingActivityId);
-        String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
-        ThreadContext.put("activity.id",activityId);
-        ThreadContext.put("correlation.id",UUID.randomUUID().toString());
+        activityCorrelationContextHandling(incomingActivityId);
 
         return content;
     }
@@ -86,5 +83,13 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
     @Override
     public String format(final Map<String, Object> content) throws IOException {
         try{return objectMapper.writeValueAsString(content);}catch (IOException ioe){return content.toString();}
+    }
+
+    private void activityCorrelationContextHandling(String incomingActivityId){
+        ThreadContext.clearAll();
+        String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
+        ThreadContext.put("activity.id",activityId);
+        ThreadContext.put("correlation.id",UUID.randomUUID().toString());
+        ThreadContext.put("logbook.execution.status","executed");
     }
 }
