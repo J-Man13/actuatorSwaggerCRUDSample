@@ -56,7 +56,7 @@ public class CrmCustomerService implements ICrmCustomerService {
             LOGGER.trace("Extracting customer by id from crm customers repository","id",crmCustomer.getId());
             crmCustomerMongoDocument = crmCustomerMongoRepository.findById(crmCustomer.getId()).orElse(null);
             Objects.requireNonNull(crmCustomerMongoDocument,()->{
-                LOGGER.debug(String.format("CRM customer mongo document with %s id was not found",crmCustomer.getId()));
+                LOGGER.debug(String.format("CRM customer mongo document with given id was not found","id",crmCustomer.getId()));
                 throw new MongoDocumentNotFoundException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),crmCustomer.getId()));
             });
             crmCustomerMapper.updateCrmCustomerMongoDocumentByCrmCustomer(crmCustomerMongoDocument,crmCustomer);
@@ -108,7 +108,7 @@ public class CrmCustomerService implements ICrmCustomerService {
         }
 
         Objects.requireNonNull(crmCustomerMongoDocument,()->{
-            LOGGER.debug(String.format("CRM customer mongo document with %s id was not found",id));
+            LOGGER.debug(String.format("CRM customer mongo document with given id was not found","id",id));
             throw new MongoDocumentNotFoundException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),id));
         });
         return crmCustomerMapper.crmCustomerMongoDocumentToCrmCustomer(crmCustomerMongoDocument);
@@ -128,7 +128,7 @@ public class CrmCustomerService implements ICrmCustomerService {
         }
 
         if (CollectionUtils.isEmpty(crmCustomerMongoDocumentList)){
-            LOGGER.debug(String.format("There was not any CRM customer mongo documents with %s name",name));
+            LOGGER.debug(String.format("There was not any CRM customer mongo documents with given name","name",name));
             throw new MongoDocumentNotFoundException(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND),name));
         }
         return crmCustomerMapper.crmCustomerMongoDocumentListToCrmCustomerList(crmCustomerMongoDocumentList);

@@ -113,7 +113,7 @@ public class CrmCustomersController {
     })
     @PutMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO<CrmCustomerUpdateResponceDto>> updateCustomer(@RequestBody CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto) {
-        LOGGER.trace(String.format("Updating crmUserEntity by %s id with given dto",crmCustomerUpdateRequestDto.getId()),"crmCustomerUpdateRequestDto", crmCustomerUpdateRequestDto);
+        LOGGER.trace("Updating crmUserEntity with given dto","crmCustomerUpdateRequestDto", crmCustomerUpdateRequestDto);
         CrmCustomer crmCustomer = crmCustomerMapper.crmCustomerUpdateRequestDtoToCrmCustomer(crmCustomerUpdateRequestDto);
         crmCustomer = crmCustomerService.update(crmCustomer);
         LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service after update",crmCustomer.getId()),"crmCustomer", crmCustomer);
