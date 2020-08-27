@@ -16,14 +16,13 @@ public class CommonLoggingObject{
     }
 
     public CommonLoggingObject(String logCauseDescription,String location) {
+        this();
         this.logCauseDescription = logCauseDescription;
         this.logCallLocation = location;
-        this.logEntry = null;
     }
 
     public CommonLoggingObject(String logCauseDescription, String loggableObjectKey, Object data,String location) {
-        this.logCauseDescription = logCauseDescription;
-        this.logCallLocation = location;
+
         if (StringUtils.isEmpty(loggableObjectKey) || data == null)
             this.logEntry = null;
         else
@@ -31,8 +30,7 @@ public class CommonLoggingObject{
     }
 
     public CommonLoggingObject(String logCauseDescription, Map<String,String> logMap, String location) {
-        this.logCauseDescription = logCauseDescription;
-        this.logCallLocation = location;
+        this(logCauseDescription,location);
         if (logMap == null || logMap.isEmpty())
             this.logMap = null;
         else
