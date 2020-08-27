@@ -1,5 +1,7 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 
+import com.google.common.base.Throwables;
+import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
@@ -24,6 +26,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.HashMap;
 
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -31,15 +34,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final IMultiLanguageComponent multiLanguageComponent;
+    private final CommonLogger LOGGER;
 
     private final String THERE_IS_NO_LISTENER_FOR_ROUTE = "THERE_IS_NO_LISTENER_FOR_ROUTE";
     private final String METHOD_IS_NOT_SUPPORTED = "METHOD_IS_NOT_SUPPORTED";
     private final String HTTP_REQUEST_IS_NOT_READABLE = "HTTP_REQUEST_IS_NOT_READABLE";
     private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION = "HTTP_REQUEST_FAILED_COMMON_VALIDATION";
     private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON = "HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON";
+    private final String RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING = "RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING";
 
-    public CommonRestExceptionHandler(@Autowired @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent){
+    public CommonRestExceptionHandler(@Autowired @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
+                                      @Autowired @Qualifier("trace-logger") CommonLogger LOGGER){
         this.multiLanguageComponent = multiLanguageComponent;
+        this.LOGGER = LOGGER;
     }
 
     @ExceptionHandler(MongoDocumentNotFoundException.class)
@@ -57,7 +64,12 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception exception) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
-                "UNHANDLED_EXCEPTION",exception.getMessage(),exception.getClass().getCanonicalName());
+                RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING,exception.getMessage(),exception.getClass().getCanonicalName());
+        LOGGER.fatal("",new HashMap<String, String>() {{
+            put("unhandledExceptionCanonicalName", exception.getClass().getCanonicalName());
+            put("unhandledExceptionMessage", exception.getMessage());
+            put("unhandledExceptionStackTraceAsString", Throwables.getStackTraceAsString(exception));
+        }});
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
