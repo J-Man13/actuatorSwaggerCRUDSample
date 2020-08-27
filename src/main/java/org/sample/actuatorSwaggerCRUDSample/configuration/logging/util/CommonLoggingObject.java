@@ -22,7 +22,7 @@ public class CommonLoggingObject{
     }
 
     public CommonLoggingObject(String logCauseDescription, String loggableObjectKey, Object data,String location) {
-
+        this(logCauseDescription,location);
         if (StringUtils.isEmpty(loggableObjectKey) || data == null)
             this.logEntry = null;
         else
