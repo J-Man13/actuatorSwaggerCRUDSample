@@ -65,7 +65,7 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity exceptionHandler(Exception exception) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
                 RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING,exception.getMessage(),exception.getClass().getCanonicalName());
-        LOGGER.fatal("",new HashMap<String, String>() {{
+        LOGGER.fatal("ResponseEntityExceptionHandler caught unhandled exception, logging it's class, message and stack trace",new HashMap<String, String>() {{
             put("unhandledExceptionCanonicalName", exception.getClass().getCanonicalName());
             put("unhandledExceptionMessage", exception.getMessage());
             put("unhandledExceptionStackTraceAsString", Throwables.getStackTraceAsString(exception));
