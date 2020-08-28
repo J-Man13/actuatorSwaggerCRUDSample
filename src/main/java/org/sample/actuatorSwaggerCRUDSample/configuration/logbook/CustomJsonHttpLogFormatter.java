@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import org.apache.logging.log4j.ThreadContext;
+import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -52,7 +53,7 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         if (incomingActivityIdList != null && !incomingActivityIdList.isEmpty())
             incomingActivityId = StringUtils.isEmpty(incomingActivityIdList.get(0))?null:incomingActivityIdList.get(0);
         content.put("incomingActivityId", incomingActivityId);
-        activityCorrelationContextHandling(incomingActivityId);
+        CommonUtil.activityCorrelationContextHandling(incomingActivityId);
 
         return content;
     }
@@ -85,11 +86,4 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         try{return objectMapper.writeValueAsString(content);}catch (IOException ioe){return content.toString();}
     }
 
-    private void activityCorrelationContextHandling(String incomingActivityId){
-        ThreadContext.clearAll();
-        String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
-        ThreadContext.put("activity.id",activityId);
-        ThreadContext.put("correlation.id",UUID.randomUUID().toString());
-        ThreadContext.put("logbook.execution.status","executed");
-    }
 }
