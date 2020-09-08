@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class СrmUsersController {
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
 
-    public СrmUsersController(@Autowired @Qualifier("usersJwtSecurityAuthenticationManagerBean") AuthenticationManager authenticationManager){
-        this.authenticationManager = authenticationManager;
-    }
+//    public СrmUsersController(@Autowired @Qualifier("usersJwtSecurityAuthenticationManagerBean") AuthenticationManager authenticationManager){
+//        this.authenticationManager = authenticationManager;
+//    }
 
 }
