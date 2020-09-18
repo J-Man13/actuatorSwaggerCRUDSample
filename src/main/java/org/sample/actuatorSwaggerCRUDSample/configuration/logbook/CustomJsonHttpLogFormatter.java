@@ -3,7 +3,6 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-import org.apache.logging.log4j.ThreadContext;
 import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -53,7 +52,7 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         if (incomingActivityIdList != null && !incomingActivityIdList.isEmpty())
             incomingActivityId = StringUtils.isEmpty(incomingActivityIdList.get(0))?null:incomingActivityIdList.get(0);
         content.put("incomingActivityId", incomingActivityId);
-        CommonUtil.activityCorrelationContextHandling(incomingActivityId);
+        CommonUtil.activityCorrelationContextInitialization(incomingActivityId);
 
         return content;
     }

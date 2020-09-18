@@ -23,7 +23,7 @@ public class CommonUtil {
         }
     }
 
-    public static void activityCorrelationContextHandling(String incomingActivityId){
+    public static void activityCorrelationContextInitialization(String incomingActivityId){
         ThreadContext.clearAll();
         String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
         ThreadContext.put("activity.id",activityId);
