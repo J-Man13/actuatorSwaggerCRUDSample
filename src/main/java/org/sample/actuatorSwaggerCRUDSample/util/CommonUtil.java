@@ -24,10 +24,8 @@ public class CommonUtil {
     }
 
     public static void activityCorrelationContextInitialization(String incomingActivityId){
-        ThreadContext.clearAll();
         String activityId = StringUtils.isEmpty(incomingActivityId)? UUID.randomUUID().toString():incomingActivityId;
         ThreadContext.put("activity.id",activityId);
         ThreadContext.put("correlation.id",UUID.randomUUID().toString());
-        ThreadContext.put("logbook.execution.status","executed");
     }
 }

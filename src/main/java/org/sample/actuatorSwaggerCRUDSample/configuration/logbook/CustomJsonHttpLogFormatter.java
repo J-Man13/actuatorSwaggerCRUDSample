@@ -3,6 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.configuration.logbook;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import org.apache.logging.log4j.ThreadContext;
 import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -52,6 +53,7 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         if (incomingActivityIdList != null && !incomingActivityIdList.isEmpty())
             incomingActivityId = StringUtils.isEmpty(incomingActivityIdList.get(0))?null:incomingActivityIdList.get(0);
         content.put("incomingActivityId", incomingActivityId);
+        ThreadContext.clearAll();
         CommonUtil.activityCorrelationContextInitialization(incomingActivityId);
 
         return content;
@@ -66,10 +68,8 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         content.put("duration", correlation.getDuration().toMillis());
         content.put("protocol", response.getProtocolVersion());
         content.put("status", response.getStatus());
-
         content.put("headers",response.getHeaders().toString());
         prepareBody(response).ifPresent(body -> content.put("body", body));
-
         return content;
     }
 
