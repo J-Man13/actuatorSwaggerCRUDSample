@@ -1,8 +1,5 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.logging.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
