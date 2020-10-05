@@ -14,77 +14,77 @@ public class CommonLogger {
     }
 
     public void trace(String logCauseDescription){
-        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
+        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller(),"TRACE")));
     }
 
     public void trace(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
+        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller(),"TRACE")));
     }
 
     public void trace(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
+        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller(),"TRACE")));
     }
 
     public void debug(String logCauseDescription){
-        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
+        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller(),"DEBUG")));
     }
 
     public void debug(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
+        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller(),"DEBUG")));
     }
 
     public void debug(String logCauseDescription, Map<String,String> logMap) {
-        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
+        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller(),"DEBUG")));
     }
 
     public void info(String logCauseDescription){
-        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
+        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller(),"INFO")));
     }
 
     public void info(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
+        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller(),"INFO")));
     }
 
     public void info(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
+        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller(),"INFO")));
     }
 
     public void warn(String logCauseDescription){
-        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
+        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller(),"WARN")));
     }
 
     public void warn(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
+        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller(),"WARN")));
     }
 
     public void warn(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
+        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller(),"WARN")));
     }
 
     public void error(String logCauseDescription)
     {
-        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
+        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller(),"ERROR")));
     }
 
     public void error(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
+        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller(),"ERROR")));
     }
 
     public void error(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
+        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller(),"ERROR")));
     }
 
     public void fatal(String logCauseDescription)
     {
-        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
+        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller(),"FATAL")));
     }
 
     public void fatal(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
+        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller(),"FATAL")));
     }
 
     public void fatal(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
+        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller(),"FATAL")));
     }
 
     private String getCaller(){

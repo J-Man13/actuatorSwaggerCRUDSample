@@ -14,17 +14,11 @@ public class CommonLoggableJsonMessage implements Message{
     private String messageString;
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public CommonLoggableJsonMessage() throws JsonProcessingException {
+    public CommonLoggableJsonMessage(){
         this(null);
     }
 
     public CommonLoggableJsonMessage(Object msgObj){
-        parseMessageAsJson(msgObj);
-    }
-
-    public CommonLoggableJsonMessage(String msgStr){
-        Map<String,String> msgObj = new HashMap<>();
-        msgObj.put("message", msgStr);
         parseMessageAsJson(msgObj);
     }
 

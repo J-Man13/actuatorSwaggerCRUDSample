@@ -13,6 +13,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonLoggingObject{
     private final String logDateStamp;
+    private String level;
     private String logCauseDescription;
     private AbstractMap.SimpleEntry<String,Object> logEntry;
     private String logCallLocation;
@@ -37,22 +38,23 @@ public class CommonLoggingObject{
         this.correlationId = ThreadContext.get("correlation.id");
     }
 
-    public CommonLoggingObject(String logCauseDescription,String location) {
+    public CommonLoggingObject(String logCauseDescription,String location,String level) {
         this();
         this.logCauseDescription = logCauseDescription;
         this.logCallLocation = location;
+        this.level = level;
     }
 
-    public CommonLoggingObject(String logCauseDescription, String loggableObjectKey, Object data,String location) {
-        this(logCauseDescription,location);
+    public CommonLoggingObject(String logCauseDescription, String loggableObjectKey, Object data,String location,String level) {
+        this(logCauseDescription,location,level);
         if (StringUtils.isEmpty(loggableObjectKey) || data == null)
             this.logEntry = null;
         else
             this.logEntry = new AbstractMap.SimpleEntry<>(loggableObjectKey,data);
     }
 
-    public CommonLoggingObject(String logCauseDescription, Map<String,String> logMap, String location) {
-        this(logCauseDescription,location);
+    public CommonLoggingObject(String logCauseDescription, Map<String,String> logMap, String location,String level) {
+        this(logCauseDescription,location,level);
         if (logMap == null || logMap.isEmpty())
             this.logMap = null;
         else
@@ -113,5 +115,13 @@ public class CommonLoggingObject{
 
     public String getCorrelationId() {
         return correlationId;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }
