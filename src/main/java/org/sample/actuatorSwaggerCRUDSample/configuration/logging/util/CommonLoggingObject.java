@@ -1,18 +1,40 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.logging.util;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.logging.log4j.ThreadContext;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.AbstractMap;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonLoggingObject{
+    private final String logDateStamp;
     private String logCauseDescription;
-    private String logCallLocation;
     private AbstractMap.SimpleEntry<String,Object> logEntry;
+    private String logCallLocation;
     private Map<String,String> logMap;
 
+    private final String logHostName;
+    private final String logHostAddress;
+    private final String logInfoBuildArchiveBaseName;
+
+    private final String activityId;
+    private final String correlationId;
+    public static CommonLoggingPropertiesConfig commonLoggingPropertiesConfig;
+
+
+
     public CommonLoggingObject() {
+        this.logDateStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        this.logHostName = commonLoggingPropertiesConfig.getHostName();
+        this.logHostAddress =commonLoggingPropertiesConfig.getHostAddress();
+        this.logInfoBuildArchiveBaseName =commonLoggingPropertiesConfig.getInfoBuildArchiveBaseName();
+        this.activityId = ThreadContext.get("activity.id");
+        this.correlationId = ThreadContext.get("correlation.id");
     }
 
     public CommonLoggingObject(String logCauseDescription,String location) {
@@ -67,5 +89,29 @@ public class CommonLoggingObject{
 
     public void setLogMap(Map<String, String> logMap) {
         this.logMap = logMap;
+    }
+
+    public String getLogDateStamp() {
+        return logDateStamp;
+    }
+
+    public String getLogHostName() {
+        return logHostName;
+    }
+
+    public String getLogHostAddress() {
+        return logHostAddress;
+    }
+
+    public String getLogInfoBuildArchiveBaseName() {
+        return logInfoBuildArchiveBaseName;
+    }
+
+    public String getActivityId() {
+        return activityId;
+    }
+
+    public String getCorrelationId() {
+        return correlationId;
     }
 }

@@ -1,5 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.logging.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.Logger;
 
 
@@ -13,81 +14,83 @@ public class CommonLogger {
     }
 
     public void trace(String logCauseDescription){
-        LOGGER.trace(new CommonLoggingObject(logCauseDescription,getCaller()));
+        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
     }
 
     public void trace(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.trace(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
     }
 
     public void trace(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.trace(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+        LOGGER.trace(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
     }
 
     public void debug(String logCauseDescription){
-        LOGGER.debug(new CommonLoggingObject(logCauseDescription,getCaller()));
+        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
     }
 
     public void debug(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.debug(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
     }
 
-    public void debug(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.debug(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+    public void debug(String logCauseDescription, Map<String,String> logMap) {
+        LOGGER.debug(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
     }
 
     public void info(String logCauseDescription){
-        LOGGER.info(new CommonLoggingObject(logCauseDescription,getCaller()));
+        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
     }
 
     public void info(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.info(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
     }
 
     public void info(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.info(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+        LOGGER.info(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
     }
 
     public void warn(String logCauseDescription){
-        LOGGER.warn(new CommonLoggingObject(logCauseDescription,getCaller()));
+        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
     }
 
     public void warn(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.warn(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
     }
 
     public void warn(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.warn(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+        LOGGER.warn(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
     }
 
     public void error(String logCauseDescription)
     {
-        LOGGER.error(new CommonLoggingObject(logCauseDescription,getCaller()));
+        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
     }
 
     public void error(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.error(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
     }
 
     public void error(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.error(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+        LOGGER.error(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
     }
 
     public void fatal(String logCauseDescription)
     {
-        LOGGER.fatal(new CommonLoggingObject(logCauseDescription,getCaller()));
+        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,getCaller())));
     }
 
     public void fatal(String logCauseDescription, String loggableObjectKey, Object data){
-        LOGGER.fatal(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller()));
+        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,loggableObjectKey,data,getCaller())));
     }
 
     public void fatal(String logCauseDescription, Map<String,String> logMap){
-        LOGGER.fatal(new CommonLoggingObject(logCauseDescription,logMap,getCaller()));
+        LOGGER.fatal(new CommonLoggableJsonMessage(new CommonLoggingObject(logCauseDescription,logMap,getCaller())));
     }
 
     private String getCaller(){
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
         return stackTraceElement.getClassName()+"."+stackTraceElement.getMethodName()+"() line : "+stackTraceElement.getLineNumber();
     }
+
+
 }

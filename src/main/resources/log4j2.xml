@@ -24,12 +24,7 @@
         </RollingFile>
 
         <RollingFile name="REQUESTS_LOGS_ROLLING_FILE" fileName="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}.log" filePattern="${REQUESTS_LOGS_ROLLING_FILE_BASE_DIR}/request-logs-${bundle:application:info.build.archiveBaseName}-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <JsonLayout compact="true" stacktraceAsString="true" objectMessageAsJsonObject="true" eventEol="true">
-                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
-                <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
-                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
-                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}"/>
-            </JsonLayout>
+            <PatternLayout pattern="%m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="20 MB"/>
