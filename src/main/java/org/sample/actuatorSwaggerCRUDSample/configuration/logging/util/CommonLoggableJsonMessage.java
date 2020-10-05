@@ -12,7 +12,6 @@ public class CommonLoggableJsonMessage implements Message{
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public CommonLoggableJsonMessage(){
-        this(null);
     }
 
     public CommonLoggableJsonMessage(Object msgObj){
