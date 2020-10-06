@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.logging.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.apache.logging.log4j.Logger;
 
 
