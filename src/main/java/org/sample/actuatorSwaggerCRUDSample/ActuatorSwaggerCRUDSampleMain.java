@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample;
 
-import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLoggableJsonMessage;
+
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLoggingObject;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLoggingPropertiesConfig;
 import org.springframework.beans.factory.annotation.Autowired;
