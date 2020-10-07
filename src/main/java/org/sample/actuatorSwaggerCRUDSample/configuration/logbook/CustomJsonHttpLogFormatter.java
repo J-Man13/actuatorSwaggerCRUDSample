@@ -33,15 +33,10 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         final String correlationId = precorrelation.getId();
 
         final Map<String, Object> content = new LinkedHashMap<>();
-
-        content.put("origin", request.getOrigin().name().toLowerCase(Locale.ROOT));
-        content.put("type", "request");
-        content.put("correlation", correlationId);
-        content.put("protocol", request.getProtocolVersion());
-        content.put("remote", request.getRemote());
-        content.put("method", request.getMethod());
         content.put("uri", request.getRequestUri());
+        content.put("remote", request.getRemote());
         content.put("path",request.getPath());
+        content.put("method", request.getMethod());
         content.put("headers",request.getHeaders().toString());
         prepareBody(request).ifPresent(body -> content.put("body", body));
 
@@ -62,11 +57,7 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
     @Override
     public Map<String, Object> prepare(Correlation correlation, HttpResponse response) throws IOException {
         final Map<String, Object> content = new LinkedHashMap<>();
-        content.put("origin", response.getOrigin().name().toLowerCase(Locale.ROOT));
-        content.put("type", "response");
-        content.put("correlation", correlation.getId());
         content.put("duration", correlation.getDuration().toMillis());
-        content.put("protocol", response.getProtocolVersion());
         content.put("status", response.getStatus());
         content.put("headers",response.getHeaders().toString());
         prepareBody(response).ifPresent(body -> content.put("body", body));

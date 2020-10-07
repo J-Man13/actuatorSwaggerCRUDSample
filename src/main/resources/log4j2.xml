@@ -55,7 +55,12 @@
 
         <Elasticsearch name="APPLICATION_LOGS_ELASTICSEARCH">
             <IndexName indexName="java-application-${bundle:application:info.build.archiveBaseName}"/>
-            <PatternLayout pattern="%m%n"/>
+            <JsonLayout compact="true" stacktraceAsString="true" objectMessageAsJsonObject="false">
+                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
+                <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
+                <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
+                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
+            </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
                 <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
             </AsyncBatchDelivery>
