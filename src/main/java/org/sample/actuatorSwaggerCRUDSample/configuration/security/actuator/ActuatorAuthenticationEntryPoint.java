@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration.security;
+package org.sample.actuatorSwaggerCRUDSample.configuration.security.actuator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;

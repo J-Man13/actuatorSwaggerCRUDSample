@@ -1,15 +1,18 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration.security;
+package org.sample.actuatorSwaggerCRUDSample.configuration.security.actuator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
+@Order(1)
 public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final ActuatorAuthenticationEntryPoint actuatorAuthenticationEntryPoint;
@@ -31,7 +34,9 @@ public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter 
         http.authorizeRequests()
                 .antMatchers("/actuator/**").authenticated()
                 .and()
-                .httpBasic().authenticationEntryPoint(actuatorAuthenticationEntryPoint);
+                .httpBasic().authenticationEntryPoint(actuatorAuthenticationEntryPoint)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Autowired
