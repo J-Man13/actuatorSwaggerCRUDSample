@@ -79,15 +79,15 @@
         <Root level="info" includeLocation="true">
             <AppenderRef ref="CONSOLE"/>
             <AppenderRef ref="APPLICATION_LOGS_ROLLING_FILE"/>
-<!--            <AppenderRef ref="APPLICATION_LOGS_ELASTICSEARCH"/>-->
+            <AppenderRef ref="APPLICATION_LOGS_ELASTICSEARCH"/>
         </Root>
         <AsyncLogger name="requests_logs" level="TRACE" additivity="false" includeLocation="true">
             <AppenderRef ref="REQUESTS_LOGS_ROLLING_FILE"/>
-<!--            <AppenderRef ref="SERVICE_LOGS_ELASTICSEARCH"/>-->
+            <AppenderRef ref="SERVICE_LOGS_ELASTICSEARCH"/>
         </AsyncLogger>
         <AsyncLogger name="trace_logs" level="TRACE" additivity="false" includeLocation="true">
             <AppenderRef ref="TRACE_LOGS_ROLLING_FILE"/>
-<!--            <AppenderRef ref="SERVICE_LOGS_ELASTICSEARCH"/>-->
+            <AppenderRef ref="SERVICE_LOGS_ELASTICSEARCH"/>
         </AsyncLogger>
     </Loggers>
 </Configuration>

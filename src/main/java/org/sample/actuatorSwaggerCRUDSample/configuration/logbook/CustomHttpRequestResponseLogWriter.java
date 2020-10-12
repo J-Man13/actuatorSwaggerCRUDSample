@@ -17,31 +17,27 @@ import java.io.IOException;
 @Component
 public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
     private final CommonLogger LOGGER;
+    private final ObjectMapper objectMapper;
 
     public CustomHttpRequestResponseLogWriter(@Autowired @Qualifier("requests-logger") CommonLogger LOGGER){
         this.LOGGER = LOGGER;
+        this.objectMapper = new ObjectMapper();
     }
 
     @Override
-    public void write(Precorrelation precorrelation, String request){
-        try {
-            JsonNode jsonNode = new ObjectMapper().readTree(request);
-            LOGGER.info("request logging","request",jsonNode);
-        }
-        catch (IOException ioe){
-            LOGGER.info("request log is not in json format, logging as a string","unparsableRequest",request);
-        }
+    public void write(Precorrelation precorrelation, String request) throws IOException {
+        JsonNode jsonNode = objectMapper.readTree(request);
+        LOGGER.info("request logging","request",jsonNode);
     }
 
     @Override
-    public void write(Correlation correlation, String response){
+    public void write(Correlation correlation, String response) throws IOException {
         try {
-            JsonNode jsonNode = new ObjectMapper().readTree(response);
+            JsonNode jsonNode = objectMapper.readTree(response);
             LOGGER.info("response logging","response",jsonNode);
         }
-        catch (IOException ioe){
-            LOGGER.info("response log is not in json format, logging as a string","unparsableResponse",response);
+        finally{
+            ThreadContext.clearAll();//clear ThreadContext after request processing
         }
-        ThreadContext.clearAll();//clear ThreadContext after request processing
     }
 }

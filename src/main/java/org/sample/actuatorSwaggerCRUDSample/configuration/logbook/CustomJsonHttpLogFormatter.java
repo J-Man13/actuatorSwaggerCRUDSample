@@ -29,8 +29,28 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
     }
 
     @Override
+    public String format(final Map<String, Object> content) throws IOException {
+        return objectMapper.writeValueAsString(content);
+    }
+
+    @Override
+    public Optional<Object> prepareBody(final HttpMessage message) throws IOException {
+        String bodyAsString = ObjectUtils.isEmpty(message)?null:message.getBodyAsString();
+        return Optional.ofNullable(bodyAsString);
+    }
+
+    @Override
+    public Map<String, Object> prepare(Correlation correlation, HttpResponse response) throws IOException {
+        final Map<String, Object> content = new LinkedHashMap<>();
+        content.put("duration", correlation.getDuration().toMillis());
+        content.put("status", response.getStatus());
+        content.put("headers",response.getHeaders().toString());
+        prepareBody(response).ifPresent(body -> content.put("body", body));
+        return content;
+    }
+
+    @Override
     public Map<String, Object> prepare(Precorrelation precorrelation, HttpRequest request) throws IOException {
-        final String correlationId = precorrelation.getId();
 
         final Map<String, Object> content = new LinkedHashMap<>();
         content.put("uri", request.getRequestUri());
@@ -54,26 +74,6 @@ public class CustomJsonHttpLogFormatter implements StructuredHttpLogFormatter {
         return content;
     }
 
-    @Override
-    public Map<String, Object> prepare(Correlation correlation, HttpResponse response) throws IOException {
-        final Map<String, Object> content = new LinkedHashMap<>();
-        content.put("duration", correlation.getDuration().toMillis());
-        content.put("status", response.getStatus());
-        content.put("headers",response.getHeaders().toString());
-        prepareBody(response).ifPresent(body -> content.put("body", body));
-        return content;
-    }
 
-    @Override
-    public Optional<Object> prepareBody(final HttpMessage message) throws IOException {
-        return Optional.ofNullable(ObjectUtils.isEmpty(message)|| StringUtils.isEmpty(message.getBodyAsString())? null : message.getBodyAsString());
-    }
-
-
-
-    @Override
-    public String format(final Map<String, Object> content) throws IOException {
-        try{return objectMapper.writeValueAsString(content);}catch (IOException ioe){return content.toString();}
-    }
 
 }
