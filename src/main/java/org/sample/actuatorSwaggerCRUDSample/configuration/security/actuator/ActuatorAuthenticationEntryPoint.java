@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
-import org.sample.actuatorSwaggerCRUDSample.model.CommonUnsuccessfulResponseDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonUnsuccessfulResponseDTO;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

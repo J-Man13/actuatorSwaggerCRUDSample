@@ -6,7 +6,7 @@ import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledExcept
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmCustomerMapper;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
-import org.sample.actuatorSwaggerCRUDSample.model.CrmCustomer;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmCustomer;
 import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document.CrmCustomerMongoDocument;
 import org.sample.actuatorSwaggerCRUDSample.repository.mongo.crm.CrmCustomerMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

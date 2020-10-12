@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.model;
+package org.sample.actuatorSwaggerCRUDSample.model.crm.dto;
 
 import javax.validation.constraints.NotBlank;
 

@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception;
 
-import org.sample.actuatorSwaggerCRUDSample.model.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
 
 public class GlobalHandledException extends RuntimeException {
     private ErrorDesriptor errorDesriptor;

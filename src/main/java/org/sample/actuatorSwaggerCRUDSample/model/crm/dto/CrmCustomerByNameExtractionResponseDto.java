@@ -1,11 +1,13 @@
-package org.sample.actuatorSwaggerCRUDSample.model;
+package org.sample.actuatorSwaggerCRUDSample.model.crm.dto;
+
+import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmCustomer;
 
 import java.util.List;
 
-public class CrmCustomerByNameExtractionResponceDto {
+public class CrmCustomerByNameExtractionResponseDto {
     private List<CrmCustomer> crmCustomerList;
 
-    public CrmCustomerByNameExtractionResponceDto(List<CrmCustomer> crmCustomerList) {
+    public CrmCustomerByNameExtractionResponseDto(List<CrmCustomer> crmCustomerList) {
         this.crmCustomerList = crmCustomerList;
     }
 

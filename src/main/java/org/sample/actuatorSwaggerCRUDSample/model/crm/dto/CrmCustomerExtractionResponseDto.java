@@ -1,9 +1,12 @@
-package org.sample.actuatorSwaggerCRUDSample.model;
+package org.sample.actuatorSwaggerCRUDSample.model.crm.dto;
 
-public class CrmCustomerAdditionResponceDto {
+import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmCustomer;
+
+public class CrmCustomerExtractionResponseDto {
     private CrmCustomer crmCustomer;
 
-    public CrmCustomerAdditionResponceDto(CrmCustomer crmCustomer) {
+
+    public CrmCustomerExtractionResponseDto(CrmCustomer crmCustomer) {
         this.crmCustomer = crmCustomer;
     }
 

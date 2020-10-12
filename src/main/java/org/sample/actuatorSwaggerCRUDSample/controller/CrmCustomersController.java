@@ -5,7 +5,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmCustomerMapper;
-import org.sample.actuatorSwaggerCRUDSample.model.*;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmCustomer;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.*;
 import org.sample.actuatorSwaggerCRUDSample.service.ICrmCustomerService;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +55,13 @@ public class CrmCustomersController {
             @ApiResponse(code = 500, message = "Technical mismatch, advising to contact for the logs, to handle the issue")
     })
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<CommonResponseDTO<CrmCustomerExtractionResponceDto>> findCustomerById(@PathVariable("id") String id){
+    public ResponseEntity<CommonResponseDTO<CrmCustomerExtractionResponseDto>> findCustomerById(@PathVariable("id") String id){
         LOGGER.trace("Extracting customer by id from crm customers service","id",id);
         CrmCustomer crmCustomer = crmCustomerService.findById(id);
         LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service",id),"crmCustomer", crmCustomer);
-        CrmCustomerExtractionResponceDto crmCustomerExtractionResponceDto = new CrmCustomerExtractionResponceDto(crmCustomer);
-        CommonResponseDTO<CrmCustomerExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),"success",FIND_CRM_CUSTOMER_BY_ID_SUCCESS,String.format(multiLanguageComponent.getMessageByKey(FIND_CRM_CUSTOMER_BY_ID_SUCCESS),id));
-        commonResponseDTO.setData(crmCustomerExtractionResponceDto);
+        CrmCustomerExtractionResponseDto crmCustomerExtractionResponseDto = new CrmCustomerExtractionResponseDto(crmCustomer);
+        CommonResponseDTO<CrmCustomerExtractionResponseDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),"success",FIND_CRM_CUSTOMER_BY_ID_SUCCESS,String.format(multiLanguageComponent.getMessageByKey(FIND_CRM_CUSTOMER_BY_ID_SUCCESS),id));
+        commonResponseDTO.setData(crmCustomerExtractionResponseDto);
         return ResponseEntity.ok(commonResponseDTO);
     }
 
@@ -72,13 +75,13 @@ public class CrmCustomersController {
             @ApiResponse(code = 500, message = "Technical mismatch, advising to contact for the logs, to handle the issue")
     })
     @GetMapping(value = "/attributes/name/{name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<CommonResponseDTO<CrmCustomerByNameExtractionResponceDto>> findCustomersByName(@PathVariable("name") String name){
+    public ResponseEntity<CommonResponseDTO<CrmCustomerByNameExtractionResponseDto>> findCustomersByName(@PathVariable("name") String name){
         LOGGER.trace("Extracting list of customers by name from crm customers service","name",name);
         List<CrmCustomer> crmCustomerList = crmCustomerService.findByName(name);
         LOGGER.info(String.format("Extracted crm customers by %s name from crm customers service",name),"crmCustomerList", crmCustomerList);
-        CrmCustomerByNameExtractionResponceDto crmCustomerByNameExtractionResponceDto = new CrmCustomerByNameExtractionResponceDto(crmCustomerList);
-        CommonResponseDTO<CrmCustomerByNameExtractionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),"success",FIND_CRM_CUSTOMER_BY_NAME_SUCCESS,String.format(multiLanguageComponent.getMessageByKey(FIND_CRM_CUSTOMER_BY_NAME_SUCCESS),name));
-        commonResponseDTO.setData(crmCustomerByNameExtractionResponceDto);
+        CrmCustomerByNameExtractionResponseDto crmCustomerByNameExtractionResponseDto = new CrmCustomerByNameExtractionResponseDto(crmCustomerList);
+        CommonResponseDTO<CrmCustomerByNameExtractionResponseDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),"success",FIND_CRM_CUSTOMER_BY_NAME_SUCCESS,String.format(multiLanguageComponent.getMessageByKey(FIND_CRM_CUSTOMER_BY_NAME_SUCCESS),name));
+        commonResponseDTO.setData(crmCustomerByNameExtractionResponseDto);
         return ResponseEntity.ok(commonResponseDTO);
     }
 
@@ -91,13 +94,13 @@ public class CrmCustomersController {
             @ApiResponse(code = 500, message = "Technical mismatch, advising to contact for the logs, to handle the issue")
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<CommonResponseDTO<CrmCustomerAdditionResponceDto>> addCustomer(@RequestBody @Valid CrmCustomerAdditionRequestDto crmCustomerAdditionRequestDto) {
+    public ResponseEntity<CommonResponseDTO<CrmCustomerAdditionResponseDto>> addCustomer(@RequestBody @Valid CrmCustomerAdditionRequestDto crmCustomerAdditionRequestDto) {
         LOGGER.trace("Adding customer via crm customers save service","crmCustomerAdditionRequestDto", crmCustomerAdditionRequestDto);
         CrmCustomer crmCustomer = crmCustomerMapper.crmCustomerAdditionRequestDtoToCrmCustomer(crmCustomerAdditionRequestDto);
         crmCustomer = crmCustomerService.save(crmCustomer);
         LOGGER.trace("Customer saved at crm customers service","crmCustomer", crmCustomer);
-        CrmCustomerAdditionResponceDto crmCustomerAdditionResponceDto = new CrmCustomerAdditionResponceDto(crmCustomer);
-        CommonResponseDTO<CrmCustomerAdditionResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success",CRM_CUSTOMER_SAVED_SUCCESSFULLY,multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_SAVED_SUCCESSFULLY)));
+        CrmCustomerAdditionResponseDto crmCustomerAdditionResponceDto = new CrmCustomerAdditionResponseDto(crmCustomer);
+        CommonResponseDTO<CrmCustomerAdditionResponseDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success",CRM_CUSTOMER_SAVED_SUCCESSFULLY,multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_SAVED_SUCCESSFULLY)));
         commonResponseDTO.setData(crmCustomerAdditionResponceDto);
         return ResponseEntity.ok(commonResponseDTO);
     }
@@ -112,13 +115,13 @@ public class CrmCustomersController {
             @ApiResponse(code = 500, message = "Technical mismatch, advising to contact for the logs, to handle the issue")
     })
     @PutMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<CommonResponseDTO<CrmCustomerUpdateResponceDto>> updateCustomer(@RequestBody CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto) {
+    public ResponseEntity<CommonResponseDTO<CrmCustomerUpdateResponseDto>> updateCustomer(@RequestBody CrmCustomerUpdateRequestDto crmCustomerUpdateRequestDto) {
         LOGGER.trace("Updating crmUserEntity with given dto","crmCustomerUpdateRequestDto", crmCustomerUpdateRequestDto);
         CrmCustomer crmCustomer = crmCustomerMapper.crmCustomerUpdateRequestDtoToCrmCustomer(crmCustomerUpdateRequestDto);
         crmCustomer = crmCustomerService.update(crmCustomer);
         LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service after update",crmCustomer.getId()),"crmCustomer", crmCustomer);
-        CrmCustomerUpdateResponceDto crmCustomerUpdateResponceDto = new CrmCustomerUpdateResponceDto(crmCustomer);
-        CommonResponseDTO<CrmCustomerUpdateResponceDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success",CRM_CUSTOMER_UPDATED_SUCCESSFULLY,multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_UPDATED_SUCCESSFULLY)));
+        CrmCustomerUpdateResponseDto crmCustomerUpdateResponceDto = new CrmCustomerUpdateResponseDto(crmCustomer);
+        CommonResponseDTO<CrmCustomerUpdateResponseDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),new CommonMessageDTO("success",CRM_CUSTOMER_UPDATED_SUCCESSFULLY,multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_UPDATED_SUCCESSFULLY)));
         commonResponseDTO.setData(crmCustomerUpdateResponceDto);
         return ResponseEntity.ok(commonResponseDTO);
     }

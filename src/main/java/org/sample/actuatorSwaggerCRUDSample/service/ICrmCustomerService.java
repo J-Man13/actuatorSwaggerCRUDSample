@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.service;
 
-import org.sample.actuatorSwaggerCRUDSample.model.CrmCustomer;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmCustomer;
 
 import java.util.List;
 

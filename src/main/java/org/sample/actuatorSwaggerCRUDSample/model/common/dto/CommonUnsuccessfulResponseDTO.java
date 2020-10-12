@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.model;
+package org.sample.actuatorSwaggerCRUDSample.model.common.dto;
 
 import java.util.LinkedList;
 import java.util.List;

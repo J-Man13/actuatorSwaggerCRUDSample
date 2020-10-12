@@ -3,9 +3,9 @@ package org.sample.actuatorSwaggerCRUDSample.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
-import org.sample.actuatorSwaggerCRUDSample.model.CrmCustomer;
-import org.sample.actuatorSwaggerCRUDSample.model.CrmCustomerAdditionRequestDto;
-import org.sample.actuatorSwaggerCRUDSample.model.CrmCustomerUpdateRequestDto;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmCustomer;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.CrmCustomerAdditionRequestDto;
+import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.CrmCustomerUpdateRequestDto;
 import org.sample.actuatorSwaggerCRUDSample.model.mongo.crm.document.CrmCustomerMongoDocument;
 
 import java.util.List;

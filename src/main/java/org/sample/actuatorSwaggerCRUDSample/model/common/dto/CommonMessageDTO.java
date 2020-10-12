@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.model;
+package org.sample.actuatorSwaggerCRUDSample.model.common.dto;
 
 public class CommonMessageDTO {
     private String type;

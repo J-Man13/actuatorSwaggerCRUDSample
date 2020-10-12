@@ -5,9 +5,9 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLog
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
-import org.sample.actuatorSwaggerCRUDSample.model.CommonMessageDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.CommonUnsuccessfulResponseDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonUnsuccessfulResponseDTO;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.Ordered;
