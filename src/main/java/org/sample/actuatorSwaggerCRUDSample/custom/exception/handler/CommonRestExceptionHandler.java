@@ -44,8 +44,8 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON = "HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON";
     private final String RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING = "RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING";
 
-    public CommonRestExceptionHandler(@Autowired @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
-                                      @Autowired @Qualifier("trace-logger") CommonLogger LOGGER){
+    public CommonRestExceptionHandler(@Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
+                                      @Qualifier("trace-logger") CommonLogger LOGGER){
         this.multiLanguageComponent = multiLanguageComponent;
         this.LOGGER = LOGGER;
     }

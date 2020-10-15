@@ -60,4 +60,9 @@ public class CrmUserService implements ICrmUserService {
         }
     }
 
+    @Override
+    public CrmUser save(CrmUser crmUser) {
+        return null;
+    }
+
 }

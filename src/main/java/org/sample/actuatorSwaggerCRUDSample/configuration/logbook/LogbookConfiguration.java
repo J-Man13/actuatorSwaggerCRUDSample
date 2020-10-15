@@ -16,8 +16,8 @@ public class LogbookConfiguration {
     private CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter;
     private CustomJsonHttpLogFormatter customJsonHttpLogFormatter;
 
-    public LogbookConfiguration(@Autowired CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter,
-                                @Autowired CustomJsonHttpLogFormatter customJsonHttpLogFormatter) {
+    public LogbookConfiguration(CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter,
+                                CustomJsonHttpLogFormatter customJsonHttpLogFormatter) {
         this.customHttpRequestResponseLogWriter = customHttpRequestResponseLogWriter;
         this.customJsonHttpLogFormatter = customJsonHttpLogFormatter;
     }

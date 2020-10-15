@@ -38,10 +38,10 @@ public class CrmCustomerService implements ICrmCustomerService {
     private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION";
     private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND";
 
-    public CrmCustomerService(@Autowired @Qualifier("crmCustomerMongoRepository") CrmCustomerMongoRepository crmCustomerMongoRepository,
-                              @Autowired CrmCustomerMapper crmCustomerMapper,
-                              @Autowired @Qualifier("trace-logger") CommonLogger LOGGER,
-                              @Autowired @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent){
+    public CrmCustomerService(@Qualifier("crmCustomerMongoRepository") CrmCustomerMongoRepository crmCustomerMongoRepository,
+                              CrmCustomerMapper crmCustomerMapper,
+                              @Qualifier("trace-logger") CommonLogger LOGGER,
+                              @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent){
         this.crmCustomerMongoRepository = crmCustomerMongoRepository;
         this.crmCustomerMapper = crmCustomerMapper;
         this.LOGGER = LOGGER;

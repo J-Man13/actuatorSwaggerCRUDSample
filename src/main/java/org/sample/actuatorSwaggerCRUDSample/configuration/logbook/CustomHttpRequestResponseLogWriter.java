@@ -19,7 +19,7 @@ public class CustomHttpRequestResponseLogWriter implements HttpLogWriter {
     private final CommonLogger LOGGER;
     private final ObjectMapper objectMapper;
 
-    public CustomHttpRequestResponseLogWriter(@Autowired @Qualifier("requests-logger") CommonLogger LOGGER){
+    public CustomHttpRequestResponseLogWriter(@Qualifier("requests-logger") CommonLogger LOGGER){
         this.LOGGER = LOGGER;
         this.objectMapper = new ObjectMapper();
     }

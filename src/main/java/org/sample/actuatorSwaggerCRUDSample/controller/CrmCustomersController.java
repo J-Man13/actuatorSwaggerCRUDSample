@@ -35,10 +35,10 @@ public class CrmCustomersController {
     private final String CRM_CUSTOMER_SAVED_SUCCESSFULLY = "CRM_CUSTOMER_SAVED_SUCCESSFULLY";
     private final String CRM_CUSTOMER_UPDATED_SUCCESSFULLY = "CRM_CUSTOMER_UPDATED_SUCCESSFULLY";
 
-    public CrmCustomersController(@Autowired @Qualifier("crmCustomerService") ICrmCustomerService crmCustomerService,
-                                  @Autowired CrmCustomerMapper crmCustomerMapper,
-                                  @Autowired @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
-                                  @Autowired @Qualifier("trace-logger") CommonLogger LOGGER){
+    public CrmCustomersController(@Qualifier("crmCustomerService") ICrmCustomerService crmCustomerService,
+                                  CrmCustomerMapper crmCustomerMapper,
+                                  @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
+                                  @Qualifier("trace-logger") CommonLogger LOGGER){
         this.crmCustomerService = crmCustomerService;
         this.crmCustomerMapper = crmCustomerMapper;
         this.LOGGER = LOGGER;
