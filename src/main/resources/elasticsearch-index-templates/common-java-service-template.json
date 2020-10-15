@@ -25,44 +25,36 @@
         "type": "date",
         "format": "yyyy-MM-dd HH:mm:ss.SSS"
       },
-      "thread": {
-        "type": "keyword"
-      },
       "level": {
         "type": "keyword"
       },
-      "loggerName": {
+      "logCallLocation": {
+        "type": "text"
+      },
+      "logHostName": {
         "type": "keyword"
       },
-      "endOfBatch": {
-        "type" : "boolean"
+      "logHostAddress": {
+        "type": "keyword"
       },
-      "loggerFqcn": {
-        "type" : "keyword"
+      "logCauseDescription": {
+        "type": "text"
       },
-      "threadId": {
-        "type": "long"
+      "logEntry": {
+        "type": "object"
       },
-      "threadPriority" : {
-        "type" : "long"
-      },
-      "message": {
-        "properties":{
-          "logCallLocation" : {
-            "type" : "text"
-          },
-          "logCauseDescription":{
-            "type" : "text"
-          },
-          "logEntry" : {
-            "type" : "object"
-          },
-          "logMap" : {
-            "type" : "object"
-          }
-        },
-        "type" : "object"
+      "logMap": {
+        "type": "object"
+      }
+    },
+    "dynamic_templates": [{
+      "strings_as_text": {
+        "match_mapping_type": "string",
+        "mapping": {
+          "type": "text"
+        }
       }
     }
+    ]
   }
 }

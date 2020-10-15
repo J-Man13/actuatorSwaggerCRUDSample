@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-public class CrmUserMySqlEntity {
+public class CrmUserEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class CrmUserMySqlEntity {
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
-    public CrmUserMySqlEntity() {
+    public CrmUserEntity() {
 
     }
 

@@ -88,5 +88,10 @@
     "en": "CRM users mysql repository has thrown exception during document by login extraction : %s",
     "ru": "В репозитории пользователелей CRM, во время извлечения по логину произошла ошибка : %s",
     "az": "CRM istifadəçilər repositoriyda, login üzrə mətumatın çıxarılması zamanı xəta baş verib : %s"
+  },
+  "CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE": {
+    "en": "CRM User repository has thrown exception during entity save : %s",
+    "ru": "CRM Пользовательский репозиторий выдал исключение во время сохранения сущности : %s",
+    "az": "CRM İstifadəçi repositoriyi mahiyyət yadda saxlanılması zamanı texniki xəta gaytarıb : %s"
   }
 }

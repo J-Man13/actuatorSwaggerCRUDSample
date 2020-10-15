@@ -7,29 +7,31 @@ import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFou
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
-import org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity.CrmUserMySqlEntity;
-import org.sample.actuatorSwaggerCRUDSample.repository.mysql.crm.CrmUserMySqlRepository;
+import org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity.CrmUserEntity;
+import org.sample.actuatorSwaggerCRUDSample.repository.mysql.crm.CrmUserRepository;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Objects;
 
 @Service
 public class CrmUserService implements ICrmUserService {
 
-    private final CrmUserMySqlRepository crmUserMySqlRepository;
+    private final CrmUserRepository crmUserRepository;
     private final CommonLogger LOGGER;
     private final CrmUserMapper crmUserMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
 
-    public CrmUserService(CrmUserMySqlRepository crmUserMySqlRepository,
+    public CrmUserService(CrmUserRepository crmUserRepository,
                           @Qualifier("trace-logger") CommonLogger LOGGER,
                           CrmUserMapper crmUserMapper,
                           @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent){
-        this.crmUserMySqlRepository=crmUserMySqlRepository;
+        this.crmUserRepository = crmUserRepository;
         this.LOGGER=LOGGER;
         this.crmUserMapper=crmUserMapper;
         this.multiLanguageComponent = multiLanguageComponent;
@@ -37,16 +39,18 @@ public class CrmUserService implements ICrmUserService {
 
     private final String CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION = "CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION";
     private final String CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND = "CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND";
+    private final String CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE = "CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE";
 
     @Override
     public CrmUser findUserByLogin(String login) {
         try {
-            CrmUserMySqlEntity crmUserMySqlEntity = crmUserMySqlRepository.findByLogin(login).orElse(null);
-            Objects.requireNonNull(crmUserMySqlEntity,()->{
+            CrmUserEntity crmUserEntity = crmUserRepository.findByLogin(login).orElse(null);
+            Objects.requireNonNull(crmUserEntity,()->{
                 LOGGER.debug("CRM user mysql entity with given login was not found","login",login);
-                throw new CrmUserEntityNotFoundException(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),login));
+                throw new CrmUserEntityNotFoundException(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
+                        String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),login));
             });
-            return crmUserMapper.crmUserMySqlEntityToCrmUser(crmUserMySqlEntity);
+            return crmUserMapper.crmUserEntityToCrmUser(crmUserEntity);
         }
         catch (CrmUserEntityNotFoundException crmUserEntityNotFoundException){
             throw crmUserEntityNotFoundException;
@@ -56,13 +60,28 @@ public class CrmUserService implements ICrmUserService {
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalHandledException(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()));
+            throw new GlobalHandledException(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()));
         }
     }
 
+    @Transactional("mySqlCRMTransactionManager")
     @Override
     public CrmUser save(CrmUser crmUser) {
-        return null;
+        CrmUserEntity crmUserEntity = crmUserMapper.crmUserToCrmUserEntity(crmUser);
+        crmUserEntity.setRegistrationDate(LocalDateTime.now());
+        try {
+            crmUserEntity = crmUserRepository.save(crmUserEntity);
+            return crmUserMapper.crmUserEntityToCrmUser(crmUserEntity);
+        }
+        catch (DataAccessException dataAccessException){
+            LOGGER.error("CRM Users repository has thrown exception during entity save",new HashMap<String, String>() {{
+                put("dataAccessExceptionMessage", dataAccessException.getMessage());
+                put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
+            }});
+            throw new GlobalHandledException(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()));
+        }
     }
 
 }

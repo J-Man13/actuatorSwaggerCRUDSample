@@ -22,7 +22,7 @@ public class CommonLoggingObject{
 
     private final String logHostName;
     private final String logHostAddress;
-    private final String logInfoBuildArchiveBaseName;
+    private final String appArchiveName;
 
     private final String activityId;
     private final String correlationId;
@@ -34,7 +34,7 @@ public class CommonLoggingObject{
         this.logDateStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
         this.logHostName = commonLoggingPropertiesConfig.getHostName();
         this.logHostAddress =commonLoggingPropertiesConfig.getHostAddress();
-        this.logInfoBuildArchiveBaseName =commonLoggingPropertiesConfig.getInfoBuildArchiveBaseName();
+        this.appArchiveName =commonLoggingPropertiesConfig.getInfoBuildArchiveBaseName();
         this.activityId = ThreadContext.get("activity.id");
         this.correlationId = ThreadContext.get("correlation.id");
     }
@@ -60,6 +60,18 @@ public class CommonLoggingObject{
             this.logMap = null;
         else
             this.logMap = logMap;
+    }
+
+    public String getLogDateStamp() {
+        return logDateStamp;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getLogCauseDescription() {
@@ -94,10 +106,6 @@ public class CommonLoggingObject{
         this.logMap = logMap;
     }
 
-    public String getLogDateStamp() {
-        return logDateStamp;
-    }
-
     public String getLogHostName() {
         return logHostName;
     }
@@ -106,8 +114,8 @@ public class CommonLoggingObject{
         return logHostAddress;
     }
 
-    public String getLogInfoBuildArchiveBaseName() {
-        return logInfoBuildArchiveBaseName;
+    public String getAppArchiveName() {
+        return appArchiveName;
     }
 
     public String getActivityId() {
@@ -116,13 +124,5 @@ public class CommonLoggingObject{
 
     public String getCorrelationId() {
         return correlationId;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 }
