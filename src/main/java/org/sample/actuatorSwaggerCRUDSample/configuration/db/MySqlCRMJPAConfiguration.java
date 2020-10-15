@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 
 @Configuration
-@EnableJpaRepositories(basePackages = "org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity",
+@EnableJpaRepositories(basePackages = "org.sample.actuatorSwaggerCRUDSample.repository.mysql.crm",
         entityManagerFactoryRef = "mySqlCRMEntityManagerFactory",
         transactionManagerRef = "mySqlCRMTransactionManager")
 public class MySqlCRMJPAConfiguration {

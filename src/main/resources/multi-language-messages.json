@@ -78,5 +78,15 @@
     "en": "Request to actuator is not authenticated. Reason: %s",
     "ru": "Запрос в актутор не аутентифицирован. Причина: %s",
     "az": "Aktuatora gedən sorğu autentifikasiyanı keçməyib. Səbəb: %s"
+  },
+  "CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND": {
+    "en": "CRM user mysql entity with %s login was not found",
+    "ru": "Сущность клиента CRM с логином %s не была найдена",
+    "az": "CRM müştərisinin mahiyyəti %s logini ilə tapılmadı"
+  },
+  "CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION": {
+    "en": "CRM users mysql repository has thrown exception during document by login extraction : %s",
+    "ru": "В репозитории пользователелей CRM, во время извлечения по логину произошла ошибка : %s",
+    "az": "CRM istifadəçilər repositoriyda, login üzrə mətumatın çıxarılması zamanı xəta baş verib : %s"
   }
 }

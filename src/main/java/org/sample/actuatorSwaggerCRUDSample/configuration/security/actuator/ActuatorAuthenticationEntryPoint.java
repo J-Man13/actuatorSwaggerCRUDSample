@@ -6,7 +6,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLog
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonUnsuccessfulResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 
 
@@ -14,7 +14,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,15 +33,17 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
     private final IMultiLanguageComponent multiLanguageComponent;
 
 
-    public ActuatorAuthenticationEntryPoint(@Autowired @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
-                                            @Autowired @Qualifier("trace-logger") CommonLogger LOGGER ){
+    public ActuatorAuthenticationEntryPoint(@Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
+                                            @Qualifier("trace-logger") CommonLogger LOGGER)
+    {
         this.multiLanguageComponent = multiLanguageComponent;
         this.LOGGER = LOGGER;
     }
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException)
-            throws IOException, ServletException {
+            throws IOException
+    {
         //Extracting headers key/value pairs via stream api
         Map<String, List<String>> headersMap = Collections.list(request.getHeaderNames())
                 .stream()
@@ -65,12 +66,14 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        setRealmName("AZC");
+    public void afterPropertiesSet() throws Exception
+    {
+        setRealmName("internal.azericard");
         super.afterPropertiesSet();
     }
 
-    private CommonUnsuccessfulResponseDTO buildFailedActuatorAuthenticationDto(AuthenticationException authenticationException){
+    private CommonUnsuccessfulResponseDTO buildFailedActuatorAuthenticationDto(AuthenticationException authenticationException)
+    {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(authenticationException.getStackTrace()[0].getClassName(),
                 FAILED_ACTUATOR_AUTHENTICATION,
                 String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),authenticationException.getMessage()),

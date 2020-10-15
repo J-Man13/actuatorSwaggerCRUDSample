@@ -3,6 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
@@ -52,6 +53,12 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MongoDocumentNotFoundException.class)
     public ResponseEntity mongoDocumentNotFoundExceptionHandler(MongoDocumentNotFoundException mongoDocumentNotFoundException) {
         ErrorDesriptor errorDesriptor = mongoDocumentNotFoundException.getErrorDesriptor();
+        return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CrmUserEntityNotFoundException.class)
+    public ResponseEntity crmUserEntityNotFoundExceptionHandler(CrmUserEntityNotFoundException crmUserEntityNotFoundException) {
+        ErrorDesriptor errorDesriptor = crmUserEntityNotFoundException.getErrorDesriptor();
         return new ResponseEntity(new CommonUnsuccessfulResponseDTO(HttpStatus.NOT_FOUND.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.NOT_FOUND);
     }
 
