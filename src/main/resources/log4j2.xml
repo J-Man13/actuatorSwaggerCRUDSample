@@ -62,6 +62,7 @@
                 <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
+                <IndexTemplate name="log4j2-example-1" path="classpath:elasticsearch-index-templates/common-java-application-logs-template.json"/>
                 <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
@@ -70,6 +71,7 @@
             <IndexName indexName="java-service-${bundle:application:info.build.archiveBaseName}"/>
             <PatternLayout pattern="%m%n"/>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
+                <IndexTemplate name="log4j2-example-2" path="classpath:elasticsearch-index-templates/common-java-service-template.json"/>
                 <JestHttp serverUris="${bundle:application:spring.elasticsearch.jest.uris}" mappingType="_doc"/>
             </AsyncBatchDelivery>
         </Elasticsearch>
