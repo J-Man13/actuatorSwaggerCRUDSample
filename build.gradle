@@ -1,3 +1,5 @@
+import groovy.json.*
+
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
@@ -18,7 +20,12 @@ repositories {
     mavenCentral()
 }
 
+bootRun {
+    setProperIndexPatternsInElasticSearchIndexTemplateFiles()
+}
+
 dependencies {
+
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web-services'
 
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
@@ -34,13 +41,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation group: 'com.auth0', name: 'java-jwt', version: '3.11.0'
-//    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.10.7'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.7'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.7'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.7'
-
-// https://mvnrepository.com/artifact/com.auth0/java-jwt
-
 
 
     implementation group: 'org.mapstruct', name: 'mapstruct-jdk8', version: '1.2.0.Final'
@@ -69,4 +72,51 @@ processResources {
     filesMatching("**/application.properties") {
         expand( project.properties )
     }
+}
+
+
+
+def setProperIndexPatternsInElasticSearchIndexTemplateFiles (){
+    //Reconstruct src/main/resources/elasticsearch-index-templates directory in the beginning
+    def elasticsearchIndexTemplatesDir = new File("src/main/resources/elasticsearch-index-templates")
+    if (elasticsearchIndexTemplatesDir.exists())
+        elasticsearchIndexTemplatesDir.deleteDir();
+    elasticsearchIndexTemplatesDir.mkdir();
+
+    println 'Trying to read elastic index templates file templates...'
+
+    //elasticsearch-index-templates-file-templates/common-java-application-logs-index-template-file-template.json workout
+    def javaApplicationLogsIndexTemplateFileTemplate = file('src/main/resources/elasticsearch-index-templates-file-templates/common-java-application-logs-index-template-file-template.json')
+    def javaApplicationLogsIndexTemplateFileTemplateParsedJson = new JsonSlurper().parseText(javaApplicationLogsIndexTemplateFileTemplate.text)
+    def javaApplicationIndexPatternValues=["java-application-logs-"+bootJar.archiveBaseName.get()]
+    javaApplicationLogsIndexTemplateFileTemplateParsedJson << [index_patterns:javaApplicationIndexPatternValues]
+    def commonJavaApplicationLogsIndexTemplateUglyJson=JsonOutput.toJson(javaApplicationLogsIndexTemplateFileTemplateParsedJson);
+    def commonJavaApplicationLogsIndexTemplateJson = JsonOutput.prettyPrint(commonJavaApplicationLogsIndexTemplateUglyJson);
+
+    println 'Parsed elasticsearch-index-templates-file-templates/common-java-application-logs-index-template-file-template.json into common-java-application-logs-index-template.json'
+    println 'common-java-application-logs-index-template.json file contents'
+    println commonJavaApplicationLogsIndexTemplateJson;
+    def commonJavaApplicationLogsIndexTemplateFile = new File("src/main/resources/elasticsearch-index-templates/common-java-application-logs-index-template.json")
+    commonJavaApplicationLogsIndexTemplateFile.text=commonJavaApplicationLogsIndexTemplateJson;
+    commonJavaApplicationLogsIndexTemplateFile.createNewFile();
+    println 'common-java-application-logs-index-template.json fle successfully created'
+
+
+    //elasticsearch-index-templates-file-templates/common-java-service-logs-index-template-file-template.json workout
+    def commonJavaServiceLogsIndexTemplateFileTemplate = file('src/main/resources/elasticsearch-index-templates-file-templates/common-java-service-logs-index-template-file-template.json')
+    def javaServiceLogsIndexTemplateFileTemplateParsedJson = new JsonSlurper().parseText(commonJavaServiceLogsIndexTemplateFileTemplate.text)
+    def indexPatternValues=["java-service-logs-"+bootJar.archiveBaseName.get()]
+    javaServiceLogsIndexTemplateFileTemplateParsedJson << [index_patterns:indexPatternValues]
+    def commonJavaServiceLogsIndexTemplateUglyJson=JsonOutput.toJson(javaServiceLogsIndexTemplateFileTemplateParsedJson);
+    def commonJavaServiceLogsIndexTemplateJson = JsonOutput.prettyPrint(commonJavaServiceLogsIndexTemplateUglyJson);
+
+    println 'Parsed elasticsearch-index-templates-file-templates/common-java-service-logs-index-template-file-template.json into common-java-service-logs-index-template.json'
+    println 'common-java-service-logs-index-template.json file contents'
+    println commonJavaServiceLogsIndexTemplateJson;
+    def commonJavaServiceLogsIndexTemplateFile = new File("src/main/resources/elasticsearch-index-templates/common-java-service-logs-index-template.json")
+    commonJavaServiceLogsIndexTemplateFile.text=commonJavaServiceLogsIndexTemplateJson;
+    commonJavaServiceLogsIndexTemplateFile.createNewFile();
+    println 'common-java-service-logs-index-template.json fle successfully created'
+
+    println 'Successfully added index patterns!'
 }

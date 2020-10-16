@@ -12,6 +12,8 @@
 .factorypath
 .gradle
 .idea
+.logs
+.src/main/resources/elasticsearch-index-templates
 .metadata
 .project
 .recommenders

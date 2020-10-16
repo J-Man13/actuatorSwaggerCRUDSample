@@ -1,7 +1,4 @@
 {
-  "index_patterns": [
-    "java-service-*"
-  ],
   "settings": {
     "index": {
       "refresh_interval": "10s"
