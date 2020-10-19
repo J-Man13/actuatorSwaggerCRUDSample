@@ -15,18 +15,16 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final  CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService;
-    private final String SECURITY_BASE_PATH_PATTERN;
     private final String LOGIN_ENDPOINT;
     private final String AUTHENTICATED_ENDPOINTS_PATTERN;
 
     public CrmUsersJwtSecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder,
                                             CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService,
-                                            @Value("${local.crm.user.security.base.path.pattern}")String SECURITY_BASE_PATH_PATTERN,
                                             @Value("${local.crm.user.security.login.endpoint}")String LOGIN_ENDPOINT,
                                             @Value("${local.crm.user.security.authenticated.endpoints.pattern}")String AUTHENTICATED_ENDPOINTS_PATTERN){
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.crmUsersJwtUserDetailsService = crmUsersJwtUserDetailsService;
-        this.SECURITY_BASE_PATH_PATTERN=SECURITY_BASE_PATH_PATTERN;
+
         this.LOGIN_ENDPOINT = LOGIN_ENDPOINT;
         this.AUTHENTICATED_ENDPOINTS_PATTERN=AUTHENTICATED_ENDPOINTS_PATTERN;
     }
@@ -36,9 +34,9 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
         http.csrf().disable();
         http.cors().disable();
 
-        http.antMatcher(SECURITY_BASE_PATH_PATTERN)
+        http.antMatcher(LOGIN_ENDPOINT)
                 .authorizeRequests()
-                    .antMatchers(AUTHENTICATED_ENDPOINTS_PATTERN).authenticated()
+                    .anyRequest().permitAll()
                 .and()
                 .addFilter(getCrmUserJwtUsernamePasswordAuthenticationFilter())
                 .addFilter(getCrmUserJwtBasicAuthenticationFilter())
