@@ -12,33 +12,27 @@
       "correlationId": {
         "type": "keyword"
       },
-      "appArchiveName": {
+      "appName": {
         "type": "keyword"
       },
-      "logDateStamp": {
+      "date": {
         "type": "date",
         "format": "yyyy-MM-dd HH:mm:ss.SSS"
       },
       "level": {
         "type": "keyword"
       },
-      "logCallLocation": {
+      "location": {
         "type": "text"
       },
-      "logHostName": {
+      "hostName": {
         "type": "keyword"
       },
-      "logHostAddress": {
+      "hostAddress": {
         "type": "keyword"
       },
-      "logCauseDescription": {
+      "desc": {
         "type": "text"
-      },
-      "logEntry": {
-        "type": "object"
-      },
-      "logMap": {
-        "type": "object"
       }
     },
     "dynamic_templates": [{

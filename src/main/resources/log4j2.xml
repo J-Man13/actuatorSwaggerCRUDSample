@@ -56,10 +56,10 @@
         <Elasticsearch name="APPLICATION_LOGS_ELASTICSEARCH">
             <IndexName indexName="java-application-logs-${bundle:application:info.build.archiveBaseName}"/>
             <JsonLayout compact="true" stacktraceAsString="true" objectMessageAsJsonObject="false">
-                <KeyValuePair key="appArchiveName" value="${bundle:application:info.build.archiveBaseName}"/>
+                <KeyValuePair key="appName" value="${bundle:application:info.build.archiveBaseName}"/>
                 <KeyValuePair key="activityId" value="$${ctx:activity.id}"/>
                 <KeyValuePair key="correlationId" value="$${ctx:correlation.id}"/>
-                <KeyValuePair key="logDateStamp" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
+                <KeyValuePair key="date" value="$${date:yyyy-MM-dd HH:mm:ss.SSS}" />
             </JsonLayout>
             <AsyncBatchDelivery batchSize="1000" deliveryInterval="5000">
                 <IndexTemplate name="java-application-logs-${bundle:application:info.build.archiveBaseName}" path="classpath:elasticsearch-index-templates/common-java-application-logs-index-template.json"/>
