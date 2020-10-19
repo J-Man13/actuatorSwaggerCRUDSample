@@ -13,16 +13,16 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonLoggingObject{
-    private final String logDateStamp;
+    private final String date;
     private String level;
-    private String logCauseDescription;
-    private AbstractMap.SimpleEntry<String,Object> logEntry;
-    private String logCallLocation;
+    private String desc;
+    private AbstractMap.SimpleEntry<String,Object> entry;
+    private String location;
     private Map<String,String> logMap;
 
-    private final String logHostName;
-    private final String logHostAddress;
-    private final String appArchiveName;
+    private final String hostName;
+    private final String hostAddress;
+    private final String appName;
 
     private final String activityId;
     private final String correlationId;
@@ -31,39 +31,39 @@ public class CommonLoggingObject{
 
 
     public CommonLoggingObject() {
-        this.logDateStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
-        this.logHostName = commonLoggingPropertiesConfig.getHostName();
-        this.logHostAddress =commonLoggingPropertiesConfig.getHostAddress();
-        this.appArchiveName =commonLoggingPropertiesConfig.getInfoBuildArchiveBaseName();
+        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        this.hostName = commonLoggingPropertiesConfig.getHostName();
+        this.hostAddress =commonLoggingPropertiesConfig.getHostAddress();
+        this.appName =commonLoggingPropertiesConfig.getInfoBuildArchiveBaseName();
         this.activityId = ThreadContext.get("activity.id");
         this.correlationId = ThreadContext.get("correlation.id");
     }
 
-    public CommonLoggingObject(String logCauseDescription,String location,String level) {
+    public CommonLoggingObject(String desc, String location, String level) {
         this();
-        this.logCauseDescription = logCauseDescription;
-        this.logCallLocation = location;
+        this.desc = desc;
+        this.location = location;
         this.level = level;
     }
 
-    public CommonLoggingObject(String logCauseDescription, String loggableObjectKey, Object data,String location,String level) {
-        this(logCauseDescription,location,level);
+    public CommonLoggingObject(String desc, String loggableObjectKey, Object data, String location, String level) {
+        this(desc,location,level);
         if (StringUtils.isEmpty(loggableObjectKey) || data == null)
-            this.logEntry = null;
+            this.entry = null;
         else
-            this.logEntry = new AbstractMap.SimpleEntry<>(loggableObjectKey,data);
+            this.entry = new AbstractMap.SimpleEntry<>(loggableObjectKey,data);
     }
 
-    public CommonLoggingObject(String logCauseDescription, Map<String,String> logMap, String location,String level) {
-        this(logCauseDescription,location,level);
+    public CommonLoggingObject(String desc, Map<String,String> logMap, String location, String level) {
+        this(desc,location,level);
         if (logMap == null || logMap.isEmpty())
             this.logMap = null;
         else
             this.logMap = logMap;
     }
 
-    public String getLogDateStamp() {
-        return logDateStamp;
+    public String getDate() {
+        return date;
     }
 
     public String getLevel() {
@@ -74,28 +74,28 @@ public class CommonLoggingObject{
         this.level = level;
     }
 
-    public String getLogCauseDescription() {
-        return logCauseDescription;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setLogCauseDescription(String logCauseDescription) {
-        this.logCauseDescription = logCauseDescription;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public AbstractMap.SimpleEntry<String, Object> getLogEntry() {
-        return logEntry;
+    public AbstractMap.SimpleEntry<String, Object> getEntry() {
+        return entry;
     }
 
-    public void setLogEntry(AbstractMap.SimpleEntry<String, Object> logEntry) {
-        this.logEntry = logEntry;
+    public void setEntry(AbstractMap.SimpleEntry<String, Object> entry) {
+        this.entry = entry;
     }
 
-    public String getLogCallLocation() {
-        return logCallLocation;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLogCallLocation(String logCallLocation) {
-        this.logCallLocation = logCallLocation;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Map<String, String> getLogMap() {
@@ -106,16 +106,16 @@ public class CommonLoggingObject{
         this.logMap = logMap;
     }
 
-    public String getLogHostName() {
-        return logHostName;
+    public String getHostName() {
+        return hostName;
     }
 
-    public String getLogHostAddress() {
-        return logHostAddress;
+    public String getHostAddress() {
+        return hostAddress;
     }
 
-    public String getAppArchiveName() {
-        return appArchiveName;
+    public String getAppName() {
+        return appName;
     }
 
     public String getActivityId() {
