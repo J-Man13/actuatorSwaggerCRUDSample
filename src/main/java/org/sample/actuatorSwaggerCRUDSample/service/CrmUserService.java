@@ -12,6 +12,7 @@ import org.sample.actuatorSwaggerCRUDSample.repository.mysql.crm.CrmUserReposito
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,15 +27,18 @@ public class CrmUserService implements ICrmUserService {
     private final CommonLogger LOGGER;
     private final CrmUserMapper crmUserMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CrmUserService(CrmUserRepository crmUserRepository,
-                          @Qualifier("trace-logger") CommonLogger LOGGER,
-                          CrmUserMapper crmUserMapper,
-                          @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent){
+    public CrmUserService(final CrmUserRepository crmUserRepository,
+                          final @Qualifier("trace-logger") CommonLogger LOGGER,
+                          final CrmUserMapper crmUserMapper,
+                          final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
+                          final BCryptPasswordEncoder bCryptPasswordEncoder){
         this.crmUserRepository = crmUserRepository;
         this.LOGGER=LOGGER;
         this.crmUserMapper=crmUserMapper;
         this.multiLanguageComponent = multiLanguageComponent;
+        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
     }
 
     private final String CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION = "CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION";
@@ -67,8 +71,9 @@ public class CrmUserService implements ICrmUserService {
 
     @Transactional("mySqlCRMTransactionManager")
     @Override
-    public CrmUser save(CrmUser crmUser) {
+    public CrmUser save(CrmUser crmUser,String unencryptedPassword) {
         CrmUserEntity crmUserEntity = crmUserMapper.crmUserToCrmUserEntity(crmUser);
+        crmUserEntity.setCryptedPassword(bCryptPasswordEncoder.encode(unencryptedPassword));
         crmUserEntity.setRegistrationDate(LocalDateTime.now());
         try {
             crmUserEntity = crmUserRepository.save(crmUserEntity);

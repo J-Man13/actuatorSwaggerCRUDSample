@@ -16,17 +16,17 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final  CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService;
     private final String LOGIN_ENDPOINT;
-    private final String AUTHENTICATED_ENDPOINTS_PATTERN;
+    private final String AUTHENTICATION_SIGNATURE_KEY;
 
-    public CrmUsersJwtSecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder,
-                                            CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService,
-                                            @Value("${local.crm.user.security.login.endpoint}")String LOGIN_ENDPOINT,
-                                            @Value("${local.crm.user.security.authenticated.endpoints.pattern}")String AUTHENTICATED_ENDPOINTS_PATTERN){
+    public CrmUsersJwtSecurityConfiguration(final BCryptPasswordEncoder bCryptPasswordEncoder,
+                                            final CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService,
+                                            final @Value("${local.crm.user.security.login.endpoint}")String LOGIN_ENDPOINT,
+                                            final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY){
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.crmUsersJwtUserDetailsService = crmUsersJwtUserDetailsService;
 
+        this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
         this.LOGIN_ENDPOINT = LOGIN_ENDPOINT;
-        this.AUTHENTICATED_ENDPOINTS_PATTERN=AUTHENTICATED_ENDPOINTS_PATTERN;
     }
 
     @Override
@@ -50,10 +50,10 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     }
 
     private CrmUserJwtUsernamePasswordAuthenticationFilter getCrmUserJwtUsernamePasswordAuthenticationFilter() throws Exception {
-        return new CrmUserJwtUsernamePasswordAuthenticationFilter(authenticationManager(),LOGIN_ENDPOINT);
+        return new CrmUserJwtUsernamePasswordAuthenticationFilter(authenticationManager(),LOGIN_ENDPOINT,AUTHENTICATION_SIGNATURE_KEY);
     }
 
     private CrmUserJwtBasicAuthenticationFilter getCrmUserJwtBasicAuthenticationFilter() throws Exception {
-        return new CrmUserJwtBasicAuthenticationFilter(authenticationManager());
+        return new CrmUserJwtBasicAuthenticationFilter(authenticationManager(),AUTHENTICATION_SIGNATURE_KEY);
     }
 }

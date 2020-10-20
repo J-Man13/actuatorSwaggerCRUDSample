@@ -93,5 +93,10 @@
     "en": "CRM User repository has thrown exception during entity save : %s",
     "ru": "CRM Пользовательский репозиторий выдал исключение во время сохранения сущности : %s",
     "az": "CRM İstifadəçi repositoriyi mahiyyət yadda saxlanılması zamanı texniki xəta gaytarıb : %s"
+  },
+  "CRM_USER_SAVED_SUCCESSFULLY": {
+    "en": "CRM user was successfully saved",
+    "ru": "Пользователь Crm был успешно сохранен",
+    "az": "CRM istifadəçi uğurla yadda saxlanıldı"
   }
 }

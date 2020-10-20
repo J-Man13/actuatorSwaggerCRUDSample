@@ -26,10 +26,10 @@ import java.util.HashMap;
 public class MySqlCRMJPAConfiguration {
 
     @Bean
-    public DataSource mySqlCRMDataSource(@Value("${mysql.crm.datasource.driver}") String mysqlCRMDataSourceDriver,
-                                         @Value("${mysql.crm.datasource.url}") String mysqlCRMDataSourceUrl,
-                                         @Value("${mysql.crm.datasource.username}") String mysqlCRMDataSourceUsername,
-                                         @Value("${mysql.crm.datasource.password}") String mysqlCRMDataSourcePassword) {
+    public DataSource mySqlCRMDataSource(final @Value("${mysql.crm.datasource.driver}") String mysqlCRMDataSourceDriver,
+                                         final @Value("${mysql.crm.datasource.url}") String mysqlCRMDataSourceUrl,
+                                         final @Value("${mysql.crm.datasource.username}") String mysqlCRMDataSourceUsername,
+                                         final @Value("${mysql.crm.datasource.password}") String mysqlCRMDataSourcePassword) {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName(mysqlCRMDataSourceDriver);
         driverManagerDataSource.setUrl(mysqlCRMDataSourceUrl);
@@ -39,10 +39,10 @@ public class MySqlCRMJPAConfiguration {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean mySqlCRMEntityManagerFactory(@Autowired @Qualifier("mySqlCRMDataSource") DataSource dataSource,
-                                                                               @Value("${mysql.crm.hibernate.hbm2ddl.auto}") String mysqlCrmHibernateHbm2ddlAuto,
-                                                                               @Value("${mysql.crm.hibernate.format_sql}") String mysqlCrmHibernateFormat_sql,
-                                                                               @Value("${mysql.crm.hibernate.show_sql}") String mysqlCrmHibernateShow_sql){
+    public LocalContainerEntityManagerFactoryBean mySqlCRMEntityManagerFactory(@Qualifier("mySqlCRMDataSource") DataSource dataSource,
+                                                                               final @Value("${mysql.crm.hibernate.hbm2ddl.auto}") String mysqlCrmHibernateHbm2ddlAuto,
+                                                                               final @Value("${mysql.crm.hibernate.format_sql}") String mysqlCrmHibernateFormat_sql,
+                                                                               final @Value("${mysql.crm.hibernate.show_sql}") String mysqlCrmHibernateShow_sql){
         LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setDatabase(Database.MYSQL);
@@ -59,7 +59,7 @@ public class MySqlCRMJPAConfiguration {
     }
 
     @Bean
-    public JpaTransactionManager mySqlCRMTransactionManager(@Autowired @Qualifier("mySqlCRMEntityManagerFactory") EntityManagerFactory emf) {
+    public JpaTransactionManager mySqlCRMTransactionManager(@Qualifier("mySqlCRMEntityManagerFactory") EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
 }

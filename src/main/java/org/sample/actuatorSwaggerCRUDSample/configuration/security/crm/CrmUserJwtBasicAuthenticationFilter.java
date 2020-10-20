@@ -23,8 +23,12 @@ import java.io.IOException;
 
 public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilter {
 
-    public CrmUserJwtBasicAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private final String AUTHENTICATION_SIGNATURE_KEY;
+
+    public CrmUserJwtBasicAuthenticationFilter(AuthenticationManager authenticationManager,
+                                               final String AUTHENTICATION_SIGNATURE_KEY) {
         super(authenticationManager);
+        this.AUTHENTICATION_SIGNATURE_KEY = AUTHENTICATION_SIGNATURE_KEY;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
         if (!StringUtils.isEmpty(jwt)) {
             try {
                 Jws<Claims> claimsJws = Jwts.parser()
-                        .setSigningKey("jwt-secret".getBytes())
+                        .setSigningKey(AUTHENTICATION_SIGNATURE_KEY.getBytes())
                         .parseClaimsJws(jwt);
 
                 String username = claimsJws.getBody().getSubject();
@@ -64,7 +68,6 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                 exception.printStackTrace();
             }
         }
-
         return null;
     }
 }

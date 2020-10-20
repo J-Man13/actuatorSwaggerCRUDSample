@@ -30,12 +30,12 @@ public class MongoDbCRMConfiguration {
 
 
     @Bean("crmMongoTemplate")
-    public MongoTemplate crmMongoTemplate(@Autowired @Qualifier("crmMongoDbFactory") MongoDbFactory mongoDbFactory) {
+    public MongoTemplate crmMongoTemplate(@Qualifier("crmMongoDbFactory") MongoDbFactory mongoDbFactory) {
         return new MongoTemplate(mongoDbFactory);
     }
 
     @Bean("crmMongoTransactionManager")
-    MongoTransactionManager transactionManager(@Autowired @Qualifier("crmMongoDbFactory")MongoDbFactory mongoDbFactory) {
+    MongoTransactionManager transactionManager(@Qualifier("crmMongoDbFactory")MongoDbFactory mongoDbFactory) {
         return new MongoTransactionManager(mongoDbFactory);
     }
 }

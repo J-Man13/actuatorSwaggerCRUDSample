@@ -28,11 +28,15 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
 
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper objectMapper;
+    private final String AUTHENTICATION_SIGNATURE_KEY;
 
-    public CrmUserJwtUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,String loginEndpoint) {
+    public CrmUserJwtUsernamePasswordAuthenticationFilter(final AuthenticationManager authenticationManager,
+                                                          final String loginEndpoint,
+                                                          final String AUTHENTICATION_SIGNATURE_KEY) {
         this.authenticationManager = authenticationManager;
         setFilterProcessesUrl(loginEndpoint);
         this.objectMapper=new ObjectMapper();
+        this.AUTHENTICATION_SIGNATURE_KEY = AUTHENTICATION_SIGNATURE_KEY;
     }
 
     @Override
@@ -57,7 +61,7 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        byte[] signingKeyBytes = "jwt-secret".getBytes();
+        byte[] signingKeyBytes = AUTHENTICATION_SIGNATURE_KEY.getBytes();
 
         String token = Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(signingKeyBytes), SignatureAlgorithm.HS512)

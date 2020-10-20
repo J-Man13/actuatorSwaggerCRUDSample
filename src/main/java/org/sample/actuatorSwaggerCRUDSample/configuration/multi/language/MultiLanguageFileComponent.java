@@ -27,9 +27,9 @@ public class MultiLanguageFileComponent implements IMultiLanguageComponent {
 
     private final String LANGUAGE_CODE_HEADER_KEY = "language.code";
 
-    public MultiLanguageFileComponent(@Value("${default.message.language.code}") String defaultLanguageCode,
-                                      @Value("${multi-language-messages.file.location}") String multiLanguageFileLocation,
-                                      @Value("#{'${available.message.language.codes}'.split(',')}")List<String> availableMessageLanguageCodes) throws IOException {
+    public MultiLanguageFileComponent(final @Value("${default.message.language.code}") String defaultLanguageCode,
+                                      final @Value("${multi-language-messages.file.location}") String multiLanguageFileLocation,
+                                      final @Value("#{'${available.message.language.codes}'.split(',')}")List<String> availableMessageLanguageCodes) throws IOException {
         DEFAULT_MESSAGE_LANGUAGE_CODE = defaultLanguageCode;
         MULTI_LANGUAGE_FILE_LOCATION = multiLanguageFileLocation;
         messageCodeMessageLanguageMap = new ObjectMapper().readValue(ResourceUtils.getFile(MULTI_LANGUAGE_FILE_LOCATION), new TypeReference<Map<String, MultiLanguageMessage>>(){});
