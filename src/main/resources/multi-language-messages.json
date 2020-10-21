@@ -75,9 +75,9 @@
     "az": "%s sahə validatisiyanı keçməyib, səbəb : %s"
   },
   "FAILED_ACTUATOR_AUTHENTICATION" : {
-    "en": "Request to actuator is not authenticated. Reason: %s",
-    "ru": "Запрос в актутор не аутентифицирован. Причина: %s",
-    "az": "Aktuatora gedən sorğu autentifikasiyanı keçməyib. Səbəb: %s"
+    "en": "Request to actuator is not authorized. Reason: %s",
+    "ru": "Запрос в актутор не авторизован. Причина: %s",
+    "az": "Aktuatora gedən sorğu avtorizasiyanı keçməyib. Səbəb: %s"
   },
   "CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND": {
     "en": "CRM user mysql entity with %s login was not found",
