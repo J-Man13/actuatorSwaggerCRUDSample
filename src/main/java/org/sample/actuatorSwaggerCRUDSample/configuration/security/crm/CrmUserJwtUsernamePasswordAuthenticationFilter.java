@@ -29,14 +29,17 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper objectMapper;
     private final String AUTHENTICATION_SIGNATURE_KEY;
+    private final Long TOKEN_ACTIVITY_PERIOD_MS;
 
     public CrmUserJwtUsernamePasswordAuthenticationFilter(final AuthenticationManager authenticationManager,
                                                           final String loginEndpoint,
-                                                          final String AUTHENTICATION_SIGNATURE_KEY) {
+                                                          final String AUTHENTICATION_SIGNATURE_KEY,
+                                                          final Long TOKEN_ACTIVITY_PERIOD_MS) {
         this.authenticationManager = authenticationManager;
         setFilterProcessesUrl(loginEndpoint);
         this.objectMapper=new ObjectMapper();
         this.AUTHENTICATION_SIGNATURE_KEY = AUTHENTICATION_SIGNATURE_KEY;
+        this.TOKEN_ACTIVITY_PERIOD_MS=TOKEN_ACTIVITY_PERIOD_MS;
     }
 
     @Override
@@ -69,7 +72,7 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
                 .setIssuer("Azericard LLC")
                 .setAudience("internal.azericard")
                 .setSubject(user.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + 864000000))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_ACTIVITY_PERIOD_MS))
                 .claim("rol", roles)
                 .compact();
 

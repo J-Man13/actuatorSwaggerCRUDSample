@@ -17,16 +17,19 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final  CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService;
     private final String LOGIN_ENDPOINT;
     private final String AUTHENTICATION_SIGNATURE_KEY;
+    private final Long TOKEN_ACTIVITY_PERIOD_MS;
 
     public CrmUsersJwtSecurityConfiguration(final BCryptPasswordEncoder bCryptPasswordEncoder,
                                             final CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService,
                                             final @Value("${local.crm.user.security.login.endpoint}")String LOGIN_ENDPOINT,
-                                            final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY){
+                                            final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
+                                            final @Value("${local.crm.user.security..jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS){
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.crmUsersJwtUserDetailsService = crmUsersJwtUserDetailsService;
 
         this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
         this.LOGIN_ENDPOINT = LOGIN_ENDPOINT;
+        this.TOKEN_ACTIVITY_PERIOD_MS=TOKEN_ACTIVITY_PERIOD_MS;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     }
 
     private CrmUserJwtUsernamePasswordAuthenticationFilter getCrmUserJwtUsernamePasswordAuthenticationFilter() throws Exception {
-        return new CrmUserJwtUsernamePasswordAuthenticationFilter(authenticationManager(),LOGIN_ENDPOINT,AUTHENTICATION_SIGNATURE_KEY);
+        return new CrmUserJwtUsernamePasswordAuthenticationFilter(authenticationManager(),LOGIN_ENDPOINT,AUTHENTICATION_SIGNATURE_KEY,TOKEN_ACTIVITY_PERIOD_MS);
     }
 
     private CrmUserJwtBasicAuthenticationFilter getCrmUserJwtBasicAuthenticationFilter() throws Exception {
