@@ -1,0 +1,52 @@
+{
+    "settings": {
+        "index": {
+            "refresh_interval": "10s"
+        }
+    },
+    "mappings": {
+        "properties": {
+            "activityId": {
+                "type": "keyword"
+            },
+            "correlationId": {
+                "type": "keyword"
+            },
+            "appName": {
+                "type": "keyword"
+            },
+            "date": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss.SSS"
+            },
+            "level": {
+                "type": "keyword"
+            },
+            "location": {
+                "type": "text"
+            },
+            "hostName": {
+                "type": "keyword"
+            },
+            "hostAddress": {
+                "type": "keyword"
+            },
+            "desc": {
+                "type": "text"
+            }
+        },
+        "dynamic_templates": [
+            {
+                "strings_as_text": {
+                    "match_mapping_type": "string",
+                    "mapping": {
+                        "type": "text"
+                    }
+                }
+            }
+        ]
+    },
+    "index_patterns": [
+        "java-service-logs-actuator-swagger-crud-sample"
+    ]
+}

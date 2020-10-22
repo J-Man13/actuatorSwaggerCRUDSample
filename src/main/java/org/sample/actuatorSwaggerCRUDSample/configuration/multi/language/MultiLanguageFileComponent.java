@@ -25,14 +25,16 @@ public class MultiLanguageFileComponent implements IMultiLanguageComponent {
 
     private Map<String, MultiLanguageMessage> messageCodeMessageLanguageMap;
 
-    private final String LANGUAGE_CODE_HEADER_KEY = "language.code";
+    private final String LANGUAGE_CODE_HEADER_KEY;
 
     public MultiLanguageFileComponent(final @Value("${default.message.language.code}") String defaultLanguageCode,
                                       final @Value("${multi-language-messages.file.location}") String multiLanguageFileLocation,
-                                      final @Value("#{'${available.message.language.codes}'.split(',')}")List<String> availableMessageLanguageCodes) throws IOException {
-        DEFAULT_MESSAGE_LANGUAGE_CODE = defaultLanguageCode;
-        MULTI_LANGUAGE_FILE_LOCATION = multiLanguageFileLocation;
-        messageCodeMessageLanguageMap = new ObjectMapper().readValue(ResourceUtils.getFile(MULTI_LANGUAGE_FILE_LOCATION), new TypeReference<Map<String, MultiLanguageMessage>>(){});
+                                      final @Value("#{'${available.message.language.codes}'.split(',')}")List<String> availableMessageLanguageCodes,
+                                      final @Value("${multi-language-messages.language.code.header.key}") String LANGUAGE_CODE_HEADER_KEY) throws IOException {
+        this.DEFAULT_MESSAGE_LANGUAGE_CODE = defaultLanguageCode;
+        this.MULTI_LANGUAGE_FILE_LOCATION = multiLanguageFileLocation;
+        this.messageCodeMessageLanguageMap = new ObjectMapper().readValue(ResourceUtils.getFile(MULTI_LANGUAGE_FILE_LOCATION), new TypeReference<Map<String, MultiLanguageMessage>>(){});
+        this.LANGUAGE_CODE_HEADER_KEY=LANGUAGE_CODE_HEADER_KEY;
         this.availableMessageLanguageCodes = availableMessageLanguageCodes;
     }
 

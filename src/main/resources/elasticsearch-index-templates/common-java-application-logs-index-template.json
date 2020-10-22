@@ -1,0 +1,48 @@
+{
+    "settings": {
+        "index": {
+            "refresh_interval": "10s"
+        }
+    },
+    "mappings": {
+        "properties": {
+            "correlationId": {
+                "type": "keyword"
+            },
+            "appName": {
+                "type": "keyword"
+            },
+            "date": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss.SSS"
+            },
+            "thread": {
+                "type": "keyword"
+            },
+            "level": {
+                "type": "keyword"
+            },
+            "loggerName": {
+                "type": "keyword"
+            },
+            "endOfBatch": {
+                "type": "boolean"
+            },
+            "loggerFqcn": {
+                "type": "keyword"
+            },
+            "threadId": {
+                "type": "long"
+            },
+            "threadPriority": {
+                "type": "long"
+            },
+            "message": {
+                "type": "text"
+            }
+        }
+    },
+    "index_patterns": [
+        "java-application-logs-actuator-swagger-crud-sample"
+    ]
+}
