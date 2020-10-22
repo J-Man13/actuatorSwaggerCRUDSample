@@ -67,7 +67,7 @@ public class MultiLanguageFileComponent implements IMultiLanguageComponent {
             case "az":
                 return  multiLanguageMessage.getAz();
             default:
-                return String.format("Multi language message with %s key does not have support for language with %s language code, that is a technical misfit , asking to contact api owners to handle the issue of multi language message addition",key,languageCode);
+                return String.format("Multi language message with %s key does not have support for language with %s language code, that is a technical misfit, asking to contact api owners to handle the issue of multi language message addition",key,languageCode);
         }
     }
 }
