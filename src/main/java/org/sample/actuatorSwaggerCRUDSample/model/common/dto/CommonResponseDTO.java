@@ -20,11 +20,13 @@ public class CommonResponseDTO<Data> {
     private LocalDateTime dateStamp;
     private List<CommonMessageDTO> messages;
     private Data data;
+    private List<ErrorDesriptor> errorDesriptorList;
 
     public CommonResponseDTO() {
         this.timestamp = Instant.now().getEpochSecond();
         this.messages = new LinkedList<>();
         this.dateStamp =  LocalDateTime.now();
+        this.errorDesriptorList = new LinkedList<>();
     }
     public CommonResponseDTO(int status) {
         this();
@@ -38,6 +40,15 @@ public class CommonResponseDTO<Data> {
 
     public CommonResponseDTO(int status, String type,String messageKey, String message) {
         this(status,new CommonMessageDTO(type,messageKey,message));
+    }
+
+    public CommonResponseDTO(int status, CommonMessageDTO commonMessageDTO,ErrorDesriptor errorDesriptor) {
+        this(status,commonMessageDTO);
+        errorDesriptorList.add(errorDesriptor);
+    }
+
+    public CommonResponseDTO(int status, String type, String messageKey, String message,ErrorDesriptor errorDesriptor) {
+        this(status,new CommonMessageDTO(type,messageKey,message),errorDesriptor);
     }
 
     public Integer getStatus() {
@@ -80,4 +91,11 @@ public class CommonResponseDTO<Data> {
         this.data = data;
     }
 
+    public List<ErrorDesriptor> getErrorDesriptorList() {
+        return errorDesriptorList;
+    }
+
+    public void setErrorDesriptorList(List<ErrorDesriptor> errorDesriptorList) {
+        this.errorDesriptorList = errorDesriptorList;
+    }
 }

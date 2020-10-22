@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonUnsuccessfulResponseDTO;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,13 +31,14 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
     private final CommonLogger LOGGER;
     private final String FAILED_ACTUATOR_AUTHENTICATION = "FAILED_ACTUATOR_AUTHENTICATION";
     private final IMultiLanguageComponent multiLanguageComponent;
-
+    private final ObjectMapper mapper;
 
     public ActuatorAuthenticationEntryPoint(@Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
                                             @Qualifier("trace-logger") CommonLogger LOGGER)
     {
         this.multiLanguageComponent = multiLanguageComponent;
         this.LOGGER = LOGGER;
+        this.mapper=new ObjectMapper();
     }
 
     @Override
@@ -62,7 +63,7 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().println(new ObjectMapper().writeValueAsString(buildFailedActuatorAuthenticationDto(authenticationException)));
+        response.getWriter().println(mapper.writeValueAsString(buildFailedActuatorAuthenticationDto(authenticationException)));
     }
 
     @Override
@@ -72,12 +73,12 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
         super.afterPropertiesSet();
     }
 
-    private CommonUnsuccessfulResponseDTO buildFailedActuatorAuthenticationDto(AuthenticationException authenticationException)
+    private CommonResponseDTO buildFailedActuatorAuthenticationDto(AuthenticationException authenticationException)
     {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(authenticationException.getStackTrace()[0].getClassName(),
                 FAILED_ACTUATOR_AUTHENTICATION,
                 String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),authenticationException.getMessage()),
                 authenticationException.getClass().getCanonicalName());
-        return new CommonUnsuccessfulResponseDTO(HttpServletResponse.SC_UNAUTHORIZED, "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor);
+        return new CommonResponseDTO(HttpServletResponse.SC_UNAUTHORIZED, "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor);
     }
 }
