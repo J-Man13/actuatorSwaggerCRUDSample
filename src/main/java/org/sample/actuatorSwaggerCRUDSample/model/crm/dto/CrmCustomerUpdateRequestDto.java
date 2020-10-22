@@ -3,7 +3,7 @@ package org.sample.actuatorSwaggerCRUDSample.model.crm.dto;
 import javax.validation.constraints.NotBlank;
 
 public class CrmCustomerUpdateRequestDto {
-    @NotBlank
+    @NotBlank(message = "CRM_CUSTOMER_UPDATE_REQUEST_DTO_ID_IS_BLANK")
     private String id;
     private  String name;
     private  String surname;

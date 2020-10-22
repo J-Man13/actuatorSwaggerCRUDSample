@@ -66,13 +66,8 @@
   },
   "HTTP_REQUEST_FAILED_COMMON_VALIDATION": {
     "en": "Request body did not pass common validation at %s route with %s method",
-    "ru": "Тело запроса не прошло общую проверку для %s маршрута %s http метода",
-    "az": "Müraciət ümumi yoxlamanı %s marşrut üçün və %s http metod üçün keçmədi"
-  },
-  "HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON" : {
-    "en": "%s field did not pass validation, reason : %s",
-    "ru": "%s поле не прошло валидацию, причина : %s",
-    "az": "%s sahə validatisiyanı keçməyib, səbəb : %s"
+    "ru": "Тело запроса не прошло валидацию для %s маршрута %s http метода",
+    "az": "Müraciət validasiya yoxlamasını %s marşrutda və %s http metod ilə keçmədi"
   },
   "FAILED_ACTUATOR_AUTHENTICATION" : {
     "en": "Request to actuator is not authorized. Reason: %s",
@@ -98,5 +93,40 @@
     "en": "CRM user was successfully saved",
     "ru": "Пользователь Crm был успешно сохранен",
     "az": "CRM istifadəçi uğurla yadda saxlanıldı"
+  },
+  "CRM_CUSTOMER_ADDITION_REQUEST_DTO_NAME_IS_BLANK": {
+    "en": "Validation error during client addition request. Name field cannot be empty. Field - %s",
+    "ru": "Ошибка валидации во время запроса на добавление клиента в базу. Имя не может быть пустым. Поле - %s",
+    "az": "Müştəri əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - %s"
+  },
+  "CRM_CUSTOMER_ADDITION_REQUEST_DTO_SURNAME_IS_BLANK": {
+    "en": "Validation error during client addition request. Surname cannot be empty. Field - %s",
+    "ru": "Ошибка валидации во время запроса на добавление клиента в базу. Фамилия не может быть пустой. Поле - %s",
+    "az": "Müştəri əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - %s"
+  },
+  "CRM_CUSTOMER_UPDATE_REQUEST_DTO_ID_IS_BLANK": {
+    "en": "Validation error during client update request. Id cannot be empty. Field - %s",
+    "ru": "Ошибка валидации во время запроса на обновление клиента в базе. Идентификатор не может быть пустым. Поле - %s",
+    "az": "Müştəri yeniləmə müraciyəti zamanı validasiya xətası baş verib. İdentifikator boş ola bilməz. Sahə - %s"
+  },
+  "CRM_USER_ADDITION_REQUEST_DTO_FIRSTNAME_IS_BLANK": {
+    "en": "Validation error during user addition request. First name field cannot be empty. Field - %s",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Имя не может быть пустым. Поле - %s",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - %s"
+  },
+  "CRM_USER_ADDITION_REQUEST_DTO_LASTNAME_IS_BLANK": {
+    "en": "Validation error during user addition request. Last name cannot be empty. Field - %s",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Фамилия не может быть пустой. Поле - %s",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - %s"
+  },
+  "CRM_USER_ADDITION_REQUEST_DTO_LOGIN_IS_BLANK": {
+    "en": "Validation error during user addition request. Login cannot be empty. Field - %s",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Логин не может быть пустым. Поле - %s",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Login boş ola bilməz. Sahə - %s"
+  },
+  "CRM_USER_ADDITION_REQUEST_DTO_PASSWORD_REGEX_VIOLATION": {
+    "en": "Validation error during user addition request. Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character(@$!%%*?&). Field - %s",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Пароль должен содержать минимум восемь символов, по крайней мере, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ(@$!%%*?&). Поле - %s",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Şifrə minimum səkkiz simvoldan, ən azı bir böyük hərfdən, bir kiçik hərfdən, bir rəqəmdən və bir xüsusi simvoldan(@$!%%*?&) ibarət olmalıdır. Sahə - %s"
   }
 }

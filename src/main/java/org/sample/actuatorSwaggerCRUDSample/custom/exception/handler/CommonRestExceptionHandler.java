@@ -122,9 +122,11 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
                 ex.getClass().getCanonicalName());
 
         CommonUnsuccessfulResponseDTO commonUnsuccessfulResponseDTO = new CommonUnsuccessfulResponseDTO(HttpStatus.BAD_REQUEST.value(), "error",errorDesriptor.getMessageKey(), errorDesriptor.getMessage(), errorDesriptor);
-        for (FieldError fieldError:ex.getBindingResult().getFieldErrors())
-            commonUnsuccessfulResponseDTO.getMessages().add(new CommonMessageDTO("error",HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON,String.format(multiLanguageComponent.getMessageByKey(HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON),fieldError.getField(),fieldError.getDefaultMessage())));
 
+        for (FieldError fieldError:ex.getBindingResult().getFieldErrors()) {
+            commonUnsuccessfulResponseDTO.getMessages().add(new CommonMessageDTO("error",
+                    fieldError.getDefaultMessage(), String.format(multiLanguageComponent.getMessageByKey(fieldError.getDefaultMessage()),fieldError.getField())));
+        }
         return new ResponseEntity(commonUnsuccessfulResponseDTO,HttpStatus.BAD_REQUEST);
     }
 }

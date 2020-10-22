@@ -1,17 +1,17 @@
 package org.sample.actuatorSwaggerCRUDSample.model.crm.dto;
 
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.Pattern;
 
 
 public class CrmUserAdditionRequestDto {
-    @NotBlank
+    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_FIRSTNAME_IS_BLANK")
     private String firstname;
-    @NotBlank
+    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_LASTNAME_IS_BLANK")
     private String lastname;
-    @NotBlank
+    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_LOGIN_IS_BLANK")
     private String login;
-    @NotBlank
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$",message = "CRM_USER_ADDITION_REQUEST_DTO_PASSWORD_REGEX_VIOLATION")
     private String password;
 
     public CrmUserAdditionRequestDto() {

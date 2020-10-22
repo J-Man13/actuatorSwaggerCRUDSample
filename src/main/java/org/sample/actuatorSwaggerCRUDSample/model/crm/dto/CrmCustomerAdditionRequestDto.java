@@ -6,10 +6,10 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class CrmCustomerAdditionRequestDto implements Serializable {
-    @NotBlank
+    @NotBlank(message = "CRM_CUSTOMER_ADDITION_REQUEST_DTO_NAME_IS_BLANK")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "CRM_CUSTOMER_ADDITION_REQUEST_DTO_SURNAME_IS_BLANK")
     private String surname;
 
     public String getName() {
