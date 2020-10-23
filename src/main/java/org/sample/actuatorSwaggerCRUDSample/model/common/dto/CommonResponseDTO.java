@@ -27,9 +27,7 @@ public class CommonResponseDTO<Data>{
     private List<ErrorDesriptor> errorDescriptorList;
 
     public CommonResponseDTO() {
-//        this.timestamp = Instant.now().getEpochSecond();
         this.messages = Collections.synchronizedList(new LinkedList());
-//        this.dateStamp =  LocalDateTime.now();
         this.errorDescriptorList = Collections.synchronizedList(new LinkedList());
     }
 
