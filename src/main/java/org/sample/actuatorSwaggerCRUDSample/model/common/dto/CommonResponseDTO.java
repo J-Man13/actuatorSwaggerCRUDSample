@@ -6,28 +6,38 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import java.time.Instant;
+
 import java.time.LocalDateTime;
+
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CommonResponseDTO<Data> {
+
+public class CommonResponseDTO<Data>{
     private Integer status;
     private Long timestamp;
+    private String app;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dateStamp;
-    private List<CommonMessageDTO> messages;
     private Data data;
-    private List<ErrorDesriptor> errorDesriptorList;
+    private List<CommonMessageDTO> messages;
+    private List<ErrorDesriptor> errorDescriptorList;
 
     public CommonResponseDTO() {
-        this.timestamp = Instant.now().getEpochSecond();
-        this.messages = new LinkedList<>();
-        this.dateStamp =  LocalDateTime.now();
-        this.errorDesriptorList = new LinkedList<>();
+//        this.timestamp = Instant.now().getEpochSecond();
+        this.messages = Collections.synchronizedList(new LinkedList());
+//        this.dateStamp =  LocalDateTime.now();
+        this.errorDescriptorList = Collections.synchronizedList(new LinkedList());
     }
+
+    public CommonResponseDTO(String infoBuildArchiveBaseName) {
+        this();
+        this.app=infoBuildArchiveBaseName;
+    }
+
     public CommonResponseDTO(int status) {
         this();
         this.status = status;
@@ -44,7 +54,7 @@ public class CommonResponseDTO<Data> {
 
     public CommonResponseDTO(int status, CommonMessageDTO commonMessageDTO,ErrorDesriptor errorDesriptor) {
         this(status,commonMessageDTO);
-        errorDesriptorList.add(errorDesriptor);
+        errorDescriptorList.add(errorDesriptor);
     }
 
     public CommonResponseDTO(int status, String type, String messageKey, String message,ErrorDesriptor errorDesriptor) {
@@ -91,11 +101,19 @@ public class CommonResponseDTO<Data> {
         this.data = data;
     }
 
-    public List<ErrorDesriptor> getErrorDesriptorList() {
-        return errorDesriptorList;
+    public List<ErrorDesriptor> getErrorDescriptorList() {
+        return errorDescriptorList;
     }
 
-    public void setErrorDesriptorList(List<ErrorDesriptor> errorDesriptorList) {
-        this.errorDesriptorList = errorDesriptorList;
+    public void setErrorDescriptorList(List<ErrorDesriptor> errorDescriptorList) {
+        this.errorDescriptorList = errorDescriptorList;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
     }
 }

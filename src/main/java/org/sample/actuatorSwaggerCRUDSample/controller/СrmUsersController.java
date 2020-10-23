@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
@@ -12,6 +13,7 @@ import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.CrmUserAdditionRequestDto;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.CrmUserAdditionResponseDto;
 import org.sample.actuatorSwaggerCRUDSample.service.ICrmUserService;
+import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,14 +37,21 @@ public class СrmUsersController {
 
     private final String CRM_USER_SAVED_SUCCESSFULLY = "CRM_USER_SAVED_SUCCESSFULLY";
 
+    private final CommonResponseDTO commonResponseDTO;
+    private final CommonMapper commonMapper;
+
     public СrmUsersController(final @Qualifier("trace-logger") CommonLogger LOGGER,
                               final CrmUserMapper crmUserMapper,
                               final @Qualifier("crmUserService") ICrmUserService crmUserService,
-                              final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent){
+                              final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
+                              final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO,
+                              final CommonMapper commonMapper){
         this.LOGGER = LOGGER;
         this.crmUserMapper = crmUserMapper;
         this.crmUserService = crmUserService;
         this.multiLanguageComponent = multiLanguageComponent;
+        this.commonResponseDTO=commonResponseDTO;
+        this.commonMapper=commonMapper;
     }
 
 
@@ -62,9 +71,13 @@ public class СrmUsersController {
         crmUser = crmUserService.save(crmUser,crmUserAdditionRequestDto.getPassword());
         LOGGER.trace("User saved at crm users service","crmUser", crmUser);
         CrmUserAdditionResponseDto crmCustomerAdditionResponceDto = new CrmUserAdditionResponseDto(crmUser);
-        CommonResponseDTO<CrmUserAdditionResponseDto> commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(),
-                new CommonMessageDTO("success",CRM_USER_SAVED_SUCCESSFULLY,multiLanguageComponent.getMessageByKey(CRM_USER_SAVED_SUCCESSFULLY)));
-        commonResponseDTO.setData(crmCustomerAdditionResponceDto);
-        return ResponseEntity.ok(commonResponseDTO);
+        CommonUtil.setCommonResponseDTO(
+                commonResponseDTO,
+                HttpStatus.OK.value(),
+                new CommonMessageDTO("success",
+                        CRM_USER_SAVED_SUCCESSFULLY,
+                        multiLanguageComponent.getMessageByKey(CRM_USER_SAVED_SUCCESSFULLY)),
+                ()->crmCustomerAdditionResponceDto);
+        return ResponseEntity.ok(commonMapper.cloneCommonResponseDTO(commonResponseDTO));
     }
 }

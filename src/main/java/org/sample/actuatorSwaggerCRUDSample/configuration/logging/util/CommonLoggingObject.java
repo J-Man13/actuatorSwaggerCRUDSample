@@ -140,29 +140,38 @@ public class CommonLoggingObject{
     public static class CustomSerializer extends JsonSerializer<CommonLoggingObject> {
         @Override
         public void serialize(CommonLoggingObject commonLoggingObject, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeStartObject();
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getDate()))
-                gen.writeStringField("date", commonLoggingObject.getDate());
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getLevel()))
-                gen.writeStringField("level", commonLoggingObject.getLevel());
+            try {
+                gen.writeStartObject();
 
-            if (ObjectUtils.isEmpty(commonLoggingObject.getLogMap()))
-                gen.writeObjectField(commonLoggingObject.getAppName(), commonLoggingObject.getEntry());
-            else if (ObjectUtils.isEmpty(commonLoggingObject.getEntry()))
-                gen.writeObjectField(commonLoggingObject.getAppName(), commonLoggingObject.getLogMap());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getDate()))
+                    gen.writeStringField("date", commonLoggingObject.getDate());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getLevel()))
+                    gen.writeStringField("level", commonLoggingObject.getLevel());
 
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getDesc()))
-                gen.writeStringField("desc", commonLoggingObject.getDesc());
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getHostName()))
-                gen.writeStringField("hostName", commonLoggingObject.getHostName());
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getHostAddress()))
-                gen.writeStringField("hostAddress", commonLoggingObject.getHostAddress());
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getAppName()))
-                gen.writeStringField("appName", commonLoggingObject.getAppName());
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getActivityId()))
-                gen.writeStringField("activityId", commonLoggingObject.getActivityId());
-            if (!ObjectUtils.isEmpty(commonLoggingObject.getCorrelationId()))
-                gen.writeStringField("correlationId", commonLoggingObject.getCorrelationId());
+                if (ObjectUtils.isEmpty(commonLoggingObject.getLogMap()))
+                    gen.writeObjectField(commonLoggingObject.getAppName(), commonLoggingObject.getEntry());
+                else if (ObjectUtils.isEmpty(commonLoggingObject.getEntry()))
+                    gen.writeObjectField(commonLoggingObject.getAppName(), commonLoggingObject.getLogMap());
+
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getDesc()))
+                    gen.writeStringField("desc", commonLoggingObject.getDesc());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getLocation()))
+                    gen.writeStringField("location", commonLoggingObject.getLocation());
+
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getHostName()))
+                    gen.writeStringField("hostName", commonLoggingObject.getHostName());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getHostAddress()))
+                    gen.writeStringField("hostAddress", commonLoggingObject.getHostAddress());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getAppName()))
+                    gen.writeStringField("appName", commonLoggingObject.getAppName());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getActivityId()))
+                    gen.writeStringField("activityId", commonLoggingObject.getActivityId());
+                if (!ObjectUtils.isEmpty(commonLoggingObject.getCorrelationId()))
+                    gen.writeStringField("correlationId", commonLoggingObject.getCorrelationId());
+            }
+            finally {
+                gen.close();
+            }
         }
     }
 }

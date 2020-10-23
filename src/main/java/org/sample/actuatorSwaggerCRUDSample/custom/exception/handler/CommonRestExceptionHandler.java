@@ -67,7 +67,7 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(new CommonResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(Exception.class)
+//    @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception exception) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
                 RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING,exception.getMessage(),exception.getClass().getCanonicalName());
