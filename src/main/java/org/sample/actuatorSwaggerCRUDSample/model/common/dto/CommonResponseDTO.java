@@ -7,11 +7,13 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 
 
 public class CommonResponseDTO<Data>{
@@ -113,5 +115,25 @@ public class CommonResponseDTO<Data>{
 
     public void setApp(String app) {
         this.app = app;
+    }
+
+    public void setStatusCodeMessageDtoDataAndInitDate(final int httpStatusCode,
+                                 final CommonMessageDTO commonMessageDTO,
+                                 final Data data){
+        this.setStatus(httpStatusCode);
+        this.getMessages().add(commonMessageDTO);
+        this.setData(data);
+        this.setDateStamp(LocalDateTime.now());
+        this.setTimestamp(Instant.now().getEpochSecond());
+    }
+
+    public void setStatusCodeMessageDtoErrorDescriptorAndInitDate(final int httpStatusCode,
+                                                       final CommonMessageDTO commonMessageDTO,
+                                                       ErrorDesriptor errorDesriptor){
+        this.setStatus(httpStatusCode);
+        this.getMessages().add(commonMessageDTO);
+        this.getErrorDescriptorList().add(errorDesriptor);
+        this.setDateStamp(LocalDateTime.now());
+        this.setTimestamp(Instant.now().getEpochSecond());
     }
 }

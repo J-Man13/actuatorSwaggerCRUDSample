@@ -71,13 +71,12 @@ public class СrmUsersController {
         crmUser = crmUserService.save(crmUser,crmUserAdditionRequestDto.getPassword());
         LOGGER.trace("User saved at crm users service","crmUser", crmUser);
         CrmUserAdditionResponseDto crmCustomerAdditionResponceDto = new CrmUserAdditionResponseDto(crmUser);
-        CommonUtil.setCommonResponseDTO(
-                commonResponseDTO,
+        commonResponseDTO.setStatusCodeMessageDtoDataAndInitDate(
                 HttpStatus.OK.value(),
                 new CommonMessageDTO("success",
                         CRM_USER_SAVED_SUCCESSFULLY,
                         multiLanguageComponent.getMessageByKey(CRM_USER_SAVED_SUCCESSFULLY)),
-                ()->crmCustomerAdditionResponceDto);
+                crmCustomerAdditionResponceDto);
         return ResponseEntity.ok(commonMapper.cloneCommonResponseDTO(commonResponseDTO));
     }
 }

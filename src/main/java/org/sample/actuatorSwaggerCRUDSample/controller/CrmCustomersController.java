@@ -75,13 +75,12 @@ public class CrmCustomersController {
         CrmCustomer crmCustomer = crmCustomerService.findById(id);
         LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service",id),"crmCustomer", crmCustomer);
         CrmCustomerExtractionResponseDto crmCustomerExtractionResponseDto = new CrmCustomerExtractionResponseDto(crmCustomer);
-        CommonUtil.setCommonResponseDTO(
-                commonResponseDTO,
-                HttpStatus.OK.value(),
+        commonResponseDTO.setStatusCodeMessageDtoDataAndInitDate(
+                                HttpStatus.OK.value(),
                 new CommonMessageDTO("success",
                         FIND_CRM_CUSTOMER_BY_ID_SUCCESS,
                         String.format(multiLanguageComponent.getMessageByKey(FIND_CRM_CUSTOMER_BY_ID_SUCCESS), id)),
-                () -> crmCustomerExtractionResponseDto);
+                crmCustomerExtractionResponseDto);
         return ResponseEntity.ok(commonMapper.cloneCommonResponseDTO(commonResponseDTO));
     }
 
@@ -100,13 +99,12 @@ public class CrmCustomersController {
         List<CrmCustomer> crmCustomerList = crmCustomerService.findByName(name);
         LOGGER.info(String.format("Extracted crm customers by %s name from crm customers service",name),"crmCustomerList", crmCustomerList);
         CrmCustomerByNameExtractionResponseDto crmCustomerByNameExtractionResponseDto = new CrmCustomerByNameExtractionResponseDto(crmCustomerList);
-        CommonUtil.setCommonResponseDTO(
-                commonResponseDTO,
+        commonResponseDTO.setStatusCodeMessageDtoDataAndInitDate(
                 HttpStatus.OK.value(),
                 new CommonMessageDTO("success",
                         FIND_CRM_CUSTOMER_BY_NAME_SUCCESS,
                         String.format(multiLanguageComponent.getMessageByKey(FIND_CRM_CUSTOMER_BY_NAME_SUCCESS),name)),
-                ()->crmCustomerByNameExtractionResponseDto);
+                crmCustomerByNameExtractionResponseDto);
         return ResponseEntity.ok(commonMapper.cloneCommonResponseDTO(commonResponseDTO));
     }
 
@@ -125,13 +123,12 @@ public class CrmCustomersController {
         crmCustomer = crmCustomerService.save(crmCustomer);
         LOGGER.trace("Customer saved at crm customers service","crmCustomer", crmCustomer);
         CrmCustomerAdditionResponseDto crmCustomerAdditionResponseDto = new CrmCustomerAdditionResponseDto(crmCustomer);
-        CommonUtil.setCommonResponseDTO(
-                commonResponseDTO,
+        commonResponseDTO.setStatusCodeMessageDtoDataAndInitDate(
                 HttpStatus.OK.value(),
                 new CommonMessageDTO("success",
                         CRM_CUSTOMER_SAVED_SUCCESSFULLY,
                         multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_SAVED_SUCCESSFULLY)),
-                ()->crmCustomerAdditionResponseDto);
+                crmCustomerAdditionResponseDto);
         return ResponseEntity.ok(commonMapper.cloneCommonResponseDTO(commonResponseDTO));
     }
 
@@ -151,13 +148,12 @@ public class CrmCustomersController {
         crmCustomer = crmCustomerService.update(crmCustomer);
         LOGGER.info(String.format("Extracted crm customer by %s id from crm customers service after update",crmCustomer.getId()),"crmCustomer", crmCustomer);
         CrmCustomerUpdateResponseDto crmCustomerUpdateResponseDto = new CrmCustomerUpdateResponseDto(crmCustomer);
-        CommonUtil.setCommonResponseDTO(
-                commonResponseDTO,
+        commonResponseDTO.setStatusCodeMessageDtoDataAndInitDate(
                 HttpStatus.OK.value(),
                 new CommonMessageDTO("success",
                         CRM_CUSTOMER_UPDATED_SUCCESSFULLY,
                         multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_UPDATED_SUCCESSFULLY)),
-                ()->crmCustomerUpdateResponseDto);
+                crmCustomerUpdateResponseDto);
         return ResponseEntity.ok(commonMapper.cloneCommonResponseDTO(commonResponseDTO));
     }
 }

@@ -34,14 +34,4 @@ public class CommonUtil {
         ThreadContext.put("correlation.id",UUID.randomUUID().toString());
     }
 
-    public static void setCommonResponseDTO(final CommonResponseDTO commonResponseDTO,
-                                            final int httpStatusCode,
-                                            final CommonMessageDTO commonMessageDTO,
-                                            final Supplier<?> supplier){
-        commonResponseDTO.setStatus(httpStatusCode);
-        commonResponseDTO.getMessages().add(commonMessageDTO);
-        commonResponseDTO.setData(supplier.get());
-        commonResponseDTO.setDateStamp(LocalDateTime.now());
-        commonResponseDTO.setTimestamp(Instant.now().getEpochSecond());
-    }
 }

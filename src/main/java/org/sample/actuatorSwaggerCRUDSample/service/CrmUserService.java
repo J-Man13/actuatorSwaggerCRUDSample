@@ -3,8 +3,8 @@ package org.sample.actuatorSwaggerCRUDSample.service;
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundRestHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalRestHandledException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
 import org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity.CrmUserEntity;
@@ -51,12 +51,12 @@ public class CrmUserService implements ICrmUserService {
             CrmUserEntity crmUserEntity = crmUserRepository.findByLogin(login).orElse(null);
             Objects.requireNonNull(crmUserEntity,()->{
                 LOGGER.debug("CRM user mysql entity with given login was not found","login",login);
-                throw new CrmUserEntityNotFoundException(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
+                throw new CrmUserEntityNotFoundRestHandledException(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
                         String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),login));
             });
             return crmUserMapper.crmUserEntityToCrmUser(crmUserEntity);
         }
-        catch (CrmUserEntityNotFoundException crmUserEntityNotFoundException){
+        catch (CrmUserEntityNotFoundRestHandledException crmUserEntityNotFoundException){
             throw crmUserEntityNotFoundException;
         }
         catch (DataAccessException dataAccessException){
@@ -64,7 +64,7 @@ public class CrmUserService implements ICrmUserService {
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalHandledException(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
+            throw new GlobalRestHandledException(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
                     String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()));
         }
     }
@@ -84,7 +84,7 @@ public class CrmUserService implements ICrmUserService {
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalHandledException(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
+            throw new GlobalRestHandledException(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
                     String.format(multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()));
         }
     }
