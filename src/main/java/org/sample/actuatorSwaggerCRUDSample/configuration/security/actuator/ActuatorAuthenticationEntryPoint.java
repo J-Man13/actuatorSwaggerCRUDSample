@@ -33,8 +33,8 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
     private final IMultiLanguageComponent multiLanguageComponent;
     private final ObjectMapper mapper;
 
-    public ActuatorAuthenticationEntryPoint(@Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
-                                            @Qualifier("trace-logger") CommonLogger LOGGER)
+    public ActuatorAuthenticationEntryPoint(final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
+                                            final @Qualifier("trace-logger") CommonLogger LOGGER)
     {
         this.multiLanguageComponent = multiLanguageComponent;
         this.LOGGER = LOGGER;

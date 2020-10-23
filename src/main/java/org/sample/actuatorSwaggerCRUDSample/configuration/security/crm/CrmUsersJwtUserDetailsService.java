@@ -16,7 +16,7 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
 
     private ICrmUserService crmUserService;
 
-    public CrmUsersJwtUserDetailsService(@Qualifier("crmUserService") ICrmUserService crmUserService){
+    public CrmUsersJwtUserDetailsService(final @Qualifier("crmUserService") ICrmUserService crmUserService){
         this.crmUserService=crmUserService;
     }
 

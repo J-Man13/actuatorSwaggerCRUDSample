@@ -23,11 +23,11 @@ public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter 
     private final String SECURITY_BASE_PATH_PATTERN;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public ActuatorSecurityConfiguration(ActuatorAuthenticationEntryPoint actuatorAuthenticationEntryPoint,
-                                         @Value("${local.actuator.user}") String ACTUATOR_USER,
-                                         @Value("${local.actuator.password}") String ACTUATOR_USER_PASSWORD,
-                                         @Value("${local.actuator.security.base.path.pattern}") String SECURITY_BASE_PATH_PATTERN,
-                                         BCryptPasswordEncoder bCryptPasswordEncoder)
+    public ActuatorSecurityConfiguration(final ActuatorAuthenticationEntryPoint actuatorAuthenticationEntryPoint,
+                                         final @Value("${local.actuator.user}") String ACTUATOR_USER,
+                                         final @Value("${local.actuator.password}") String ACTUATOR_USER_PASSWORD,
+                                         final @Value("${local.actuator.security.base.path.pattern}") String SECURITY_BASE_PATH_PATTERN,
+                                         final BCryptPasswordEncoder bCryptPasswordEncoder)
     {
         this.actuatorAuthenticationEntryPoint = actuatorAuthenticationEntryPoint;
         this.ACTUATOR_USER = ACTUATOR_USER;

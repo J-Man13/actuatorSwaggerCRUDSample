@@ -12,11 +12,11 @@ import static org.zalando.logbook.Conditions.*;
 @Configuration
 public class LogbookConfiguration {
 
-    private CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter;
-    private CustomJsonHttpLogFormatter customJsonHttpLogFormatter;
+    private final CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter;
+    private final CustomJsonHttpLogFormatter customJsonHttpLogFormatter;
 
-    public LogbookConfiguration(CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter,
-                                CustomJsonHttpLogFormatter customJsonHttpLogFormatter) {
+    public LogbookConfiguration(final CustomHttpRequestResponseLogWriter customHttpRequestResponseLogWriter,
+                                final CustomJsonHttpLogFormatter customJsonHttpLogFormatter) {
         this.customHttpRequestResponseLogWriter = customHttpRequestResponseLogWriter;
         this.customJsonHttpLogFormatter = customJsonHttpLogFormatter;
     }

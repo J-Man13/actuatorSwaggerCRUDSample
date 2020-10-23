@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.db;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class MySqlCRMJPAConfiguration {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean mySqlCRMEntityManagerFactory(@Qualifier("mySqlCRMDataSource") DataSource dataSource,
+    public LocalContainerEntityManagerFactoryBean mySqlCRMEntityManagerFactory(final @Qualifier("mySqlCRMDataSource") DataSource dataSource,
                                                                                final @Value("${mysql.crm.hibernate.hbm2ddl.auto}") String mysqlCrmHibernateHbm2ddlAuto,
                                                                                final @Value("${mysql.crm.hibernate.format_sql}") String mysqlCrmHibernateFormat_sql,
                                                                                final @Value("${mysql.crm.hibernate.show_sql}") String mysqlCrmHibernateShow_sql){
@@ -59,7 +59,7 @@ public class MySqlCRMJPAConfiguration {
     }
 
     @Bean
-    public JpaTransactionManager mySqlCRMTransactionManager(@Qualifier("mySqlCRMEntityManagerFactory") EntityManagerFactory emf) {
+    public JpaTransactionManager mySqlCRMTransactionManager(final @Qualifier("mySqlCRMEntityManagerFactory") EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
 }

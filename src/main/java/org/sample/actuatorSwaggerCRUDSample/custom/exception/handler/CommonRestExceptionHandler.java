@@ -6,6 +6,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiL
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
+import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
@@ -35,18 +36,23 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final IMultiLanguageComponent multiLanguageComponent;
     private final CommonLogger LOGGER;
+    private final CommonMapper commonMapper;
+    private final CommonResponseDTO commonResponseDTO;
 
     private final String THERE_IS_NO_LISTENER_FOR_ROUTE = "THERE_IS_NO_LISTENER_FOR_ROUTE";
     private final String METHOD_IS_NOT_SUPPORTED = "METHOD_IS_NOT_SUPPORTED";
     private final String HTTP_REQUEST_IS_NOT_READABLE = "HTTP_REQUEST_IS_NOT_READABLE";
     private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION = "HTTP_REQUEST_FAILED_COMMON_VALIDATION";
-    private final String HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON = "HTTP_REQUEST_FAILED_COMMON_VALIDATION_REASON";
     private final String RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING = "RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING";
 
-    public CommonRestExceptionHandler(@Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
-                                      @Qualifier("trace-logger") CommonLogger LOGGER){
+    public CommonRestExceptionHandler(final @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
+                                      final @Qualifier("trace-logger") CommonLogger LOGGER,
+                                      final CommonMapper commonMapper,
+                                      final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO){
         this.multiLanguageComponent = multiLanguageComponent;
         this.LOGGER = LOGGER;
+        this.commonMapper=commonMapper;
+        this.commonResponseDTO=commonResponseDTO;
     }
 
     @ExceptionHandler(MongoDocumentNotFoundException.class)
@@ -67,14 +73,14 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(new CommonResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception exception) {
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
                 RESPONSE_ENTITY_GENERAL_EXCEPTION_HANDLING,exception.getMessage(),exception.getClass().getCanonicalName());
         LOGGER.fatal("ResponseEntityExceptionHandler caught unhandled exception, logging it's class, message and stack trace",new HashMap<String, String>() {{
-            put("unhandledExceptionCanonicalName", exception.getClass().getCanonicalName());
-            put("unhandledExceptionMessage", exception.getMessage());
-            put("unhandledExceptionStackTraceAsString", Throwables.getStackTraceAsString(exception));
+            put("restHandledExceptionCanonicalName", exception.getClass().getCanonicalName());
+            put("restHandledExceptionMessage", exception.getMessage());
+            put("restHandledExceptionStackTraceAsString", Throwables.getStackTraceAsString(exception));
         }});
         return new ResponseEntity(new CommonResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor), HttpStatus.INTERNAL_SERVER_ERROR);
     }

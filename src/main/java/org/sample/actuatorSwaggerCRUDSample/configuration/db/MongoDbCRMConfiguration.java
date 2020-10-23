@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoDbCRMConfiguration {
 
     @Bean("crmMongoDbFactory")
-    public MongoDbFactory crmMongoDbFactory(@Value("${spring.data.mongodb.crm.uri}") String mongoDbCRMUri) {
+    public MongoDbFactory crmMongoDbFactory(final @Value("${spring.data.mongodb.crm.uri}") String mongoDbCRMUri) {
         MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder();
         optionsBuilder.connectTimeout(10000);
         optionsBuilder.socketTimeout(10000);
@@ -30,12 +30,12 @@ public class MongoDbCRMConfiguration {
 
 
     @Bean("crmMongoTemplate")
-    public MongoTemplate crmMongoTemplate(@Qualifier("crmMongoDbFactory") MongoDbFactory mongoDbFactory) {
+    public MongoTemplate crmMongoTemplate(final @Qualifier("crmMongoDbFactory") MongoDbFactory mongoDbFactory) {
         return new MongoTemplate(mongoDbFactory);
     }
 
     @Bean("crmMongoTransactionManager")
-    MongoTransactionManager transactionManager(@Qualifier("crmMongoDbFactory")MongoDbFactory mongoDbFactory) {
+    MongoTransactionManager transactionManager(final @Qualifier("crmMongoDbFactory")MongoDbFactory mongoDbFactory) {
         return new MongoTransactionManager(mongoDbFactory);
     }
 }
