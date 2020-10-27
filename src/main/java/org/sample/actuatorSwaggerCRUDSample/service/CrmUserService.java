@@ -6,6 +6,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiL
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundRestHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalRestHandledException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
 import org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity.CrmUserEntity;
 import org.sample.actuatorSwaggerCRUDSample.repository.mysql.crm.CrmUserRepository;
@@ -28,17 +29,20 @@ public class CrmUserService implements ICrmUserService {
     private final CrmUserMapper crmUserMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CommonResponseDTO commonResponseDTO;
 
     public CrmUserService(final CrmUserRepository crmUserRepository,
                           final @Qualifier("trace-logger") CommonLogger LOGGER,
                           final CrmUserMapper crmUserMapper,
                           final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
-                          final BCryptPasswordEncoder bCryptPasswordEncoder){
+                          final BCryptPasswordEncoder bCryptPasswordEncoder,
+                          final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO){
         this.crmUserRepository = crmUserRepository;
         this.LOGGER=LOGGER;
         this.crmUserMapper=crmUserMapper;
         this.multiLanguageComponent = multiLanguageComponent;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
+        this.commonResponseDTO=commonResponseDTO;
     }
 
     private final String CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION = "CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION";

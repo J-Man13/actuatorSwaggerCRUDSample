@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
 
@@ -32,13 +34,19 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
     private final String FAILED_ACTUATOR_AUTHENTICATION = "FAILED_ACTUATOR_AUTHENTICATION";
     private final IMultiLanguageComponent multiLanguageComponent;
     private final ObjectMapper mapper;
+    private final CommonResponseDTO commonResponseDTO;
+    private final CommonMapper commonMapper;
 
     public ActuatorAuthenticationEntryPoint(final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
-                                            final @Qualifier("trace-logger") CommonLogger LOGGER)
+                                            final @Qualifier("trace-logger") CommonLogger LOGGER,
+                                            final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO,
+                                            final CommonMapper commonMapper)
     {
         this.multiLanguageComponent = multiLanguageComponent;
         this.LOGGER = LOGGER;
         this.mapper=new ObjectMapper();
+        this.commonResponseDTO=commonResponseDTO;
+        this.commonMapper=commonMapper;
     }
 
     @Override
@@ -63,7 +71,20 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().println(mapper.writeValueAsString(buildFailedActuatorAuthenticationDto(authenticationException)));
+
+        ErrorDesriptor errorDesriptor = new ErrorDesriptor(authenticationException.getStackTrace()[0].getClassName(),
+                FAILED_ACTUATOR_AUTHENTICATION,
+                String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),authenticationException.getMessage()),
+                authenticationException.getClass().getCanonicalName());
+
+        commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
+                HttpServletResponse.SC_UNAUTHORIZED,
+                new CommonMessageDTO("error",
+                        errorDesriptor.getMessageKey(),
+                        errorDesriptor.getMessage()),
+                errorDesriptor
+                );
+        response.getWriter().println(mapper.writeValueAsString(commonMapper.cloneCommonResponseDTO(commonResponseDTO)));
     }
 
     @Override
@@ -71,14 +92,5 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
     {
         setRealmName("internal.azericard");
         super.afterPropertiesSet();
-    }
-
-    private CommonResponseDTO buildFailedActuatorAuthenticationDto(AuthenticationException authenticationException)
-    {
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(authenticationException.getStackTrace()[0].getClassName(),
-                FAILED_ACTUATOR_AUTHENTICATION,
-                String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),authenticationException.getMessage()),
-                authenticationException.getClass().getCanonicalName());
-        return new CommonResponseDTO(HttpServletResponse.SC_UNAUTHORIZED, "error", errorDesriptor.getMessageKey(),errorDesriptor.getMessage(), errorDesriptor);
     }
 }
