@@ -21,12 +21,14 @@ public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter 
     private final String ACTUATOR_USER;
     private final String ACTUATOR_USER_PASSWORD;
     private final String SECURITY_BASE_PATH_PATTERN;
+    private final String HEALTH_CHECK_PATH;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public ActuatorSecurityConfiguration(final ActuatorAuthenticationEntryPoint actuatorAuthenticationEntryPoint,
                                          final @Value("${local.actuator.user}") String ACTUATOR_USER,
                                          final @Value("${local.actuator.password}") String ACTUATOR_USER_PASSWORD,
                                          final @Value("${local.actuator.security.base.path.pattern}") String SECURITY_BASE_PATH_PATTERN,
+                                         final @Value("${local.actuator.security.base.health.check.path}") String HEALTH_CHECK_PATH,
                                          final BCryptPasswordEncoder bCryptPasswordEncoder)
     {
         this.actuatorAuthenticationEntryPoint = actuatorAuthenticationEntryPoint;
@@ -34,6 +36,7 @@ public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter 
         this.ACTUATOR_USER_PASSWORD = ACTUATOR_USER_PASSWORD;
         this.SECURITY_BASE_PATH_PATTERN = SECURITY_BASE_PATH_PATTERN;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.HEALTH_CHECK_PATH=HEALTH_CHECK_PATH;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class ActuatorSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
         http.antMatcher(SECURITY_BASE_PATH_PATTERN)
                 .authorizeRequests()
+                    .antMatchers(HEALTH_CHECK_PATH).permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .httpBasic().authenticationEntryPoint(actuatorAuthenticationEntryPoint)
