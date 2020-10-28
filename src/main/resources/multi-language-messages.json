@@ -109,12 +109,12 @@
     "ru": "Ошибка валидации во время запроса на обновление клиента в базе. Идентификатор не может быть пустым. Поле - %s",
     "az": "Müştəri yeniləmə müraciyəti zamanı validasiya xətası baş verib. İdentifikator boş ola bilməz. Sahə - %s"
   },
-  "CRM_USER_ADDITION_REQUEST_DTO_FIRSTNAME_IS_BLANK": {
+  "CRM_USER_ADDITION_REQUEST_DTO_FIRST_NAME_IS_BLANK": {
     "en": "Validation error during user addition request. First name field cannot be empty. Field - %s",
     "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Имя не может быть пустым. Поле - %s",
     "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - %s"
   },
-  "CRM_USER_ADDITION_REQUEST_DTO_LASTNAME_IS_BLANK": {
+  "CRM_USER_ADDITION_REQUEST_DTO_LAST_NAME_IS_BLANK": {
     "en": "Validation error during user addition request. Last name cannot be empty. Field - %s",
     "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Фамилия не может быть пустой. Поле - %s",
     "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - %s"

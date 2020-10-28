@@ -5,10 +5,10 @@ import javax.validation.constraints.Pattern;
 
 
 public class CrmUserAdditionRequestDto {
-    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_FIRSTNAME_IS_BLANK")
-    private String firstname;
-    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_LASTNAME_IS_BLANK")
-    private String lastname;
+    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_FIRST_NAME_IS_BLANK")
+    private String firstName;
+    @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_LAST_NAME_IS_BLANK")
+    private String lastName;
     @NotBlank(message = "CRM_USER_ADDITION_REQUEST_DTO_LOGIN_IS_BLANK")
     private String login;
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$",message = "CRM_USER_ADDITION_REQUEST_DTO_PASSWORD_REGEX_VIOLATION")
@@ -18,20 +18,20 @@ public class CrmUserAdditionRequestDto {
 
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getLogin() {
