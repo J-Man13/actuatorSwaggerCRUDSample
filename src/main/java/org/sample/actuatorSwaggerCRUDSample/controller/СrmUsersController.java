@@ -13,7 +13,6 @@ import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.CrmUserAdditionRequestDto;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.dto.CrmUserAdditionResponseDto;
 import org.sample.actuatorSwaggerCRUDSample.service.ICrmUserService;
-import org.sample.actuatorSwaggerCRUDSample.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

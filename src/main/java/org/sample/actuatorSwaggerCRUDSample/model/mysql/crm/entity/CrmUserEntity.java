@@ -22,7 +22,7 @@ public class CrmUserEntity {
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles_assignments",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

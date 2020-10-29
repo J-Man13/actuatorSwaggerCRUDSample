@@ -73,7 +73,7 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
                 .setAudience("internal.azericard")
                 .setSubject(user.getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_ACTIVITY_PERIOD_MS))
-                .claim("rol", roles)
+                .claim("roles", roles)
                 .compact();
 
         response.addHeader("internal.ldap.authentication.bearer.jwt", token);
