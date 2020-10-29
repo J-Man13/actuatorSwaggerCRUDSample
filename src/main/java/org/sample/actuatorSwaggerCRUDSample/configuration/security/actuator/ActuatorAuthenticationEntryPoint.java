@@ -74,7 +74,7 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
 
         ErrorDesriptor errorDesriptor = new ErrorDesriptor(authenticationException.getStackTrace()[0].getClassName(),
                 FAILED_ACTUATOR_AUTHENTICATION,
-                String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION),authenticationException.getMessage()),
+                String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION,"en"),authenticationException.getMessage()),
                 authenticationException.getClass().getCanonicalName());
 
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
