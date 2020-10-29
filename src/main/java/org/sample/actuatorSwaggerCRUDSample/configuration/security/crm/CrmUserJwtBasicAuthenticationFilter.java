@@ -43,7 +43,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                                     FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader(JWT_HEADER_KEY);
 
-        if (header == null) {
+        if (StringUtils.isEmpty(header)) {
             chain.doFilter(request, response);
             return;
         }
@@ -62,15 +62,15 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                         .setSigningKey(AUTHENTICATION_SIGNATURE_KEY.getBytes())
                         .parseClaimsJws(jwt);
 
-                String username = claimsJws.getBody().getSubject();
+                String login = claimsJws.getBody().getSubject();
                 List<String> roles = claimsJws.getBody().get("roles",List.class);
                 List<GrantedAuthority> grantedAuthorities = roles.stream().map(role->new SimpleGrantedAuthority(role)).collect(Collectors.toList());
 
-                if ("".equals(username) || username == null) {
+                if (StringUtils.isEmpty(login)) {
                     return null;
                 }
 
-                return new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
+                return new UsernamePasswordAuthenticationToken(login, null, grantedAuthorities);
             } catch (JwtException exception) {
                 System.out.println(String.format("Some exception : %s failed : %s", jwt, exception.getMessage()));
                 exception.printStackTrace();

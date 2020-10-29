@@ -46,7 +46,8 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response){
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response){
         CrmUserLoginRequestDto crmUserLoginRequestDto =null;
         try {
             crmUserLoginRequestDto = objectMapper.readValue(request.getInputStream(),CrmUserLoginRequestDto.class);
@@ -58,8 +59,10 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain filterChain, Authentication authentication) {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain filterChain,
+                                            Authentication authentication) {
         User user = ((User) authentication.getPrincipal());
 
         List<String> roles = user.getAuthorities()
@@ -71,7 +74,6 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
 
         String token = Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(signingKeyBytes), SignatureAlgorithm.HS512)
-                .setHeaderParam("typ", "type")
                 .setIssuer("Azericard LLC")
                 .setAudience("internal.azericard")
                 .setSubject(user.getUsername())
