@@ -18,18 +18,21 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final String LOGIN_ENDPOINT;
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final Long TOKEN_ACTIVITY_PERIOD_MS;
+    private final String JWT_HEADER_KEY;
 
     public CrmUsersJwtSecurityConfiguration(final BCryptPasswordEncoder bCryptPasswordEncoder,
                                             final CrmUsersJwtUserDetailsService crmUsersJwtUserDetailsService,
                                             final @Value("${local.crm.user.security.login.endpoint}")String LOGIN_ENDPOINT,
                                             final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
-                                            final @Value("${local.crm.user.security..jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS){
+                                            final @Value("${local.crm.user.security..jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS,
+                                            final @Value("${local.crm.user.security.jwt.header.key}") String JWT_HEADER_KEY){
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.crmUsersJwtUserDetailsService = crmUsersJwtUserDetailsService;
 
         this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
         this.LOGIN_ENDPOINT = LOGIN_ENDPOINT;
         this.TOKEN_ACTIVITY_PERIOD_MS=TOKEN_ACTIVITY_PERIOD_MS;
+        this.JWT_HEADER_KEY=JWT_HEADER_KEY;
     }
 
     @Override
@@ -53,10 +56,10 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     }
 
     private CrmUserJwtUsernamePasswordAuthenticationFilter getCrmUserJwtUsernamePasswordAuthenticationFilter() throws Exception {
-        return new CrmUserJwtUsernamePasswordAuthenticationFilter(authenticationManager(),LOGIN_ENDPOINT,AUTHENTICATION_SIGNATURE_KEY,TOKEN_ACTIVITY_PERIOD_MS);
+        return new CrmUserJwtUsernamePasswordAuthenticationFilter(authenticationManager(),LOGIN_ENDPOINT,AUTHENTICATION_SIGNATURE_KEY,TOKEN_ACTIVITY_PERIOD_MS,JWT_HEADER_KEY);
     }
 
     private CrmUserJwtBasicAuthenticationFilter getCrmUserJwtBasicAuthenticationFilter() throws Exception {
-        return new CrmUserJwtBasicAuthenticationFilter(authenticationManager(),AUTHENTICATION_SIGNATURE_KEY);
+        return new CrmUserJwtBasicAuthenticationFilter(authenticationManager(),AUTHENTICATION_SIGNATURE_KEY,JWT_HEADER_KEY);
     }
 }

@@ -30,16 +30,19 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
     private final ObjectMapper objectMapper;
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final Long TOKEN_ACTIVITY_PERIOD_MS;
+    private final String JWT_HEADER_KEY;
 
     public CrmUserJwtUsernamePasswordAuthenticationFilter(final AuthenticationManager authenticationManager,
                                                           final String loginEndpoint,
                                                           final String AUTHENTICATION_SIGNATURE_KEY,
-                                                          final Long TOKEN_ACTIVITY_PERIOD_MS) {
+                                                          final Long TOKEN_ACTIVITY_PERIOD_MS,
+                                                          final String JWT_HEADER_KEY) {
         this.authenticationManager = authenticationManager;
         setFilterProcessesUrl(loginEndpoint);
         this.objectMapper=new ObjectMapper();
         this.AUTHENTICATION_SIGNATURE_KEY = AUTHENTICATION_SIGNATURE_KEY;
         this.TOKEN_ACTIVITY_PERIOD_MS=TOKEN_ACTIVITY_PERIOD_MS;
+        this.JWT_HEADER_KEY=JWT_HEADER_KEY;
     }
 
     @Override
@@ -76,6 +79,6 @@ public class CrmUserJwtUsernamePasswordAuthenticationFilter extends UsernamePass
                 .claim("roles", roles)
                 .compact();
 
-        response.addHeader("internal.ldap.authentication.bearer.jwt", token);
+        response.addHeader(JWT_HEADER_KEY, token);
     }
 }
