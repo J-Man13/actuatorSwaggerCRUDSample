@@ -3,9 +3,9 @@ package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundRestHandledException;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalRestHandledException;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundRestHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
@@ -55,8 +55,8 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         this.commonResponseDTO=commonResponseDTO;
     }
 
-    @ExceptionHandler(MongoDocumentNotFoundRestHandledException.class)
-    public ResponseEntity mongoDocumentNotFoundExceptionHandler(MongoDocumentNotFoundRestHandledException mongoDocumentNotFoundException) {
+    @ExceptionHandler(MongoDocumentNotFoundException.class)
+    public ResponseEntity mongoDocumentNotFoundExceptionHandler(MongoDocumentNotFoundException mongoDocumentNotFoundException) {
         ErrorDesriptor errorDesriptor = mongoDocumentNotFoundException.getErrorDesriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.NOT_FOUND.value(),
@@ -67,8 +67,8 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CrmUserEntityNotFoundRestHandledException.class)
-    public ResponseEntity crmUserEntityNotFoundExceptionHandler(CrmUserEntityNotFoundRestHandledException crmUserEntityNotFoundException) {
+    @ExceptionHandler(CrmUserEntityNotFoundException.class)
+    public ResponseEntity crmUserEntityNotFoundExceptionHandler(CrmUserEntityNotFoundException crmUserEntityNotFoundException) {
         ErrorDesriptor errorDesriptor = crmUserEntityNotFoundException.getErrorDesriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.NOT_FOUND.value(),
@@ -79,9 +79,9 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(GlobalRestHandledException.class)
-    public ResponseEntity globalHandledException(GlobalRestHandledException globalRestHandledException) {
-        ErrorDesriptor errorDesriptor = globalRestHandledException.getErrorDesriptor();
+    @ExceptionHandler(GlobalHandledException.class)
+    public ResponseEntity globalHandledException(GlobalHandledException globalHandledException) {
+        ErrorDesriptor errorDesriptor = globalHandledException.getErrorDesriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 new CommonMessageDTO("error",
