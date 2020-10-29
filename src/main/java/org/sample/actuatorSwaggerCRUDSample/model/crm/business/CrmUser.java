@@ -1,6 +1,7 @@
 package org.sample.actuatorSwaggerCRUDSample.model.crm.business;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CrmUser {
     private Long id;
@@ -9,6 +10,8 @@ public class CrmUser {
     private String login;
     private String cryptedPassword;
     private LocalDateTime registrationDate;
+
+    private List<CrmUserRole> roles;
 
     public CrmUser() {
 
@@ -60,5 +63,13 @@ public class CrmUser {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public List<CrmUserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<CrmUserRole> roles) {
+        this.roles = roles;
     }
 }

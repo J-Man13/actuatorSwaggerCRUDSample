@@ -2,6 +2,7 @@ package org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +21,14 @@ public class CrmUserEntity {
     private String cryptedPassword;
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles_assignments",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private List<CrmUserRoleEntity> roles;
 
     public CrmUserEntity() {
 
@@ -71,5 +80,13 @@ public class CrmUserEntity {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public List<CrmUserRoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<CrmUserRoleEntity> roles) {
+        this.roles = roles;
     }
 }
