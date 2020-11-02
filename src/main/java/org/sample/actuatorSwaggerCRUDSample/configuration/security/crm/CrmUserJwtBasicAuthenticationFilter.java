@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,7 +30,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final String JWT_HEADER_KEY;
 
-    public CrmUserJwtBasicAuthenticationFilter(AuthenticationManager authenticationManager,
+    public CrmUserJwtBasicAuthenticationFilter(final AuthenticationManager authenticationManager,
                                                final String AUTHENTICATION_SIGNATURE_KEY,
                                                final String JWT_HEADER_KEY) {
         super(authenticationManager);

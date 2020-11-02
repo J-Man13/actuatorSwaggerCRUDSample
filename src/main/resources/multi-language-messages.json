@@ -95,38 +95,68 @@
     "az": "CRM istifadəçi uğurla yadda saxlanıldı"
   },
   "CRM_CUSTOMER_ADDITION_REQUEST_DTO_NAME_IS_BLANK": {
-    "en": "Validation error during client addition request. Name field cannot be empty. Field - %s",
-    "ru": "Ошибка валидации во время запроса на добавление клиента в базу. Имя не может быть пустым. Поле - %s",
-    "az": "Müştəri əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - %s"
+    "en": "Validation error during client addition request. Name field cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на добавление клиента в базу. Имя не может быть пустым. Поле - '%s'",
+    "az": "Müştəri əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - '%s'"
   },
   "CRM_CUSTOMER_ADDITION_REQUEST_DTO_SURNAME_IS_BLANK": {
-    "en": "Validation error during client addition request. Surname cannot be empty. Field - %s",
-    "ru": "Ошибка валидации во время запроса на добавление клиента в базу. Фамилия не может быть пустой. Поле - %s",
-    "az": "Müştəri əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - %s"
+    "en": "Validation error during client addition request. Surname cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на добавление клиента в базу. Фамилия не может быть пустой. Поле - '%s'",
+    "az": "Müştəri əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - '%s'"
   },
   "CRM_CUSTOMER_UPDATE_REQUEST_DTO_ID_IS_BLANK": {
-    "en": "Validation error during client update request. Id cannot be empty. Field - %s",
-    "ru": "Ошибка валидации во время запроса на обновление клиента в базе. Идентификатор не может быть пустым. Поле - %s",
-    "az": "Müştəri yeniləmə müraciyəti zamanı validasiya xətası baş verib. İdentifikator boş ola bilməz. Sahə - %s"
+    "en": "Validation error during client update request. Id cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на обновление клиента в базе. Идентификатор не может быть пустым. Поле - '%s'",
+    "az": "Müştəri yeniləmə müraciyəti zamanı validasiya xətası baş verib. İdentifikator boş ola bilməz. Sahə - '%s'"
   },
   "CRM_USER_ADDITION_REQUEST_DTO_FIRST_NAME_IS_BLANK": {
-    "en": "Validation error during user addition request. First name field cannot be empty. Field - %s",
-    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Имя не может быть пустым. Поле - %s",
-    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - %s"
+    "en": "Validation error during user addition request. First name field cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Имя не может быть пустым. Поле - '%s'",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Ad boş ola bilməz. Sahə - '%s'"
   },
   "CRM_USER_ADDITION_REQUEST_DTO_LAST_NAME_IS_BLANK": {
-    "en": "Validation error during user addition request. Last name cannot be empty. Field - %s",
-    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Фамилия не может быть пустой. Поле - %s",
-    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - %s"
+    "en": "Validation error during user addition request. Last name cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Фамилия не может быть пустой. Поле - '%s'",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Soyad boş ola bilməz. Sahə - '%s'"
   },
   "CRM_USER_ADDITION_REQUEST_DTO_LOGIN_IS_BLANK": {
     "en": "Validation error during user addition request. Login cannot be empty. Field - %s",
-    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Логин не может быть пустым. Поле - %s",
-    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Login boş ola bilməz. Sahə - %s"
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Логин не может быть пустым. Поле - '%s'",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Login boş ola bilməz. Sahə - '%s'"
   },
   "CRM_USER_ADDITION_REQUEST_DTO_PASSWORD_REGEX_VIOLATION": {
-    "en": "Validation error during user addition request. Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character(@$!%%*?&). Field - %s",
-    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Пароль должен содержать минимум восемь символов, по крайней мере, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ(@$!%%*?&). Поле - %s",
-    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Şifrə minimum səkkiz simvoldan, ən azı bir böyük hərfdən, bir kiçik hərfdən, bir rəqəmdən və bir xüsusi simvoldan(@$!%%*?&) ibarət olmalıdır. Sahə - %s"
+    "en": "Validation error during user addition request. Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character(@$!%%*?&). Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на добавление пользователя в базу. Пароль должен содержать минимум восемь символов, по крайней мере, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ(@$!%%*?&). Поле - '%s'",
+    "az": "İstifadəçi əlavə müraciyəti zamanı validasiya xətası baş verib. Şifrə minimum səkkiz simvoldan, ən azı bir böyük hərfdən, bir kiçik hərfdən, bir rəqəmdən və bir xüsusi simvoldan(@$!%%*?&) ibarət olmalıdır. Sahə - '%s'"
+  },
+  "CRM_USERS_JWT_SECURITY_AUTHENTICATION_ATTEMPT_EXCEPTION": {
+    "en": "Technical misfit occurred during authentication attempt : %s",
+    "ru": "Техническое несоответствие во время попытки аутентификации : %s",
+    "az": "Autentifikasiya zamani texniki həta baş verib : %s"
+  },
+  "CRM_USER_INVALID_CREDENTIALS_EXCEPTION": {
+    "en": "Entered credentials are wrong",
+    "ru": "Введены неверные учетные данные",
+    "az": "Daxil edilmiş etimadnamələr səhvdir"
+  },
+  "CRM_USER_LOGIN_REQUEST_DTO_LOGIN_IS_BLANK": {
+    "en": "Validation error during user login request. Login cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на авторизацию пользователя. Логин не может быть пустым. Поле - '%s'",
+    "az": "İstifadəçi avtorizasiya müraciyəti zamanı validasiya xətası baş verib. Login boş ola bilməz. Sahə - '%s'"
+  },
+  "CRM_USER_LOGIN_REQUEST_DTO_PASSWORD_IS_BLANK": {
+    "en": "Validation error during user login request. Password cannot be empty. Field - '%s'",
+    "ru": "Ошибка валидации во время запроса на авторизацию пользователя. Пароль не может быть пустым. Поле - '%s'",
+    "az": "İstifadəçi avtorizasiya müraciyəti zamanı validasiya xətası baş verib. Şifrə boş ola bilməz. Sahə - '%s'"
+  },
+  "CRM_USER_LOGGED_IN_SUCCESSFULLY" : {
+    "en": "User successfully authorized",
+    "ru": "Пользователь успешно авторизовался",
+    "az": "İstifadəçi avtorizasiyanı uğurla keçdi"
+  },
+  "CRM_USER_BY_LOGIN_EXTRACTION_SUCCESSFULLY_FOUND": {
+    "en": "Crm user successfully found by '%s' login",
+    "ru": "Crm пользователь успешно найден по '%s' логину",
+    "az": "İstifadəçi '%s' logini üzrə uğurla çıxarıldı"
   }
 }

@@ -4,6 +4,7 @@ import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
@@ -78,6 +79,19 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
                 errorDesriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CrmUserInvalidCredentialsException.class)
+    public ResponseEntity crmUserInvalidCredentialsExceptionHandler(CrmUserInvalidCredentialsException crmUserInvalidCredentialsException) {
+        ErrorDesriptor errorDesriptor = crmUserInvalidCredentialsException.getErrorDesriptor();
+        commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
+                HttpStatus.UNAUTHORIZED.value(),
+                new CommonMessageDTO("error",
+                        errorDesriptor.getMessageKey(),
+                        errorDesriptor.getMessage()),
+                errorDesriptor);
+        return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.UNAUTHORIZED);
+    }
+
 
     @ExceptionHandler(GlobalHandledException.class)
     public ResponseEntity globalHandledException(GlobalHandledException globalHandledException) {

@@ -34,7 +34,7 @@ public class MongoDbCRMConfiguration {
     }
 
     @Bean("crmMongoTransactionManager")
-    MongoTransactionManager transactionManager(final @Qualifier("crmMongoDbFactory")MongoDbFactory mongoDbFactory) {
+    public MongoTransactionManager transactionManager(final @Qualifier("crmMongoDbFactory")MongoDbFactory mongoDbFactory) {
         return new MongoTransactionManager(mongoDbFactory);
     }
 }
