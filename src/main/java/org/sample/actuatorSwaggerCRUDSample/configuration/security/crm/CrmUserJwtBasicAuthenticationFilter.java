@@ -1,5 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.security.crm;
 
+import com.google.common.base.Throwables;
 import io.jsonwebtoken.*;
 
 
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,10 +76,10 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
     private UsernamePasswordAuthenticationToken parseToken(String jwtToken) {
         try {
             Jws<Claims> claimsJws = Jwts.parser()
-                    .setSigningKey(AUTHENTICATION_SIGNATURE_KEY.getBytes())
+                    .setSigningKey(AUTHENTICATION_SIGNATURE_KEY)
                     .parseClaimsJws(jwtToken);
 
-            String login = claimsJws.getBody().getSubject();
+            String login = claimsJws.getBody().get("login",String.class);
             List<String> roles = claimsJws.getBody().get("roles", List.class);
             List<GrantedAuthority> grantedAuthorities = roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
 
@@ -124,6 +126,11 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                     errorDesriptor);
         }
         catch (Exception exception){
+            LOGGER.fatal("There was unhandled exception during jwt parsing, logging it's class, message and stack trace",new HashMap<String, String>() {{
+                put("jwtParsingHandledExceptionCanonicalName", exception.getClass().getCanonicalName());
+                put("jwtParsingHandledExceptionMessage", exception.getMessage());
+                put("jwtParsingHandledExceptionStackTraceAsString", Throwables.getStackTraceAsString(exception));
+            }});
             ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
                     CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION,
                     String.format(multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION),exception.getMessage()),

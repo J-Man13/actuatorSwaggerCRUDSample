@@ -3,10 +3,10 @@ package org.sample.actuatorSwaggerCRUDSample.service;
 import com.google.common.base.Throwables;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
+
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
@@ -98,7 +98,7 @@ public class CrmUserService implements ICrmUserService{
 
     @Override
     public String loginWithTokenInReturn(String login,String password) {
-        User user = null;
+        final User user;
 
         try {
             user = (User) authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login,password)).getPrincipal();
@@ -118,12 +118,18 @@ public class CrmUserService implements ICrmUserService{
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        long currentTimeMillis = System.currentTimeMillis();
         return  Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(AUTHENTICATION_SIGNATURE_KEY.getBytes()), SignatureAlgorithm.HS512)
+                .signWith(SignatureAlgorithm.HS512,AUTHENTICATION_SIGNATURE_KEY)
                 .setIssuer("Azericard LLC")
                 .setAudience("internal.azericard")
-                .setSubject(user.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_ACTIVITY_PERIOD_MS))
+                .setClaims(
+                        new HashMap<String, Object>(){{
+                            put("login",user.getUsername());
+                        }}
+                )
+                .setIssuedAt(new Date(currentTimeMillis))
+                .setExpiration(new Date(currentTimeMillis + TOKEN_ACTIVITY_PERIOD_MS))
                 .claim("roles", roles)
                 .compact();
     }
