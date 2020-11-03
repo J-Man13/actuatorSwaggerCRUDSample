@@ -121,11 +121,11 @@ public class CrmUserService implements ICrmUserService{
         long currentTimeMillis = System.currentTimeMillis();
         return  Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512,AUTHENTICATION_SIGNATURE_KEY)
-                .setIssuer("Azericard LLC")
-                .setAudience("internal.azericard")
                 .setClaims(
                         new HashMap<String, Object>(){{
                             put("login",user.getUsername());
+                            put("audience","internal.azericard");
+                            put("issuer","Azericard LLC");
                         }}
                 )
                 .setIssuedAt(new Date(currentTimeMillis))
