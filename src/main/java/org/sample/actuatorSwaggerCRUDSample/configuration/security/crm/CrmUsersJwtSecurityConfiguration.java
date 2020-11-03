@@ -1,6 +1,9 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration.security.crm;
 
 
+import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
+import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
 
 @EnableWebSecurity
 @Order(2)
@@ -21,20 +27,29 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDetailsService userDetailsService;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final String JWT_HEADER_KEY;
-
+    private final CommonResponseDTO commonResponseDTO;
+    private final CommonLogger LOGGER;
+    private final  IMultiLanguageComponent multiLanguageComponent;
 
     public CrmUsersJwtSecurityConfiguration(final BCryptPasswordEncoder bCryptPasswordEncoder,
                                             final @Qualifier("crmUsersJwtUserDetailsService") UserDetailsService userDetailsService,
+                                            final @Qualifier("crmUsersJwtSecurityAuthenticationEntryPoint") AuthenticationEntryPoint authenticationEntryPoint,
                                             final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
-                                            final @Value("${local.crm.user.security.jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS,
-                                            final @Value("${local.crm.user.security.jwt.header.key}") String JWT_HEADER_KEY){
+                                            final @Value("${local.crm.user.security.jwt.header.key}") String JWT_HEADER_KEY,
+                                            final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO,
+                                            final @Qualifier("trace-logger") CommonLogger LOGGER,
+                                            final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent){
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userDetailsService = userDetailsService;
+        this.authenticationEntryPoint=authenticationEntryPoint;
         this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
-
         this.JWT_HEADER_KEY=JWT_HEADER_KEY;
+        this.commonResponseDTO=commonResponseDTO;
+        this.LOGGER=LOGGER;
+        this.multiLanguageComponent=multiLanguageComponent;
     }
 
     @Override
@@ -42,11 +57,14 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
         http.csrf().disable();
         http.cors().disable();
 
-        http.antMatcher("/kek/**")
+        http.antMatcher("/customers/**")
                 .authorizeRequests()
-                    .anyRequest().permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .addFilter(getCrmUserJwtBasicAuthenticationFilter())
+                .exceptionHandling()
+                    .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
+                .addFilter(basicAuthenticationFilter())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -61,12 +79,15 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
         return authenticationManager();
     }
 
-    private CrmUserJwtBasicAuthenticationFilter getCrmUserJwtBasicAuthenticationFilter() throws Exception {
+    private BasicAuthenticationFilter basicAuthenticationFilter() throws Exception {
         return new CrmUserJwtBasicAuthenticationFilter
                 (
                         authenticationManager(),
                         AUTHENTICATION_SIGNATURE_KEY,
-                        JWT_HEADER_KEY
+                        JWT_HEADER_KEY,
+                        commonResponseDTO,
+                        LOGGER,
+                        multiLanguageComponent
                 );
     }
 }

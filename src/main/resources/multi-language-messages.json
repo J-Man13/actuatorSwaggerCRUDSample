@@ -158,5 +158,25 @@
     "en": "Crm user successfully found by '%s' login",
     "ru": "Crm пользователь успешно найден по '%s' логину",
     "az": "İstifadəçi '%s' logini üzrə uğurla çıxarıldı"
+  },
+  "CRM_USERS_SECURITY_TOKEN_EXPIRED":{
+    "en": "Token validity date expired",
+    "ru": "Срок действия токена истек",
+    "az": "Tokenin etibarlılıq tarixi bitdi"
+  },
+  "CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED": {
+    "en": "Extracted header token value is unprocessable",
+    "ru": "Извлеченное значение хэдера токена необрабатываемо",
+    "az": "Çıxarılan heder token dəyəri işlənilə bilməz"
+  },
+  "CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION": {
+    "en": "JWT signature does not match locally computed signature, so it cannot be trusted",
+    "ru": "Данное сообщение не было подписанно локальной JWT подписью, поэтому ей нельзя доверять",
+    "az": "Bu mesaj local JWT imzası ilə imzalanmamışdır, ona görə etibarlı ola bilməz"
+  },
+  "CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION": {
+    "en": "Technical misfit occurred during token parse attempt : %s",
+    "ru": "Техническое несоответствие во время попытки парсинга токена : %s",
+    "az": "Token parsing zamani texniki həta baş verib : %s"
   }
 }

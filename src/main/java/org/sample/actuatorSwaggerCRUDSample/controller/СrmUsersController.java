@@ -97,7 +97,7 @@ public class СrmUsersController {
             @ApiResponse(code = 400, message = "Request is in unreadable format or could not pass request validation"),
             @ApiResponse(code = 500, message = "Technical mismatch, advising to contact for the logs, to handle the issue")
     })
-    @PostMapping(value = "/login",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/authorization",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommonResponseDTO> login(@RequestBody @Valid CrmUserLoginRequestDto crmUserLoginRequestDto){
         LOGGER.trace("Logging in crm user via crm user login service","crmUserLoginRequestDto", crmUserLoginRequestDto);
         final String jwtBearerToken = crmUserService.loginWithTokenInReturn(crmUserLoginRequestDto.getLogin(),crmUserLoginRequestDto.getPassword());
