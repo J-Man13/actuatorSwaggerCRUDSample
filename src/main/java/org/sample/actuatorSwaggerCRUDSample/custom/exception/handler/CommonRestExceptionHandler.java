@@ -192,9 +192,13 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
                 errorDesriptor);
 
         for (FieldError fieldError:ex.getBindingResult().getFieldErrors())
-            commonResponseDTO.getMessages().add(new CommonMessageDTO("error",
-                    fieldError.getDefaultMessage(),
-                    String.format(multiLanguageComponent.getMessageByKey(fieldError.getDefaultMessage()),fieldError.getField())));
+            commonResponseDTO.getMessages().add(
+                    new CommonMessageDTO(
+                            "error",
+                            fieldError.getDefaultMessage(),
+                            String.format(multiLanguageComponent.getMessageByKey(fieldError.getDefaultMessage()),fieldError.getField())
+                    )
+            );
 
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO), HttpStatus.BAD_REQUEST);
     }
