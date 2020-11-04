@@ -19,12 +19,11 @@ import java.util.Map;
 
 @Component
 public class MultiLanguageFileComponent implements IMultiLanguageComponent {
+
     private final String DEFAULT_MESSAGE_LANGUAGE_CODE;
     private final String MULTI_LANGUAGE_FILE_LOCATION;
     private final List<String> availableMessageLanguageCodes;
-
     private Map<String, MultiLanguageMessage> messageCodeMessageLanguageMap;
-
     private final String LANGUAGE_CODE_HEADER_KEY;
 
     public MultiLanguageFileComponent(final @Value("${default.message.language.code}") String defaultLanguageCode,

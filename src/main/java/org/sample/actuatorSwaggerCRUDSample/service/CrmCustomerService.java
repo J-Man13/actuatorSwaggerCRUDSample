@@ -30,13 +30,6 @@ public class CrmCustomerService implements ICrmCustomerService {
     private CrmCustomerMapper crmCustomerMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
 
-    private final String CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE = "CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE";
-    private final String CRM_CUSTOMER_EXCEPTION_FAILED_SAVE = "CRM_CUSTOMER_EXCEPTION_FAILED_SAVE";
-    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION";
-    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND";
-    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION";
-    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND";
-
     public CrmCustomerService(@Qualifier("crmCustomerMongoRepository") CrmCustomerMongoRepository crmCustomerMongoRepository,
                               CrmCustomerMapper crmCustomerMapper,
                               @Qualifier("trace-logger") CommonLogger LOGGER,
@@ -46,6 +39,13 @@ public class CrmCustomerService implements ICrmCustomerService {
         this.LOGGER = LOGGER;
         this.multiLanguageComponent = multiLanguageComponent;
     }
+
+    private final String CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE = "CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE";
+    private final String CRM_CUSTOMER_EXCEPTION_FAILED_SAVE = "CRM_CUSTOMER_EXCEPTION_FAILED_SAVE";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION";
+    private final String CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND = "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND";
 
     @Transactional("crmMongoTransactionManager")
     @Override

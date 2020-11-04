@@ -38,12 +38,6 @@ public class CrmCustomersController {
     private final CommonMapper commonMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
 
-    private final String FIND_CRM_CUSTOMER_BY_ID_SUCCESS = "FIND_CRM_CUSTOMER_BY_ID_SUCCESS";
-    private final String FIND_CRM_CUSTOMER_BY_NAME_SUCCESS = "FIND_CRM_CUSTOMER_BY_NAME_SUCCESS";
-    private final String CRM_CUSTOMER_SAVED_SUCCESSFULLY = "CRM_CUSTOMER_SAVED_SUCCESSFULLY";
-    private final String CRM_CUSTOMER_UPDATED_SUCCESSFULLY = "CRM_CUSTOMER_UPDATED_SUCCESSFULLY";
-
-
     private final CommonResponseDTO commonResponseDTO;
 
     public CrmCustomersController(final @Qualifier("crmCustomerService") ICrmCustomerService crmCustomerService,
@@ -59,6 +53,11 @@ public class CrmCustomersController {
         this.commonMapper = commonMapper;
         this.commonResponseDTO = commonResponseDTO;
     }
+
+    private final String FIND_CRM_CUSTOMER_BY_ID_SUCCESS = "FIND_CRM_CUSTOMER_BY_ID_SUCCESS";
+    private final String FIND_CRM_CUSTOMER_BY_NAME_SUCCESS = "FIND_CRM_CUSTOMER_BY_NAME_SUCCESS";
+    private final String CRM_CUSTOMER_SAVED_SUCCESSFULLY = "CRM_CUSTOMER_SAVED_SUCCESSFULLY";
+    private final String CRM_CUSTOMER_UPDATED_SUCCESSFULLY = "CRM_CUSTOMER_UPDATED_SUCCESSFULLY";
 
     @ApiOperation(
             value = "Extraction of crm customer by id from mongo db",

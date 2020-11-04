@@ -42,10 +42,6 @@ public class СrmUsersController {
     private final CommonMapper commonMapper;
     private final String JWT_HEADER_KEY;
 
-    private final String CRM_USER_SAVED_SUCCESSFULLY = "CRM_USER_SAVED_SUCCESSFULLY";
-    private final String CRM_USER_LOGGED_IN_SUCCESSFULLY = "CRM_USER_LOGGED_IN_SUCCESSFULLY";
-
-
     public СrmUsersController(final @Qualifier("trace-logger") CommonLogger LOGGER,
                               final CrmUserMapper crmUserMapper,
                               final @Qualifier("crmUserService") ICrmUserService crmUserService,
@@ -62,6 +58,8 @@ public class СrmUsersController {
         this.JWT_HEADER_KEY=JWT_HEADER_KEY;
     }
 
+    private final String CRM_USER_SAVED_SUCCESSFULLY = "CRM_USER_SAVED_SUCCESSFULLY";
+    private final String CRM_USER_LOGGED_IN_SUCCESSFULLY = "CRM_USER_LOGGED_IN_SUCCESSFULLY";
 
 
     @ApiOperation(
