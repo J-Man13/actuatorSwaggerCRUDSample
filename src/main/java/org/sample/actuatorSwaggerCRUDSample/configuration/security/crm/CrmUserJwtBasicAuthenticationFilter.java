@@ -55,6 +55,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
     private final String CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED = "CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED";
     private final String CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION = "CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION";
     private final String CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION = "CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION";
+    private final String CRM_USERS_SECURITY_TOKEN_IS_EMPTY = "CRM_USERS_SECURITY_TOKEN_IS_EMPTY";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -69,6 +70,18 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
     }
 
     private UsernamePasswordAuthenticationToken parseToken(String jwtToken) {
+        if (StringUtils.isEmpty(jwtToken)){
+            ErrorDesriptor errorDesriptor = new ErrorDesriptor(this.getClass().getCanonicalName(),
+                    CRM_USERS_SECURITY_TOKEN_IS_EMPTY,
+                    multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_IS_EMPTY));
+            commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
+                    HttpServletResponse.SC_FORBIDDEN,
+                    new CommonMessageDTO("error",
+                            errorDesriptor.getMessageKey(),
+                            errorDesriptor.getMessage()),
+                    errorDesriptor);
+            return null;
+        }
         try {
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(AUTHENTICATION_SIGNATURE_KEY)
@@ -77,10 +90,6 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
             String login = claimsJws.getBody().get("login",String.class);
             List<String> roles = claimsJws.getBody().get("roles", List.class);
             List<GrantedAuthority> grantedAuthorities = roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
-
-            if (StringUtils.isEmpty(login)) {
-                return null;
-            }
 
             return new UsernamePasswordAuthenticationToken(login, null, grantedAuthorities);
         }

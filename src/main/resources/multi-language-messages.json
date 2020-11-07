@@ -178,5 +178,10 @@
     "en": "Technical misfit occurred during token parse attempt : %s",
     "ru": "Техническое несоответствие во время попытки парсинга токена : %s",
     "az": "Token parsing zamani texniki həta baş verib : %s"
+  },
+  "CRM_USERS_SECURITY_TOKEN_IS_EMPTY": {
+    "en": "An attempt to extract the token value from the key of headers %s was unsuccessful because the key is missing or the value is empty",
+    "ru": "Попытка извлечь значение токена из ключа хэдэров %s была нудачна, так как ключ отсутствует либо значение пусто",
+    "az": "Hederlardan %s açarnan dəyəri çıxarmaq cəhdi uğursuz oldu, çünki açar yoxdur və ya dəyər boşdur"
   }
 }
