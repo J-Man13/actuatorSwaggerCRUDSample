@@ -112,7 +112,6 @@ public class CrmUserService implements ICrmUserService{
                     multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION));
         }
 
-
         List<String> roles = user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
