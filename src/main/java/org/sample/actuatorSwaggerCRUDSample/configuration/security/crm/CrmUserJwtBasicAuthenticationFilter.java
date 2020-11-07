@@ -62,11 +62,6 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                                     FilterChain chain) throws IOException, ServletException {
         String jwtToken = request.getHeader(JWT_HEADER_KEY);
 
-        if (StringUtils.isEmpty(jwtToken)) {
-            chain.doFilter(request, response);
-            return;
-        }
-
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = parseToken(jwtToken);
 
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
