@@ -73,7 +73,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
         if (StringUtils.isEmpty(jwtToken)){
             ErrorDesriptor errorDesriptor = new ErrorDesriptor(this.getClass().getCanonicalName(),
                     CRM_USERS_SECURITY_TOKEN_IS_EMPTY,
-                    multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_IS_EMPTY));
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_IS_EMPTY),JWT_HEADER_KEY));
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,
                     new CommonMessageDTO("error",
