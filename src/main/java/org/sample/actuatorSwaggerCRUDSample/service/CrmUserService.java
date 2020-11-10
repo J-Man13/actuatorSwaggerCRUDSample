@@ -104,9 +104,9 @@ public class CrmUserService implements ICrmUserService{
             user = (User) authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login,password)).getPrincipal();
         }
         catch (BadCredentialsException badCredentialsException){
-            LOGGER.error("CRM Users repository has thrown exception during entity save",new HashMap<String, String>() {{
-                put("dataAccessExceptionMessage", badCredentialsException.getMessage());
-                put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(badCredentialsException));
+            LOGGER.error("CRM Users repository has thrown badCredentials exception during authorization",new HashMap<String, String>() {{
+                put("badCredentialsException", badCredentialsException.getMessage());
+                put("badCredentialsException", Throwables.getStackTraceAsString(badCredentialsException));
             }});
             throw new CrmUserInvalidCredentialsException(CRM_USER_INVALID_CREDENTIALS_EXCEPTION,
                     multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION));

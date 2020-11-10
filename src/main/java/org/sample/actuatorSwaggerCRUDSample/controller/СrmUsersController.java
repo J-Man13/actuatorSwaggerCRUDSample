@@ -104,9 +104,7 @@ public class СrmUsersController {
                 new CommonMessageDTO("success",
                         CRM_USER_LOGGED_IN_SUCCESSFULLY,
                         multiLanguageComponent.getMessageByKey(CRM_USER_LOGGED_IN_SUCCESSFULLY)),
-                new Object(){
-                    public String jwtToken = jwtBearerToken;
-                });
+                null);
         return ResponseEntity
                 .ok()
                 .header(JWT_HEADER_KEY,jwtBearerToken)
