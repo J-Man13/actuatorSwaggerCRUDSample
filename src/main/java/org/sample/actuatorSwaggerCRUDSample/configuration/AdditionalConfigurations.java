@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration.security;
+package org.sample.actuatorSwaggerCRUDSample.configuration;
 
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,11 +9,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @Configuration
 public class AdditionalConfigurations {
-    private final String infoBuildArchiveBaseName;
-
-    public AdditionalConfigurations(final @Value("${info.build.archiveBaseName}") String infoBuildArchiveBaseName){
-        this.infoBuildArchiveBaseName=infoBuildArchiveBaseName;
-    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -22,7 +17,7 @@ public class AdditionalConfigurations {
 
     @Bean
     @RequestScope
-    public CommonResponseDTO commonResponseDTO(){
+    public CommonResponseDTO commonResponseDTO(final @Value("${info.build.archiveBaseName}") String infoBuildArchiveBaseName){
         return new CommonResponseDTO(infoBuildArchiveBaseName);
     }
 }
