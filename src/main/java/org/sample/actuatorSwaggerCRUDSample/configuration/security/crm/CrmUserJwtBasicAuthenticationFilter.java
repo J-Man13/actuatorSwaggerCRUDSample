@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
@@ -65,7 +66,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
         String jwtToken = request.getHeader(JWT_HEADER_KEY);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = parseToken(jwtToken);
-        if (usernamePasswordAuthenticationToken != null)
+        if (!ObjectUtils.isEmpty(usernamePasswordAuthenticationToken))
             commonResponseDTO.getMessages()
                     .add(new CommonMessageDTO(
                            "success",
