@@ -171,8 +171,8 @@
   },
   "CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION": {
     "en": "JWT signature does not match locally computed signature, so it cannot be trusted",
-    "ru": "Данное сообщение не было подписанно локальной JWT подписью, поэтому ей нельзя доверять",
-    "az": "Bu mesaj local JWT imzası ilə imzalanmamışdır, ona görə etibarlı ola bilməz"
+    "ru": "Значение токена в данном сообщени не было подписанно локальной JWT подписью, поэтому ей нельзя доверять",
+    "az": "Token dəyəri bu mesajda local JWT imzası ilə imzalanmamışdır, ona görə etibarlı ola bilməz"
   },
   "CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION": {
     "en": "Technical misfit occurred during token parse attempt : %s",
