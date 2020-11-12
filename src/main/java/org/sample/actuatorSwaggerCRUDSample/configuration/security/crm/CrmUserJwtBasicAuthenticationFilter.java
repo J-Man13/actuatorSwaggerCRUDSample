@@ -54,7 +54,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
 
     private final String CRM_USERS_SECURITY_TOKEN_EXPIRED="CRM_USERS_SECURITY_TOKEN_EXPIRED";
     private final String CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED = "CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED";
-    private final String CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION = "CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION";
+    private final String CRM_USERS_TOKEN_SIGNATURE_EXCEPTION = "CRM_USERS_TOKEN_SIGNATURE_EXCEPTION";
     private final String CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION = "CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION";
     private final String CRM_USERS_SECURITY_TOKEN_IS_EMPTY = "CRM_USERS_SECURITY_TOKEN_IS_EMPTY";
     private final String CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED = "CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED";
@@ -129,8 +129,8 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
         }
         catch (SignatureException signatureException){
             ErrorDesriptor errorDesriptor = new ErrorDesriptor(signatureException.getStackTrace()[0].getClassName(),
-                    CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION,
-                    multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION),
+                    CRM_USERS_TOKEN_SIGNATURE_EXCEPTION,
+                    multiLanguageComponent.getMessageByKey(CRM_USERS_TOKEN_SIGNATURE_EXCEPTION),
                     signatureException.getClass().getCanonicalName());
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,

@@ -169,7 +169,7 @@
     "ru": "Извлеченное значение хэдера токена необрабатываемо",
     "az": "Çıxarılan heder token dəyəri işlənilə bilməz"
   },
-  "CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION": {
+  "CRM_USERS_TOKEN_SIGNATURE_EXCEPTION": {
     "en": "The token value in this message was not signed by the local JWT signature, so it cannot be trusted",
     "ru": "Значение токена в данном сообщени не было подписанно локальной JWT подписью, поэтому ей нельзя доверять",
     "az": "Token dəyəri bu mesajda local JWT imzası ilə imzalanmamışdır, ona görə etibarlı ola bilməz"
