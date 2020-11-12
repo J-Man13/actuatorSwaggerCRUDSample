@@ -56,6 +56,7 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
     private final String CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION = "CRM_USERS_SECURITY_TOKEN_SECURITY_EXCEPTION";
     private final String CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION = "CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION";
     private final String CRM_USERS_SECURITY_TOKEN_IS_EMPTY = "CRM_USERS_SECURITY_TOKEN_IS_EMPTY";
+    private final String CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED = "CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -64,10 +65,18 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
         String jwtToken = request.getHeader(JWT_HEADER_KEY);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = parseToken(jwtToken);
-
+        if (usernamePasswordAuthenticationToken != null)
+            commonResponseDTO.getMessages()
+                    .add(new CommonMessageDTO(
+                           "success",
+                            CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED,
+                            multiLanguageComponent.getMessageByKey(CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED)
+                    ));
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         chain.doFilter(request, response);
     }
+
+
 
     private UsernamePasswordAuthenticationToken parseToken(String jwtToken) {
         if (StringUtils.isEmpty(jwtToken)){

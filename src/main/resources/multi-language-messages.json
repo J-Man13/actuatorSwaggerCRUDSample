@@ -183,5 +183,10 @@
     "en": "An attempt to extract the token value from headers by %s key was unsuccessful because the key is missing or the value is empty",
     "ru": "Попытка извлечь значение токена из хэдэров по ключу %s была нудачна, так как ключ отсутствует либо значение пусто",
     "az": "Hederlardan %s açarnan dəyəri çıxarmaq cəhdi uğursuz oldu, çünki açar yoxdur və ya dəyər boşdur"
+  },
+  "CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED": {
+    "en": "Request successfully authenticated",
+    "ru": "Запрос успешно аутентифицирован",
+    "az": "Müraciyət uğurla autentifikasiyanı kecdi"
   }
 }
