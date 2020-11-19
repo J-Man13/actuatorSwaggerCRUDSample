@@ -149,7 +149,10 @@ public class CrmCustomerService implements ICrmCustomerService {
             }});
             throw new GlobalCommonException(
                     CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION,
-                    String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION),dataAccessException.getMessage()),
+                    String.format(
+                            multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION),
+                            dataAccessException.getMessage()
+                    ),
                     dataAccessException
             );
         }
