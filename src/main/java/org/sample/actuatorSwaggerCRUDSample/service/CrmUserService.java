@@ -49,7 +49,6 @@ public class CrmUserService implements ICrmUserService{
     private final CrmUserMapper crmUserMapper;
     private final IMultiLanguageComponent multiLanguageComponent;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final CommonResponseDTO commonResponseDTO;
     private final AuthenticationManager authenticationManager;
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final Long TOKEN_ACTIVITY_PERIOD_MS;
@@ -59,7 +58,6 @@ public class CrmUserService implements ICrmUserService{
                           final CrmUserMapper crmUserMapper,
                           final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
                           final BCryptPasswordEncoder bCryptPasswordEncoder,
-                          final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO,
                           final @Qualifier("crmUsersJwtSecurityAuthenticationManager") AuthenticationManager authenticationManager,
                           final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
                           final @Value("${local.crm.user.security.jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS)
@@ -69,7 +67,6 @@ public class CrmUserService implements ICrmUserService{
         this.crmUserMapper=crmUserMapper;
         this.multiLanguageComponent = multiLanguageComponent;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
-        this.commonResponseDTO=commonResponseDTO;
         this.authenticationManager=authenticationManager;
         this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
         this.TOKEN_ACTIVITY_PERIOD_MS=TOKEN_ACTIVITY_PERIOD_MS;
