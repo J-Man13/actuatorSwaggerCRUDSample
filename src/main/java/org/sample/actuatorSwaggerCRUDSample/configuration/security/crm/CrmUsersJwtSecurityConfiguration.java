@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 
@@ -28,6 +29,7 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDetailsService userDetailsService;
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final AccessDeniedHandler accessDeniedHandler;
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final String JWT_HEADER_KEY;
     private final CommonResponseDTO commonResponseDTO;
@@ -37,6 +39,7 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
     public CrmUsersJwtSecurityConfiguration(final BCryptPasswordEncoder bCryptPasswordEncoder,
                                             final @Qualifier("crmUsersJwtUserDetailsService") UserDetailsService userDetailsService,
                                             final @Qualifier("crmUsersJwtSecurityAuthenticationEntryPoint") AuthenticationEntryPoint authenticationEntryPoint,
+                                            final @Qualifier("crmUsersJwtSecurityAccessDeniedHandler") AccessDeniedHandler accessDeniedHandler,
                                             final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
                                             final @Value("${local.crm.user.security.jwt.header.key}") String JWT_HEADER_KEY,
                                             final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO,
@@ -45,6 +48,7 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userDetailsService = userDetailsService;
         this.authenticationEntryPoint=authenticationEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
         this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
         this.JWT_HEADER_KEY=JWT_HEADER_KEY;
         this.commonResponseDTO=commonResponseDTO;
@@ -63,6 +67,7 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .and()
                 .exceptionHandling()
                     .authenticationEntryPoint(authenticationEntryPoint)
+                    .accessDeniedHandler(accessDeniedHandler)
                 .and()
                 .addFilter(basicAuthenticationFilter())
                 .sessionManagement()

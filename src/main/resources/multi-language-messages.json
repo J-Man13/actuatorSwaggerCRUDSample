@@ -188,5 +188,10 @@
     "en": "Request successfully authenticated",
     "ru": "Запрос успешно аутентифицирован",
     "az": "Müraciyət uğurla autentifikasiyanı kecdi"
+  },
+  "CRM_ORIGINATOR_OF_AUTHENTICATED_REQUEST_FORBIDDEN": {
+    "en": "Originator of authenticated request does not have enough authority on %s path",
+    "ru": "Отправитель аутентифицированного запроса не имеет достаточных полномочий на %s маршруте",
+    "az": "Autentifikasiya olunmuş müraciyətin müəllifi %s marşrutda kifayət qədər səlahiyyətə malik deyil"
   }
 }
