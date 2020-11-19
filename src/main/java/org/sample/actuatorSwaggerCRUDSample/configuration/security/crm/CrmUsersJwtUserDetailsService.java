@@ -4,7 +4,7 @@ import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalCommonException;
 
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
@@ -57,8 +57,11 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
             CrmUserEntity crmUserEntity = crmUserRepository.findByLogin(username).orElse(null);
             Objects.requireNonNull(crmUserEntity,()->{
                 LOGGER.debug("CRM user mysql entity with given login was not found","login",username);
-                throw new CrmUserEntityNotFoundException(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
-                        String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),username));
+                throw new CrmUserEntityNotFoundException(
+                        CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
+                        String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),username),
+                        null
+                );
             });
             List<GrantedAuthority> grantedAuthorities = crmUserEntity.getRoles().stream()
                     .map(role->new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
@@ -67,7 +70,8 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
                     .add(new CommonMessageDTO(
                             "success",
                             CRM_USER_BY_LOGIN_EXTRACTION_SUCCESSFULLY_FOUND,
-                            String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_SUCCESSFULLY_FOUND),username)));
+                            String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_SUCCESSFULLY_FOUND),username))
+                    );
             return new User(crmUserEntity.getLogin(),crmUserEntity.getCryptedPassword(), grantedAuthorities);
 
         }
@@ -76,11 +80,15 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error("CRM mysql repository has thrown exception during entity by login extraction",new HashMap<String, String>() {{
+                put("dataAccessExceptionCanonicalName",dataAccessException.getClass().getCanonicalName());
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalHandledException(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
-                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()));
+            throw new GlobalCommonException(
+                    CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()),
+                    dataAccessException
+            );
         }
     }
 }

@@ -5,7 +5,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLog
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalCommonException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
@@ -93,9 +93,9 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler(GlobalHandledException.class)
-    public ResponseEntity globalHandledException(GlobalHandledException globalHandledException) {
-        ErrorDesriptor errorDesriptor = globalHandledException.getErrorDesriptor();
+    @ExceptionHandler(GlobalCommonException.class)
+    public ResponseEntity globalHandledException(GlobalCommonException globalCommonException) {
+        ErrorDesriptor errorDesriptor = globalCommonException.getErrorDesriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 new CommonMessageDTO("error",

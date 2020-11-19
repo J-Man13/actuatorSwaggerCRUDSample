@@ -9,7 +9,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiL
 
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
-import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalHandledException;
+import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalCommonException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
@@ -91,11 +91,17 @@ public class CrmUserService implements ICrmUserService{
         }
         catch (DataAccessException dataAccessException){
             LOGGER.error("CRM Users repository has thrown exception during entity save",new HashMap<String, String>() {{
+                put("dataAccessExceptionCanonicalName",dataAccessException.getClass().getCanonicalName());
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalHandledException(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
-                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()));
+            throw new GlobalCommonException(
+                    CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
+                    String.format(
+                            multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE),
+                            dataAccessException.getMessage()),
+                    dataAccessException
+            );
         }
     }
 
@@ -111,15 +117,18 @@ public class CrmUserService implements ICrmUserService{
                 put("badCredentialsException", badCredentialsException.getMessage());
                 put("badCredentialsException", Throwables.getStackTraceAsString(badCredentialsException));
             }});
-            throw new CrmUserInvalidCredentialsException(CRM_USER_INVALID_CREDENTIALS_EXCEPTION,
-                    multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION));
+            throw new CrmUserInvalidCredentialsException(
+                    CRM_USER_INVALID_CREDENTIALS_EXCEPTION,
+                    multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION),
+                    badCredentialsException
+            );
         }
         catch (InternalAuthenticationServiceException internalAuthenticationServiceException){
             Throwable cause = internalAuthenticationServiceException.getCause();
             if (cause instanceof CrmUserEntityNotFoundException)
                 throw (CrmUserEntityNotFoundException)cause;
-            else if (cause instanceof GlobalHandledException)
-                throw (GlobalHandledException)cause;
+            else if (cause instanceof GlobalCommonException)
+                throw (GlobalCommonException)cause;
             else
                 throw internalAuthenticationServiceException;
         }

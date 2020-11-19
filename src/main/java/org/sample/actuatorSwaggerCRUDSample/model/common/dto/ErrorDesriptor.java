@@ -17,11 +17,11 @@ public class ErrorDesriptor {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dtstamp;
+    private LocalDateTime dateStamp;
     private Long timestamp;
 
     public ErrorDesriptor() {
-        this.dtstamp = LocalDateTime.now();
+        this.dateStamp = LocalDateTime.now();
         this.timestamp = Instant.now().getEpochSecond();
     }
 
@@ -61,12 +61,12 @@ public class ErrorDesriptor {
         this.message = message;
     }
 
-    public LocalDateTime getDtstamp() {
-        return dtstamp;
+    public LocalDateTime getDateStamp() {
+        return dateStamp;
     }
 
-    public void setDtstamp(LocalDateTime dtstamp) {
-        this.dtstamp = dtstamp;
+    public void setDateStamp(LocalDateTime dateStamp) {
+        this.dateStamp = dateStamp;
     }
 
     public Long getTimestamp() {
