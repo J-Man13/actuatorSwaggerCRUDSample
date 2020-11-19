@@ -11,7 +11,6 @@ import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFou
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalCommonException;
 import org.sample.actuatorSwaggerCRUDSample.mapper.CrmUserMapper;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.crm.business.CrmUser;
 import org.sample.actuatorSwaggerCRUDSample.model.mysql.crm.entity.CrmUserEntity;
 import org.sample.actuatorSwaggerCRUDSample.repository.mysql.crm.CrmUserRepository;
