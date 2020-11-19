@@ -93,6 +93,6 @@ public class CrmUsersJwtSecurityConfiguration extends WebSecurityConfigurerAdapt
                         commonResponseDTO,
                         LOGGER,
                         multiLanguageComponent
-                ); 
+                );
     }
 }
