@@ -34,7 +34,7 @@ public class CrmCustomersController {
 
     private final CommonResponseDTO commonResponseDTO;
 
-    public CrmCustomersController(final @Qualifier("crmCustomerService") ICrmCustomerService crmCustomerService,
+    public CrmCustomersController(final @Qualifier("crmCustomerDBService") ICrmCustomerService crmCustomerService,
                                   final CrmCustomerMapper crmCustomerMapper,
                                   final @Qualifier("multiLanguageFileComponent")IMultiLanguageComponent multiLanguageComponent,
                                   final @Qualifier("trace-logger") CommonLogger LOGGER,

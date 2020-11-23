@@ -44,7 +44,7 @@ public class СrmUsersController {
 
     public СrmUsersController(final @Qualifier("trace-logger") CommonLogger LOGGER,
                               final CrmUserMapper crmUserMapper,
-                              final @Qualifier("crmUserService") ICrmUserService crmUserService,
+                              final @Qualifier("crmUserDBService") ICrmUserService crmUserService,
                               final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
                               final @Qualifier("commonResponseDTO") CommonResponseDTO commonResponseDTO,
                               final CommonMapper commonMapper,

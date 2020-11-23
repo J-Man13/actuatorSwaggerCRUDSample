@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CrmUserService implements ICrmUserService{
+public class CrmUserDBService implements ICrmUserService{
 
     private final CrmUserRepository crmUserRepository;
     private final CommonLogger LOGGER;
@@ -51,13 +51,13 @@ public class CrmUserService implements ICrmUserService{
     private final String AUTHENTICATION_SIGNATURE_KEY;
     private final Long TOKEN_ACTIVITY_PERIOD_MS;
 
-    public CrmUserService(final CrmUserRepository crmUserRepository,
-                          final @Qualifier("trace-logger") CommonLogger LOGGER,
-                          final CrmUserMapper crmUserMapper,
-                          final BCryptPasswordEncoder bCryptPasswordEncoder,
-                          final @Qualifier("crmUsersJwtSecurityAuthenticationManager") AuthenticationManager authenticationManager,
-                          final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
-                          final @Value("${local.crm.user.security.jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS)
+    public CrmUserDBService(final CrmUserRepository crmUserRepository,
+                            final @Qualifier("trace-logger") CommonLogger LOGGER,
+                            final CrmUserMapper crmUserMapper,
+                            final BCryptPasswordEncoder bCryptPasswordEncoder,
+                            final @Qualifier("crmUsersJwtSecurityAuthenticationManager") AuthenticationManager authenticationManager,
+                            final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
+                            final @Value("${local.crm.user.security.jwt.token.activity.period.ms}") Long TOKEN_ACTIVITY_PERIOD_MS)
     {
         this.crmUserRepository = crmUserRepository;
         this.LOGGER=LOGGER;

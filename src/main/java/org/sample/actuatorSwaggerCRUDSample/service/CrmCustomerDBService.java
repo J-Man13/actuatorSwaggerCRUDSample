@@ -22,15 +22,15 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class CrmCustomerService implements ICrmCustomerService {
+public class CrmCustomerDBService implements ICrmCustomerService {
 
     private final CommonLogger LOGGER;
     private CrmCustomerMongoRepository crmCustomerMongoRepository;
     private CrmCustomerMapper crmCustomerMapper;
 
-    public CrmCustomerService(@Qualifier("crmCustomerMongoRepository") CrmCustomerMongoRepository crmCustomerMongoRepository,
-                              CrmCustomerMapper crmCustomerMapper,
-                              @Qualifier("trace-logger") CommonLogger LOGGER){
+    public CrmCustomerDBService(@Qualifier("crmCustomerMongoRepository") CrmCustomerMongoRepository crmCustomerMongoRepository,
+                                CrmCustomerMapper crmCustomerMapper,
+                                @Qualifier("trace-logger") CommonLogger LOGGER){
         this.crmCustomerMongoRepository = crmCustomerMongoRepository;
         this.crmCustomerMapper = crmCustomerMapper;
         this.LOGGER = LOGGER;
