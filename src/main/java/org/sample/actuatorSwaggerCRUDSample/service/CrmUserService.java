@@ -133,7 +133,7 @@ public class CrmUserService implements ICrmUserService{
                 throw internalAuthenticationServiceException;
         }
 
-        List<String> roles = user.getAuthorities()
+        List<String> authorities = user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
@@ -150,7 +150,7 @@ public class CrmUserService implements ICrmUserService{
                 )
                 .setIssuedAt(new Date(currentTimeMillis))
                 .setExpiration(new Date(currentTimeMillis + TOKEN_ACTIVITY_PERIOD_MS))
-                .claim("roles", roles)
+                .claim("authorities", authorities)
                 .compact();
     }
 }

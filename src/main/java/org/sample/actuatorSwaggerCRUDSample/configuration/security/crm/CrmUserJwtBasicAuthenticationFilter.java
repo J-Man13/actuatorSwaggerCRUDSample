@@ -98,8 +98,8 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                     .parseClaimsJws(jwtToken);
 
             String login = claimsJws.getBody().get("login",String.class);
-            List<String> roles = claimsJws.getBody().get("roles", List.class);
-            List<GrantedAuthority> grantedAuthorities = roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+            List<String> authorities = claimsJws.getBody().get("authorities", List.class);
+            List<GrantedAuthority> grantedAuthorities = authorities.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
 
             return new UsernamePasswordAuthenticationToken(login, null, grantedAuthorities);
         }
