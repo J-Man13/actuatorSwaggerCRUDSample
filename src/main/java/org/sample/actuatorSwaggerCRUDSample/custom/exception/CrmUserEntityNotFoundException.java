@@ -1,7 +1,11 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception;
 
 public class CrmUserEntityNotFoundException extends GlobalCommonException {
-    public CrmUserEntityNotFoundException(String messageKey,String messageEn, String message, Throwable cause){
-        super(messageKey,messageEn,message,cause);
+    public CrmUserEntityNotFoundException(String messageKey,String attributeValue){
+        super(
+                messageKey,
+                String.format(getMultiLanguageComponent().getMessageByKey(messageKey,"en"),attributeValue),
+                String.format(getMultiLanguageComponent().getMessageByKey(messageKey),attributeValue)
+        );
     }
 }

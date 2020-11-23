@@ -57,12 +57,7 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
             CrmUserEntity crmUserEntity = crmUserRepository.findByLogin(username).orElse(null);
             Objects.requireNonNull(crmUserEntity,()->{
                 LOGGER.debug("CRM user mysql entity with given login was not found","login",username);
-                throw new CrmUserEntityNotFoundException(
-                        CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
-                        String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,"en"),username),
-                        String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),username),
-                        null
-                );
+                throw new CrmUserEntityNotFoundException(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND, username);
             });
             List<GrantedAuthority> grantedAuthorities = crmUserEntity.getRoles().stream()
                     .map(role->new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
@@ -85,12 +80,7 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalCommonException(
-                    CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
-                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,"en"), dataAccessException.getMessage()),
-                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()),
-                    dataAccessException
-            );
+            throw new GlobalCommonException(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION, dataAccessException);
         }
     }
 }

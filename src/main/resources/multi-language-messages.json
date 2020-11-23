@@ -1,13 +1,13 @@
 {
   "FIND_CRM_CUSTOMER_BY_ID_SUCCESS": {
-    "en": "CRM customer data was successfully extracted by %s id",
-    "ru": "Данные CRM клиента были успешно извлечены по %s идентификатору",
-    "az": "CRM müştərinin məlumatları %s identifikator üzrə uğurla çıxarıldı"
+    "en": "CRM customer data was successfully extracted by '%s' id",
+    "ru": "Данные CRM клиента были успешно извлечены по '%s' идентификатору",
+    "az": "CRM müştərinin məlumatları '%s' identifikator üzrə uğurla çıxarıldı"
   },
   "FIND_CRM_CUSTOMER_BY_NAME_SUCCESS": {
-    "en": "CRM customer data was successfully extracted by %s name",
-    "ru": "Данные Crm клиента были успешно извлечены по %s имени",
-    "az": "CRM müştərinin məlumatları uğurla çıxarıldı %s ad üzrə"
+    "en": "CRM customer data was successfully extracted by '%s' name",
+    "ru": "Данные Crm клиента были успешно извлечены по '%s' имени",
+    "az": "CRM müştərinin məlumatları uğurla çıxarıldı '%s' ad üzrə"
   },
   "CRM_CUSTOMER_SAVED_SUCCESSFULLY": {
     "en": "CRM customer was successfully saved",
@@ -35,9 +35,9 @@
     "az": "CRM müştərilər repositoriyda, identifikator üzrə mətumatın çıxarılması zamanı xəta baş verib : %s"
   },
   "CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND": {
-    "en": "CRM customer mongo document with %s id was not found",
-    "ru": "Клиент CRM с идентификатором %s не найден",
-    "az": "CRM müştərisi %s identifikator ilə tapılmadı"
+    "en": "CRM customer mongo document with '%s' id was not found",
+    "ru": "Клиент CRM с идентификатором '%s' не найден",
+    "az": "CRM müştərisi '%s' identifikator ilə tapılmadı"
   },
   "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION": {
     "en": "CRM customers mongo repository has thrown exception during documents by name extraction : %s",
@@ -45,9 +45,9 @@
     "az": "CRM müştərilər repositoriyda, ad üzrə mətumatın çıxarılması zamanı xəta baş verib : %s"
   },
   "CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND": {
-    "en": "CRM customer mongo document with %s name was not found",
-    "ru": "Клиент CRM с именем %s не были найден",
-    "az": "CRM müştərisi %s ad ilə tapılmadı"
+    "en": "CRM customer mongo document with '%s' name was not found",
+    "ru": "Клиент CRM с именем '%s' не были найден",
+    "az": "CRM müştərisi '%s' ad ilə tapılmadı"
   },
   "THERE_IS_NO_LISTENER_FOR_ROUTE": {
     "en": "There is no listener for %s route",
@@ -75,9 +75,9 @@
     "az": "Aktuatora gedən sorğu avtorizasiyanı keçməyib. Səbəb: %s"
   },
   "CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND": {
-    "en": "CRM user mysql entity with %s login was not found",
-    "ru": "Сущность клиента CRM с логином %s не была найдена",
-    "az": "CRM müştərisinin mahiyyəti %s logini ilə tapılmadı"
+    "en": "CRM user mysql entity with '%s' login was not found",
+    "ru": "Сущность клиента CRM с логином '%s' не была найдена",
+    "az": "CRM müştərisinin mahiyyəti '%s' logini ilə tapılmadı"
   },
   "CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION": {
     "en": "CRM users mysql repository has thrown exception during document by login extraction : %s",
@@ -180,9 +180,9 @@
     "az": "Token parsing zamani texniki həta baş verib : %s"
   },
   "CRM_USERS_SECURITY_TOKEN_IS_EMPTY": {
-    "en": "An attempt to extract the token value from headers by %s key was unsuccessful because the key is missing or the value is empty",
-    "ru": "Попытка извлечь значение токена из хэдэров по ключу %s была нудачна, так как ключ отсутствует либо значение пусто",
-    "az": "Hederlardan %s açarnan dəyəri çıxarmaq cəhdi uğursuz oldu, çünki açar yoxdur və ya dəyər boşdur"
+    "en": "An attempt to extract the token value from headers by '%s' key was unsuccessful because the key is missing or the value is empty",
+    "ru": "Попытка извлечь значение токена из хэдэров по ключу '%s' была нудачна, так как ключ отсутствует либо значение пусто",
+    "az": "Hederlardan '%s' açarnan dəyəri çıxarmaq cəhdi uğursuz oldu, çünki açar yoxdur və ya dəyər boşdur"
   },
   "CRM_REQUEST_SUCCESSFULLY_AUTHENTICATED": {
     "en": "Request successfully authenticated",

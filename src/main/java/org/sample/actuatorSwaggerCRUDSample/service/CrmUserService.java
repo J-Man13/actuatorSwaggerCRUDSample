@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
-import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+
 
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
@@ -46,7 +46,6 @@ public class CrmUserService implements ICrmUserService{
     private final CrmUserRepository crmUserRepository;
     private final CommonLogger LOGGER;
     private final CrmUserMapper crmUserMapper;
-    private final IMultiLanguageComponent multiLanguageComponent;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final String AUTHENTICATION_SIGNATURE_KEY;
@@ -55,7 +54,6 @@ public class CrmUserService implements ICrmUserService{
     public CrmUserService(final CrmUserRepository crmUserRepository,
                           final @Qualifier("trace-logger") CommonLogger LOGGER,
                           final CrmUserMapper crmUserMapper,
-                          final @Qualifier("multiLanguageFileComponent") IMultiLanguageComponent multiLanguageComponent,
                           final BCryptPasswordEncoder bCryptPasswordEncoder,
                           final @Qualifier("crmUsersJwtSecurityAuthenticationManager") AuthenticationManager authenticationManager,
                           final @Value("${local.crm.user.security.authenticated.jwt.signature.key}") String AUTHENTICATION_SIGNATURE_KEY,
@@ -64,7 +62,6 @@ public class CrmUserService implements ICrmUserService{
         this.crmUserRepository = crmUserRepository;
         this.LOGGER=LOGGER;
         this.crmUserMapper=crmUserMapper;
-        this.multiLanguageComponent = multiLanguageComponent;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
         this.authenticationManager=authenticationManager;
         this.AUTHENTICATION_SIGNATURE_KEY=AUTHENTICATION_SIGNATURE_KEY;
@@ -91,16 +88,7 @@ public class CrmUserService implements ICrmUserService{
                 put("dataAccessExceptionMessage", dataAccessException.getMessage());
                 put("dataAccessExceptionStackTraceAsString", Throwables.getStackTraceAsString(dataAccessException));
             }});
-            throw new GlobalCommonException(
-                    CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
-                    String.format(
-                            multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,"en"),
-                            dataAccessException.getMessage()),
-                    String.format(
-                            multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE),
-                            dataAccessException.getMessage()),
-                    dataAccessException
-            );
+            throw new GlobalCommonException(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE, dataAccessException);
         }
     }
 
@@ -116,12 +104,7 @@ public class CrmUserService implements ICrmUserService{
                 put("badCredentialsException", badCredentialsException.getMessage());
                 put("badCredentialsException", Throwables.getStackTraceAsString(badCredentialsException));
             }});
-            throw new CrmUserInvalidCredentialsException(
-                    CRM_USER_INVALID_CREDENTIALS_EXCEPTION,
-                    multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION,"en"),
-                    multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION),
-                    badCredentialsException
-            );
+            throw new CrmUserInvalidCredentialsException(CRM_USER_INVALID_CREDENTIALS_EXCEPTION, badCredentialsException);
         }
         catch (InternalAuthenticationServiceException internalAuthenticationServiceException){
             Throwable cause = internalAuthenticationServiceException.getCause();
