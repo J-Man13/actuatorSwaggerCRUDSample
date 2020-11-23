@@ -94,6 +94,9 @@ public class CrmUserService implements ICrmUserService{
             throw new GlobalCommonException(
                     CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,
                     String.format(
+                            multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE,"en"),
+                            dataAccessException.getMessage()),
+                    String.format(
                             multiLanguageComponent.getMessageByKey(CRM_USER_REPOSITORY_EXCEPTION_FAILED_SAVE),
                             dataAccessException.getMessage()),
                     dataAccessException
@@ -115,6 +118,7 @@ public class CrmUserService implements ICrmUserService{
             }});
             throw new CrmUserInvalidCredentialsException(
                     CRM_USER_INVALID_CREDENTIALS_EXCEPTION,
+                    multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION,"en"),
                     multiLanguageComponent.getMessageByKey(CRM_USER_INVALID_CREDENTIALS_EXCEPTION),
                     badCredentialsException
             );

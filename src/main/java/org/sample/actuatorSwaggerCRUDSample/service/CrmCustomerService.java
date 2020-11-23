@@ -58,6 +58,7 @@ public class CrmCustomerService implements ICrmCustomerService {
                 LOGGER.debug("CRM customer mongo document with given id was not found","id",crmCustomer.getId());
                 throw new MongoDocumentNotFoundException(
                         CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,
+                        String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,"en"),crmCustomer.getId()),
                         String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),crmCustomer.getId()),
                         null
                 );
@@ -76,6 +77,7 @@ public class CrmCustomerService implements ICrmCustomerService {
             }});
             throw new GlobalCommonException(
                     CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE,"en"), dataAccessException.getMessage()),
                     String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_UPDATE), dataAccessException.getMessage()),
                     dataAccessException
             );
@@ -99,6 +101,7 @@ public class CrmCustomerService implements ICrmCustomerService {
             }});
             throw new GlobalCommonException(
                     CRM_CUSTOMER_EXCEPTION_FAILED_SAVE,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_SAVE,"en"), dataAccessException.getMessage()),
                     String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_EXCEPTION_FAILED_SAVE), dataAccessException.getMessage()),
                     dataAccessException
             );
@@ -120,6 +123,7 @@ public class CrmCustomerService implements ICrmCustomerService {
             }});
             throw new GlobalCommonException(
                     CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION,"en"), dataAccessException.getMessage()),
                     String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_EXCEPTION), dataAccessException.getMessage()),
                     dataAccessException
             );
@@ -129,6 +133,7 @@ public class CrmCustomerService implements ICrmCustomerService {
             LOGGER.debug("CRM customer mongo document with given id was not found","id",id);
             throw new MongoDocumentNotFoundException(
                     CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND,"en"),id),
                     String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_ID_NOT_FOUND),id),
                     null
             );
@@ -150,6 +155,10 @@ public class CrmCustomerService implements ICrmCustomerService {
             throw new GlobalCommonException(
                     CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION,
                     String.format(
+                            multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION,"en"),
+                            dataAccessException.getMessage()
+                    ),
+                    String.format(
                             multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_EXCEPTION),
                             dataAccessException.getMessage()
                     ),
@@ -161,6 +170,7 @@ public class CrmCustomerService implements ICrmCustomerService {
             LOGGER.debug("There was not any CRM customer mongo documents with given name","name",name);
             throw new MongoDocumentNotFoundException(
                     CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND,"en"),name),
                     String.format(multiLanguageComponent.getMessageByKey(CRM_CUSTOMER_MONGO_DOCUMENT_BY_NAME_NOT_FOUND),name),
                     null
             );

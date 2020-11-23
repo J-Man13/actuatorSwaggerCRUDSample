@@ -59,6 +59,7 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
                 LOGGER.debug("CRM user mysql entity with given login was not found","login",username);
                 throw new CrmUserEntityNotFoundException(
                         CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,
+                        String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND,"en"),username),
                         String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_NOT_FOUND),username),
                         null
                 );
@@ -86,6 +87,7 @@ public class CrmUsersJwtUserDetailsService implements UserDetailsService {
             }});
             throw new GlobalCommonException(
                     CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,
+                    String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION,"en"), dataAccessException.getMessage()),
                     String.format(multiLanguageComponent.getMessageByKey(CRM_USER_BY_LOGIN_EXTRACTION_REPOSITORY_EXCEPTION), dataAccessException.getMessage()),
                     dataAccessException
             );
