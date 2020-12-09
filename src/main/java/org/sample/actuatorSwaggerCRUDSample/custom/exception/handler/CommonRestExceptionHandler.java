@@ -2,7 +2,7 @@ package org.sample.actuatorSwaggerCRUDSample.custom.exception.handler;
 
 import com.google.common.base.Throwables;
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
-import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserEntityNotFoundException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.CrmUserInvalidCredentialsException;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalCommonException;

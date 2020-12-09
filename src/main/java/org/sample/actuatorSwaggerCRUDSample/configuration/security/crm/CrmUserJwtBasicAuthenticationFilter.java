@@ -5,7 +5,7 @@ import io.jsonwebtoken.*;
 
 
 import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLogger;
-import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;

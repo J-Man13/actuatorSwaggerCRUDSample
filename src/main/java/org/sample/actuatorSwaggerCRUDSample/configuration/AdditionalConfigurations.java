@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.configuration;
 
-import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.custom.exception.GlobalCommonException;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
 

@@ -1,6 +1,6 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception;
 
-import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.IMultiLanguageComponent;
+import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
 
 public class GlobalCommonException extends RuntimeException {

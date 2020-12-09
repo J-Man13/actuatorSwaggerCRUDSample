@@ -1,4 +1,4 @@
-package org.sample.actuatorSwaggerCRUDSample.configuration.multi.language;
+package org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message;
 
 
 
