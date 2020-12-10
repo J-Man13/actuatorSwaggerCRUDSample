@@ -8,7 +8,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.logging.util.CommonLog
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message.IMultiLanguageComponent;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDescriptor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -81,15 +81,15 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
 
     private UsernamePasswordAuthenticationToken parseToken(String jwtToken) {
         if (StringUtils.isEmpty(jwtToken)){
-            ErrorDesriptor errorDesriptor = new ErrorDesriptor(this.getClass().getCanonicalName(),
+            ErrorDescriptor errorDescriptor = new ErrorDescriptor(this.getClass().getCanonicalName(),
                     CRM_USERS_SECURITY_TOKEN_IS_EMPTY,
                     String.format(multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_IS_EMPTY),JWT_HEADER_KEY));
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,
                     new CommonMessageDTO("error",
-                            errorDesriptor.getMessageKey(),
-                            errorDesriptor.getMessage()),
-                    errorDesriptor);
+                            errorDescriptor.getMessageKey(),
+                            errorDescriptor.getMessage()),
+                    errorDescriptor);
             return null;
         }
         try {
@@ -104,40 +104,40 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
             return new UsernamePasswordAuthenticationToken(login, null, grantedAuthorities);
         }
         catch (ExpiredJwtException expiredJwtException) {
-            ErrorDesriptor errorDesriptor = new ErrorDesriptor(expiredJwtException.getStackTrace()[0].getClassName(),
+            ErrorDescriptor errorDescriptor = new ErrorDescriptor(expiredJwtException.getStackTrace()[0].getClassName(),
                     CRM_USERS_SECURITY_TOKEN_EXPIRED,
                     multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_EXPIRED),
                     expiredJwtException.getClass().getCanonicalName());
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,
                     new CommonMessageDTO("error",
-                            errorDesriptor.getMessageKey(),
-                            errorDesriptor.getMessage()),
-                    errorDesriptor);
+                            errorDescriptor.getMessageKey(),
+                            errorDescriptor.getMessage()),
+                    errorDescriptor);
         }
         catch (MalformedJwtException malformedJwtException){
-            ErrorDesriptor errorDesriptor = new ErrorDesriptor(malformedJwtException.getStackTrace()[0].getClassName(),
+            ErrorDescriptor errorDescriptor = new ErrorDescriptor(malformedJwtException.getStackTrace()[0].getClassName(),
                     CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED,
                     multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_JWT_MALFORMED),
                     malformedJwtException.getClass().getCanonicalName());
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,
                     new CommonMessageDTO("error",
-                            errorDesriptor.getMessageKey(),
-                            errorDesriptor.getMessage()),
-                    errorDesriptor);
+                            errorDescriptor.getMessageKey(),
+                            errorDescriptor.getMessage()),
+                    errorDescriptor);
         }
         catch (SignatureException signatureException){
-            ErrorDesriptor errorDesriptor = new ErrorDesriptor(signatureException.getStackTrace()[0].getClassName(),
+            ErrorDescriptor errorDescriptor = new ErrorDescriptor(signatureException.getStackTrace()[0].getClassName(),
                     CRM_USERS_TOKEN_SIGNATURE_EXCEPTION,
                     multiLanguageComponent.getMessageByKey(CRM_USERS_TOKEN_SIGNATURE_EXCEPTION),
                     signatureException.getClass().getCanonicalName());
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,
                     new CommonMessageDTO("error",
-                            errorDesriptor.getMessageKey(),
-                            errorDesriptor.getMessage()),
-                    errorDesriptor);
+                            errorDescriptor.getMessageKey(),
+                            errorDescriptor.getMessage()),
+                    errorDescriptor);
         }
         catch (Exception exception){
             LOGGER.fatal("There was unhandled exception during jwt parsing, logging it's class, message and stack trace",new HashMap<String, String>() {{
@@ -145,16 +145,16 @@ public class CrmUserJwtBasicAuthenticationFilter extends BasicAuthenticationFilt
                 put("jwtParsingHandledExceptionMessage", exception.getMessage());
                 put("jwtParsingHandledExceptionStackTraceAsString", Throwables.getStackTraceAsString(exception));
             }});
-            ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
+            ErrorDescriptor errorDescriptor = new ErrorDescriptor(exception.getStackTrace()[0].getClassName(),
                     CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION,
                     String.format(multiLanguageComponent.getMessageByKey(CRM_USERS_SECURITY_TOKEN_PARSING_UNHANDLED_EXCEPTION),exception.getMessage()),
                     exception.getClass().getCanonicalName());
             commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                     HttpServletResponse.SC_FORBIDDEN,
                     new CommonMessageDTO("error",
-                            errorDesriptor.getMessageKey(),
-                            errorDesriptor.getMessage()),
-                    errorDesriptor);
+                            errorDescriptor.getMessageKey(),
+                            errorDescriptor.getMessage()),
+                    errorDescriptor);
         }
         return null;
     }

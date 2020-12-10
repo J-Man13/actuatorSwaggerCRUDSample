@@ -7,7 +7,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message
 import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDescriptor;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -72,7 +72,7 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(authenticationException.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(authenticationException.getStackTrace()[0].getClassName(),
                 FAILED_ACTUATOR_AUTHENTICATION,
                 String.format(multiLanguageComponent.getMessageByKey(FAILED_ACTUATOR_AUTHENTICATION,"en"),authenticationException.getMessage()),
                 authenticationException.getClass().getCanonicalName());
@@ -80,9 +80,9 @@ public class ActuatorAuthenticationEntryPoint extends BasicAuthenticationEntryPo
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpServletResponse.SC_UNAUTHORIZED,
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor
                 );
         response.getWriter().println(mapper.writeValueAsString(commonMapper.cloneCommonResponseDTO(commonResponseDTO)));
     }

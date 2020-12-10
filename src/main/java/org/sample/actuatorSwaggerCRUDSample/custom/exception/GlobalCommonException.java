@@ -1,10 +1,10 @@
 package org.sample.actuatorSwaggerCRUDSample.custom.exception;
 
 import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message.IMultiLanguageComponent;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDescriptor;
 
 public class GlobalCommonException extends RuntimeException {
-    private final ErrorDesriptor errorDesriptor;
+    private final ErrorDescriptor errorDescriptor;
     private final String messageKey;
     private static IMultiLanguageComponent MULTI_LANGUAGE_COMPONENT;
 
@@ -17,7 +17,7 @@ public class GlobalCommonException extends RuntimeException {
         );
 
         this.messageKey=messageKey;
-        this.errorDesriptor = new ErrorDesriptor(
+        this.errorDescriptor = new ErrorDescriptor(
                 this.getStackTrace()[0].getClassName(),
                 messageKey,
                 MULTI_LANGUAGE_COMPONENT.getMessageByKey(messageKey),
@@ -28,7 +28,7 @@ public class GlobalCommonException extends RuntimeException {
     public GlobalCommonException(String messageKey,String messageEn, String message) {
         super(messageEn);
         this.messageKey=messageKey;
-        this.errorDesriptor = new ErrorDesriptor(
+        this.errorDescriptor = new ErrorDescriptor(
                 this.getStackTrace()[0].getClassName(),
                 messageKey,
                 message,
@@ -39,7 +39,7 @@ public class GlobalCommonException extends RuntimeException {
     public GlobalCommonException(String messageKey,String messageEn, String message, Throwable cause) {
         super(messageEn,cause);
         this.messageKey=messageKey;
-        this.errorDesriptor = new ErrorDesriptor(
+        this.errorDescriptor = new ErrorDescriptor(
                 this.getStackTrace()[0].getClassName(),
                 messageKey,
                 message,
@@ -47,8 +47,8 @@ public class GlobalCommonException extends RuntimeException {
         );
     }
 
-    public ErrorDesriptor getErrorDesriptor() {
-        return errorDesriptor;
+    public ErrorDescriptor getErrorDescriptor() {
+        return errorDescriptor;
     }
 
     public String getMessageKey() {

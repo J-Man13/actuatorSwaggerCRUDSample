@@ -10,10 +10,8 @@ import org.sample.actuatorSwaggerCRUDSample.custom.exception.MongoDocumentNotFou
 import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDescriptor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.HashMap;
 
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
+
 @ControllerAdvice
 public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -58,56 +56,56 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(MongoDocumentNotFoundException.class)
     public ResponseEntity mongoDocumentNotFoundExceptionHandler(MongoDocumentNotFoundException mongoDocumentNotFoundException) {
-        ErrorDesriptor errorDesriptor = mongoDocumentNotFoundException.getErrorDesriptor();
+        ErrorDescriptor errorDescriptor = mongoDocumentNotFoundException.getErrorDescriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.NOT_FOUND.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CrmUserEntityNotFoundException.class)
     public ResponseEntity crmUserEntityNotFoundExceptionHandler(CrmUserEntityNotFoundException crmUserEntityNotFoundException) {
-        ErrorDesriptor errorDesriptor = crmUserEntityNotFoundException.getErrorDesriptor();
+        ErrorDescriptor errorDescriptor = crmUserEntityNotFoundException.getErrorDescriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.NOT_FOUND.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CrmUserInvalidCredentialsException.class)
     public ResponseEntity crmUserInvalidCredentialsExceptionHandler(CrmUserInvalidCredentialsException crmUserInvalidCredentialsException) {
-        ErrorDesriptor errorDesriptor = crmUserInvalidCredentialsException.getErrorDesriptor();
+        ErrorDescriptor errorDescriptor = crmUserInvalidCredentialsException.getErrorDescriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.UNAUTHORIZED.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.UNAUTHORIZED);
     }
 
 
     @ExceptionHandler(GlobalCommonException.class)
     public ResponseEntity globalHandledException(GlobalCommonException globalCommonException) {
-        ErrorDesriptor errorDesriptor = globalCommonException.getErrorDesriptor();
+        ErrorDescriptor errorDescriptor = globalCommonException.getErrorDescriptor();
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception exception) {
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(exception.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(exception.getStackTrace()[0].getClassName(),
                 REST_GENERAL_EXCEPTION_HANDLING,
                 exception.getMessage(),
                 exception.getClass().getCanonicalName());
@@ -119,25 +117,25 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @Override
     protected ResponseEntity handleNoHandlerFoundException(NoHandlerFoundException noHandlerFoundException, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(noHandlerFoundException.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(noHandlerFoundException.getStackTrace()[0].getClassName(),
                 THERE_IS_NO_LISTENER_FOR_ROUTE,
                 String.format(multiLanguageComponent.getMessageByKey(THERE_IS_NO_LISTENER_FOR_ROUTE), noHandlerFoundException.getRequestURL()),
                 noHandlerFoundException.getClass().getCanonicalName());
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.NOT_FOUND.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO), HttpStatus.NOT_FOUND);
     }
 
@@ -145,16 +143,16 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException httpRequestMethodNotSupportedException, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         String method = ((ServletWebRequest)request).getRequest().getMethod();
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpRequestMethodNotSupportedException.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(httpRequestMethodNotSupportedException.getStackTrace()[0].getClassName(),
                 METHOD_IS_NOT_SUPPORTED,
                 String.format(multiLanguageComponent.getMessageByKey(METHOD_IS_NOT_SUPPORTED), method,route),
                 httpRequestMethodNotSupportedException.getClass().getCanonicalName());
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.METHOD_NOT_ALLOWED.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
@@ -162,16 +160,16 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException httpMessageNotReadableException, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         String method = ((ServletWebRequest)request).getRequest().getMethod();
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(httpMessageNotReadableException.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(httpMessageNotReadableException.getStackTrace()[0].getClassName(),
                 HTTP_REQUEST_IS_NOT_READABLE,
                 String.format(multiLanguageComponent.getMessageByKey(HTTP_REQUEST_IS_NOT_READABLE),route,method),
                 httpMessageNotReadableException.getClass().getCanonicalName());
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.BAD_REQUEST.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
         return new ResponseEntity(commonMapper.cloneCommonResponseDTO(commonResponseDTO), HttpStatus.BAD_REQUEST);
     }
 
@@ -179,7 +177,7 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String route = ((ServletWebRequest)request).getRequest().getRequestURI();
         String method = ((ServletWebRequest)request).getRequest().getMethod();
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(ex.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(ex.getStackTrace()[0].getClassName(),
                 HTTP_REQUEST_FAILED_COMMON_VALIDATION,
                 String.format(multiLanguageComponent.getMessageByKey(HTTP_REQUEST_FAILED_COMMON_VALIDATION),route,method),
                 ex.getClass().getCanonicalName());
@@ -187,9 +185,9 @@ public class CommonRestExceptionHandler extends ResponseEntityExceptionHandler {
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpStatus.BAD_REQUEST.value(),
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor);
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor);
 
         for (FieldError fieldError:ex.getBindingResult().getFieldErrors())
             commonResponseDTO.getMessages().add(

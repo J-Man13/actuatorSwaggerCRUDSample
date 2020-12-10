@@ -26,7 +26,7 @@ public class CommonResponseDTO<Data>{
     private LocalDateTime dateStamp;
     private Data data;
     private final List<CommonMessageDTO> messages;
-    private final List<ErrorDesriptor> errorDescriptorList;
+    private final List<ErrorDescriptor> errorDescriptorList;
 
     public CommonResponseDTO() {
         this.messages = Collections.synchronizedList(new LinkedList());
@@ -74,7 +74,7 @@ public class CommonResponseDTO<Data>{
         this.data = data;
     }
 
-    public List<ErrorDesriptor> getErrorDescriptorList() {
+    public List<ErrorDescriptor> getErrorDescriptorList() {
         return errorDescriptorList;
     }
 
@@ -98,10 +98,10 @@ public class CommonResponseDTO<Data>{
 
     public void setStatusCodeMessageDtoErrorDescriptorAndInitDate(final int httpStatusCode,
                                                        final CommonMessageDTO commonMessageDTO,
-                                                       final ErrorDesriptor errorDesriptor){
+                                                       final ErrorDescriptor errorDescriptor){
         this.setStatus(httpStatusCode);
         this.getMessages().add(commonMessageDTO);
-        this.getErrorDescriptorList().add(errorDesriptor);
+        this.getErrorDescriptorList().add(errorDescriptor);
         this.setDateStamp(LocalDateTime.now());
         this.setTimestamp(Instant.now().getEpochSecond());
     }

@@ -118,7 +118,7 @@ public class CrmCustomerDBService implements ICrmCustomerService {
     public List<CrmCustomer> findByName(String name) {
         List<CrmCustomerMongoDocument> crmCustomerMongoDocumentList;
         try {
-            crmCustomerMongoDocumentList = crmCustomerMongoRepository.findAllByName(name).stream().;
+            crmCustomerMongoDocumentList = crmCustomerMongoRepository.findAllByName(name);
         }catch (DataAccessException dataAccessException){
             LOGGER.error("CRM customers mongo repository has thrown exception during documents by name extraction",new HashMap<String, String>() {{
                 put("dataAccessExceptionCanonicalName",dataAccessException.getClass().getCanonicalName());

@@ -5,7 +5,7 @@ import org.sample.actuatorSwaggerCRUDSample.configuration.multi.language.message
 import org.sample.actuatorSwaggerCRUDSample.mapper.CommonMapper;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonMessageDTO;
 import org.sample.actuatorSwaggerCRUDSample.model.common.dto.CommonResponseDTO;
-import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDesriptor;
+import org.sample.actuatorSwaggerCRUDSample.model.common.dto.ErrorDescriptor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -35,7 +35,7 @@ public class CrmUsersJwtSecurityAccessDeniedHandler implements AccessDeniedHandl
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException{
-        ErrorDesriptor errorDesriptor = new ErrorDesriptor(accessDeniedException.getStackTrace()[0].getClassName(),
+        ErrorDescriptor errorDescriptor = new ErrorDescriptor(accessDeniedException.getStackTrace()[0].getClassName(),
                 CRM_ORIGINATOR_OF_AUTHENTICATED_REQUEST_FORBIDDEN,
                 String.format(multiLanguageComponent.getMessageByKey(CRM_ORIGINATOR_OF_AUTHENTICATED_REQUEST_FORBIDDEN),request.getRequestURI()),
                 accessDeniedException.getClass().getCanonicalName());
@@ -43,9 +43,9 @@ public class CrmUsersJwtSecurityAccessDeniedHandler implements AccessDeniedHandl
         commonResponseDTO.setStatusCodeMessageDtoErrorDescriptorAndInitDate(
                 HttpServletResponse.SC_FORBIDDEN,
                 new CommonMessageDTO("error",
-                        errorDesriptor.getMessageKey(),
-                        errorDesriptor.getMessage()),
-                errorDesriptor
+                        errorDescriptor.getMessageKey(),
+                        errorDescriptor.getMessage()),
+                errorDescriptor
         );
 
         response.setContentType("application/json;charset=UTF-8");

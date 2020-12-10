@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-public class ErrorDesriptor {
+public class ErrorDescriptor {
     private String source;
     private String cause;
     private String messageKey;
@@ -20,19 +20,19 @@ public class ErrorDesriptor {
     private LocalDateTime dateStamp;
     private Long timestamp;
 
-    public ErrorDesriptor() {
+    public ErrorDescriptor() {
         this.dateStamp = LocalDateTime.now();
         this.timestamp = Instant.now().getEpochSecond();
     }
 
-    public ErrorDesriptor(String source, String messageKey,String message) {
+    public ErrorDescriptor(String source, String messageKey, String message) {
         this();
         this.source = source;
         this.message = message;
         this.messageKey = messageKey;
     }
 
-    public ErrorDesriptor(String source, String messageKey,String message, String cause) {
+    public ErrorDescriptor(String source, String messageKey, String message, String cause) {
         this(source, messageKey,message);
         this.cause = cause;
     }
